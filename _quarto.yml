@@ -21,7 +21,7 @@ format:
   html:
     email-obfuscation: javascript
     grid:
-      body-width: 200px
+      body-width: 2000px
       sidebar-width: 200px
       margin-width: 200px
     citations-hover: true
