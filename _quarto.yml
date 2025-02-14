@@ -13,6 +13,12 @@ website:
     left:
       - href: index.qmd
         text: "Introduction"
+      - text: "Data"
+        menu:
+          - text: "NewsAPI"
+            href: data_newsapi.qmd
+          - text: "Reddit"
+            href: data_reddit.qmd
     right:
       - icon: github
         href: https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness
