@@ -3,20 +3,30 @@ project:
   output-dir: docs
 
 website:
-  title: "Student-Loan-Forgiveness"
+  title: "Student Loan Forgiveness"
+  favicon: images/dollar_sign.png
+  page-footer:
+    center: "Student Loan Forgiveness"
+    background: primary
+    
   navbar:
     left:
       - href: index.qmd
-        text: Home
-      - about.qmd
+        text: "Introduction"
+    right:
+      - icon: github
+        href: https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness
 
 format:
   html:
-    theme:
-      - cosmo
-      - brand
+    email-obfuscation: javascript
+    grid:
+      body-width: 200px
+      sidebar-width: 200px
+      margin-width: 200px
+    citations-hover: true
+    code-fold: true
+    theme: flatly
     css: styles.css
+    code-block-border-left: primary
     toc: true
-
-
-

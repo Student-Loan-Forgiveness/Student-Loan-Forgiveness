@@ -2,15 +2,15 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Student-Loan-Forgiveness",
+    "title": "Introduction",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n2"
+    "text": "The introduction page for the student loan forgiveness text analysis project."
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n2"
+    "text": "About this site\n\n\nCode\n1 + 1\n\n\n2"
   }
 ]

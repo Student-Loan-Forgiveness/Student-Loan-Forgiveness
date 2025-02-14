@@ -1,12 +1,5 @@
 ---
-title: "Student-Loan-Forgiveness"
-jupyter: python3
+title: "Introduction"
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
-```{python}
-1 + 1
-```
+The introduction page for the student loan forgiveness text analysis project.
