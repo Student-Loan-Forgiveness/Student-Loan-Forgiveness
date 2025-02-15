@@ -36,7 +36,7 @@ The data is initially returned in JSON format, which was then turned into a data
 Sample of the Raw NewsAPI Data:
 
 ```{python}
-show(newsapi_raw)
+show(newsapi_raw.head(5), columnDefs=[{"width": "25%", "targets": [1, 2]}], autoWidth=False, classes="display", style="width:100%;margin:auto")
 ```
 
 **Columns**:
@@ -58,7 +58,7 @@ One limitation of NewsAPI is that it doesn't return the content of an article in
 Sample of the Raw Scraped Data:
 
 ```{python}
-show(scraped_raw)
+show(scraped_raw.head(5), columnDefs=[{"width": "25%", "targets": [1, 2]}], autoWidth=False, classes="display", style="width:100%;margin:auto")
 ```
 
 **Columns**:
@@ -79,7 +79,7 @@ AllSides is a community-based political bias rating platform for media. Using we
 Sample of the AllSides Data:
 
 ```{python}
-show(allsides_raw)
+show(allsides_raw.head(5), style="width:100%;margin:auto")
 ```
 
 **Columns**:
@@ -145,7 +145,7 @@ The main label of interest will be *Bais Specific*, but interesting analyses cou
 Sample of the final labeled data:
 
 ```{python}
-show(newsapi_clean)
+show(newsapi_clean.head(5), columnDefs=[{"width": "200px", "targets": [1, 2, 7]}], autoWidth=False, classes="display", style="width:100%;margin:auto")
 ```
 
 # Complementary Data
