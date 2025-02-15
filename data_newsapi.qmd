@@ -14,6 +14,8 @@ newsapi_raw = pd.read_csv('data/newsapi_data/newsapi_raw_snippet.csv')
 scraped_raw = pd.read_csv('data/newsapi_data/scraped_raw_snippet.csv')
 allsides_raw = pd.read_csv('data/allsides_data/allsides_raw_snippet.csv')
 newsapi_clean = pd.read_csv('data/newsapi_data/newsapi_clean_snippet.csv')
+
+#show(newsapi_raw, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
 ```
 
 # Introduction
@@ -34,7 +36,7 @@ The data is initially returned in JSON format, which was then turned into a data
 Sample of the Raw NewsAPI Data:
 
 ```{python}
-show(newsapi_raw, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
+show(newsapi_raw)
 ```
 
 **Columns**:
@@ -56,7 +58,7 @@ One limitation of NewsAPI is that it doesn't return the content of an article in
 Sample of the Raw Scraped Data:
 
 ```{python}
-show(scraped_raw, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
+show(scraped_raw)
 ```
 
 **Columns**:
@@ -77,7 +79,7 @@ AllSides is a community-based political bias rating platform for media. Using we
 Sample of the AllSides Data:
 
 ```{python}
-show(allsides_raw, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
+show(allsides_raw)
 ```
 
 **Columns**:
@@ -143,7 +145,7 @@ The main label of interest will be *Bais Specific*, but interesting analyses cou
 Sample of the final labeled data:
 
 ```{python}
-show(newsapi_clean, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
+show(newsapi_clean)
 ```
 
 # Complementary Data
