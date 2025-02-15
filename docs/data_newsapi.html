@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -67,6 +67,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -126,8 +129,34 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#newsapi-extraction" id="toc-newsapi-extraction" class="nav-link" data-scroll-target="#newsapi-extraction">NewsAPI Extraction</a>
+  <ul class="collapse">
+  <li><a href="#newsapi-extraction-initial-data" id="toc-newsapi-extraction-initial-data" class="nav-link" data-scroll-target="#newsapi-extraction-initial-data">NewsAPI Extraction Initial Data</a></li>
+  </ul></li>
+  <li><a href="#newsapi-scraping" id="toc-newsapi-scraping" class="nav-link" data-scroll-target="#newsapi-scraping">NewsAPI Scraping</a>
+  <ul class="collapse">
+  <li><a href="#newsapi-scraped-initial-data" id="toc-newsapi-scraped-initial-data" class="nav-link" data-scroll-target="#newsapi-scraped-initial-data">NewsAPI Scraped Initial Data</a></li>
+  </ul></li>
+  <li><a href="#allsides-bias-data" id="toc-allsides-bias-data" class="nav-link" data-scroll-target="#allsides-bias-data">AllSides Bias Data</a>
+  <ul class="collapse">
+  <li><a href="#allsides-initial-data" id="toc-allsides-initial-data" class="nav-link" data-scroll-target="#allsides-initial-data">AllSides Initial Data</a></li>
+  </ul></li>
+  <li><a href="#cleaning-and-merging" id="toc-cleaning-and-merging" class="nav-link" data-scroll-target="#cleaning-and-merging">Cleaning and Merging</a>
+  <ul class="collapse">
+  <li><a href="#cleaning-strategy" id="toc-cleaning-strategy" class="nav-link" data-scroll-target="#cleaning-strategy">Cleaning Strategy</a></li>
+  <li><a href="#merging-strategy" id="toc-merging-strategy" class="nav-link" data-scroll-target="#merging-strategy">Merging Strategy</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#complementary-data" id="toc-complementary-data" class="nav-link" data-scroll-target="#complementary-data">Complementary Data</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -151,9 +180,589 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Data acquired from NewsAPI.</p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Part of the discussion surrounding <strong>Student Loan Forgiveness</strong> is reporting done by different news media organizations. These organizations generally align with a certain political bias. With the realization that those on the <em>left</em> tend to <em>support</em> at least some form of student loan relief and those on the <em>right</em> tend to <em>oppose</em> it, it could be fruitful to pair news organizations with their political biases. To achieve this, two main sources of news related data were explored:</p>
+<ul>
+<li><strong><a href="https://newsapi.org/">NewsAPI</a></strong></li>
+<li><strong><a href="https://www.allsides.com/unbiased-balanced-news">AllSides</a></strong></li>
+</ul>
+<section id="newsapi-extraction" class="level2">
+<h2 class="anchored" data-anchor-id="newsapi-extraction">NewsAPI Extraction</h2>
+<p>NewsAPI maintains an application programming interfacae (API) which returns information on articles published around the world. For the scope of this analysis, two search parameters were queried from the API. Articles were gathered using the specific search parameter of <strong>student loan forgiveness</strong>, as well as a general search parameter of <strong>student loans</strong>.</p>
+<p>The data is initially returned in JSON format, which was then turned into a dataframe and subsequently exported into a <code>csv</code> file.</p>
+<section id="newsapi-extraction-initial-data" class="level3">
+<h3 class="anchored" data-anchor-id="newsapi-extraction-initial-data">NewsAPI Extraction Initial Data</h3>
+<p>Sample of the Raw NewsAPI Data:</p>
+<div id="9541c716" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<table id="itables_bb06d3e5_abe1_431b_af9a_3c0a0d3f6d7c" class="display" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>author</th>
+      <th>content</th>
+      <th>description</th>
+      <th>date</th>
+      <th>source</th>
+      <th>title</th>
+      <th>url</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.4 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_bb06d3e5_abe1_431b_af9a_3c0a0d3f6d7c:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["AP :: Setopati", "A federal judge on Tuesday temporarily blocked a push from President Donald Trump to pause federal funding while his administration conducts an across-the-board ideological review to uproot progressi\u2026 [+8039 chars]", "A federal judge on Tuesday temporarily blocked a push from President Donald Trump to pause federal funding while his administration conducts an across-the-board ideological review to uproot progressive initiatives.", "2025-01-29T09:30:01Z", "Setopati.com", "Federal judge temporarily blocks Trump administration freeze on federal grants and loans", "https://en.setopati.com/International/164233"], ["Chris Pandolfo", "Join Fox News for access to this content\\r\\nYou have reached your maximum number of articles. Log in or create an account FREE of charge to continue reading.\\r\\nBy entering your email and pushing continu\u2026 [+4852 chars]", "Senate Democrats announced they would coordinate with blue state governors to fight back against Trump's federal funding freeze, which could hold up trillions of dollars in assistance.", "2025-01-29T19:27:19Z", "Fox News", "Democrats coordinate multi-state response to Trump's funding freeze", "https://www.foxnews.com/politics/democrats-coordinate-multi-state-response-trumps-funding-freeze"], ["Newswire Editor", "\"Another giant Trump tax giveaway to price gouging corporations won't lift up working people, but it will put Social Security and Medicare at risk,\" Carrk continued. \"A national Trump sales tax won't\u2026 [+4386 chars]", "Last night, the White House Office of Management and Budget ordered\\r\\n a halt to all federal grants and loan disbursement. Groundwork Collaborative Senior Fellow Kitty Richards reacted with the following statement: \u201cThis blatantly illegal and authoritarian act\u2026", "2025-01-28T15:57:51Z", "Common Dreams", "Groundwork\u2019s Kitty Richards on OMB Freeze: \u201cA shocking power grab\u201d", "https://www.commondreams.org/newswire/groundworks-kitty-richards-on-omb-freeze-a-shocking-power-grab"], ["CHRIS MEGERIAN Associated Press", "WASHINGTON A federal judge temporarily blocked a Trump administration freeze on federal grants and loans that could total trillions of dollars.\\r\\nThe White House had planned to pause federal grants an\u2026 [+4998 chars]", "The White House had planned the pause as President Donald Trump's administration begins an ideological review of spending.", "2025-01-28T22:15:00Z", "Roanoke Times", "Federal judge temporarily blocks Trump administration freeze on federal grants and loans", "https://roanoke.com/news/nation-world/government-politics/donald-trump-federal-aid-loans-grants-pause/article_e11e588e-57f4-5f5e-a46d-fcc84f1a7e11.html"], ["Ilya Somin", "(NA)\\r\\nYesterday, Donald Trump imposed 25% tariffs on Canadian and Mexican imports, and 10% on those from China. These actions will inflict immense costs on the US economy, raise prices for many goods\u2026 [+5475 chars]", "Yesterday, Donald Trump imposed 25% tariffs on Canadian and Mexican imports, and 10% on those from China. These actions will inflict immense costs on the", "2025-02-02T21:20:39Z", "Reason", "Challenge Trump's Tariffs Under the Nondelegation and Major Questions Doctrines", "https://reason.com/volokh/2025/02/02/challenge-trumps-tariffs-under-the-nondelegation-and-major-questions-doctrines/"], ["pmcarp4", "Illinois politicians made the state's citizens proud today. They spoke out as all politicians of conscience should speak out each day every day until the degenerate fraudulence infesting the White Ho\u2026 [+3207 chars]", "Illinois politicians made the state's citizens proud today. They spoke out as all politicians of conscience should speak out each day \u2014 every day until the degenerate fraudulence infesting the White House and plaguing the nation is wiped clean from our lives \u2026", "2025-01-29T04:45:10Z", "Pmcarpenter.com", "A state in agony invokes humanity, eviscerates Trump", "https://www.pmcarpenter.com/post/a-state-in-agony-invokes-humanity-eviscerates-trump"], ["Nick Pope", "A legal organization chaired by Democratic election attorney Marc Elias and funded by a number of major left-wing donor groups helped the National Council of Nonprofits (NCN) to temporarily block the\u2026 [+6533 chars]", "A legal group chaired by Democratic election attorney Marc Elias and funded by a number of left-wing donor groups helped the National Council of Nonprofits ...", "2025-01-29T15:50:33Z", "The Daily Caller", "Liberal Donors, Marc Elias And Biden-Appointed Judge Freeze Trump Push To Starve Woke Nonprofits Of Taxpayer Cash", "https://dailycaller.com/2025/01/29/marc-elias-liberal-donors-biden-judge-trump-freeze-federal-grants/"], ["Dustin Rowles", "I read in People this morning\u2014in what must have been the umpteenth excuse to promote his new alcohol brand\u2014that Gabriel Macht has been apologizing to Suits fans who went to law school because of the \u2026 [+3331 chars]", "I read in People this morning--in what must have been the umpteenth excuse to promote his new alcohol brand--that Gabriel Macht has been apologizing to Suits fans who went to law school because of the show. \"There are so many...\\nRead more...", "2025-01-30T14:17:37Z", "Pajiba.com", "Please Don't Go to Law School Because You Liked Gabriel Macht in 'Suits'", "https://www.pajiba.com/news/please-dont-go-to-law-school-because-you-liked-gabriel-macht-in-suits.php"], ["Elisabeth McGowan", "Image Credit: AFP via Getty Images\\r\\nNow that Donald Trumpis president, multiple changes are sweeping the nation. After signing several executive orders earlier this month including putting government\u2026 [+2683 chars]", "Trump's new administration is pausing federal grants and loan disbursement. Find out what this could mean for you.", "2025-01-28T14:43:50Z", "Hollywood Life", "Did Trump Stop Food Stamps? He Freezes Federal Grants", "https://hollywoodlife.com/2025/01/28/did-trump-stop-food-stamps/"], ["CHRIS MEGERIAN Associated Press", "WASHINGTON -- The White House is pausing federal grants and loans starting Tuesday as President Donald Trump's administration begins an across-the-board ideological review of its spending, causing co\u2026 [+4038 chars]", "Democrats are planning to fight President Donald Trump's efforts to pause federal grants and loans", "2025-01-28T17:34:36Z", "ABC News", "Legal battle looms as Trump orders a funding freeze during a review of federal loans and grants", "https://abcnews.go.com/US/wireStory/legal-battle-looms-trump-orders-funding-freeze-review-118173796"]];
+
+        // Define the dt_args
+        let dt_args = {"columnDefs": [{"width": "120px", "targets": "_all"}], "autoWidth": false, "layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+<p><strong>Columns</strong>:</p>
+<ul>
+<li>author</li>
+<li>content</li>
+<li>description</li>
+<li>date</li>
+<li>source</li>
+<li>title</li>
+<li>url</li>
+</ul>
+</section>
+</section>
+<section id="newsapi-scraping" class="level2">
+<h2 class="anchored" data-anchor-id="newsapi-scraping">NewsAPI Scraping</h2>
+<p>One limitation of NewsAPI is that it doesn’t return the content of an article in its entirety. To account for this, numerous web scrapers were built for sources which were both scraping-eligible and appropriate for this analysis. This did reduce the number of sources and articles in the data from NewsAPI, but did result in complete article content. A list of eligible sources and their related scrapers were iteratively called to populate a dataframe with the individual paragraphs from the url associated with the article. To specify, the initial scrape through will result in a dataframe where each paragraph from the each scrapable article will have its own row.</p>
+<section id="newsapi-scraped-initial-data" class="level3">
+<h3 class="anchored" data-anchor-id="newsapi-scraped-initial-data">NewsAPI Scraped Initial Data</h3>
+<p>Sample of the Raw Scraped Data:</p>
+<div id="83518ceb" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<table id="itables_ffcc60ba_1aab_4cd9_baf0_ce3f40fe83fc" class="display" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>source</th>
+      <th>url</th>
+      <th>paragraph</th>
+      <th>paragraph_num</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.4 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_ffcc60ba_1aab_4cd9_baf0_ce3f40fe83fc:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["Catholicnewsagency.com", "https://www.catholicnewsagency.com/news/261659/what-would-happen-if-the-department-of-education-closed-under-trump", "Reestablished under President Jimmy Carter in 1978 to collect data, the Department of Education now manages funding for various programs for elementary and secondary students as well as federal studen...", 4], ["Richmond.com", "https://richmond.com/news/nation-world/education/higher-education-college-student-loan-debt-financial-aid/article_00061eaf-5c4b-5488-a56c-6356ff5263c0.html", "- Acceptance rate: 45%", 387], ["CNET", "https://www.cnet.com/personal-finance/loans/the-2025-26-fafsa-is-open-experts-say-not-to-wait-to-apply-for-financial-aid-for-school/", "Before you hit submit, review everything to ensure all your answers are correct. Errors could result in delays, which could impact your financial aid awards.\u00a0", 31], ["LADbible", "https://www.ladbible.com/news/uk-news/martin-lewis-student-loans-2025-change-155697-20241231", "Loads of people have recently been claiming money back due to having overpaid on their repayments.", 9], ["BusinessLine", "https://www.thehindubusinessline.com/markets/stock-market-highlights-1-february-2025/article69164334.ece", " \u2022 Shipping Corp Ltd", 652], ["Lifesciencesworld.com", "https://lifesciencesworld.com/why-university-of-michigan/", "Student Life", 32], ["BusinessLine", "https://www.thehindubusinessline.com/markets/stock-market-highlights-1-february-2025/article69164334.ece", "Budget focused on creating disposable income and boost consumption", 22], ["NerdWallet", "https://www.nerdwallet.com/article/credit-cards/credit-card-data/2024-american-household-credit-card-debt-study#article", "+3.77%", 10], ["ABC News", "https://abcnews.go.com/US/wireStory/colleges-us-cautiously-navigate-trumps-dei-crackdown-118337050", "The president of Mount Holyoke College, a liberal arts school in Massachusetts, said she hopes colleagues in higher education will not capitulate to Trump\u2019s vision for the country. Danielle Holley sai...", 3], ["Daily Signal", "https://www.dailysignal.com/2025/01/31/higher-education-must-reform-else/", "But you won\u2019t find much wisdom in our modern-day institutions of higher learning. They appear to be constitutionally incapable of reforming from within and are arrogant enough to think they can remain...", 28]];
+
+        // Define the dt_args
+        let dt_args = {"columnDefs": [{"width": "120px", "targets": "_all"}], "autoWidth": false, "layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+<p><strong>Columns</strong>:</p>
+<ul>
+<li>source</li>
+<li>url</li>
+<li>paragraph</li>
+<li>paragraph_num</li>
+</ul>
+<blockquote class="blockquote">
+<p>Using the <strong>source</strong> and <strong>url</strong> columns as keys, these can recombined with the columns from the original extraction of data for future use.</p>
+</blockquote>
+</section>
+</section>
+<section id="allsides-bias-data" class="level2">
+<h2 class="anchored" data-anchor-id="allsides-bias-data">AllSides Bias Data</h2>
+<p>AllSides is a community-based political bias rating platform for media. Using web scraping, biases for the sources in the scraped data were accumulated. Pages (urls) containing information on sources were scraped and manually found, which were then in turned scraped for their specific bias ratings.</p>
+<section id="allsides-initial-data" class="level3">
+<h3 class="anchored" data-anchor-id="allsides-initial-data">AllSides Initial Data</h3>
+<p>Sample of the AllSides Data:</p>
+<div id="9f7b666c" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<table id="itables_b9c11b29_d469_4098_b5a4_e1740e2c9a30" class="display" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>source</th>
+      <th>url</th>
+      <th>Bias Numeric</th>
+      <th>Bias Specific</th>
+      <th>Type</th>
+      <th>Region</th>
+      <th>Website</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.4 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_b9c11b29_d469_4098_b5a4_e1740e2c9a30:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["BBC News", "https://www.allsides.com/news-source/bbc-news-media-bias", -0.8, "Center", "News Media", "National", "http://www.bbc.com/"], ["Check Your Fact", "https://www.allsides.com/news-source/check-your-fact-media-bias", 0.0, "Center", "Fact Check", "National", "https://checkyourfact.com/"], ["New York Magazine", "https://www.allsides.com/news-source/new-york-magazine", -4.0, "Left", "News Media", "National", "http://nymag.com/"], ["NPR (Opinion) ", "https://www.allsides.com/news-source/npr-editorial", 0.28, "Center", "News Media", "National", "https://reason.com/"], ["ABC News (Online)", "https://www.allsides.com/news-source/abc-news-media-bias", -1.42, "Lean Left", "News Media", "National", "http://abcnews.go.com/"], ["Newsmax (Opinion)", "https://www.allsides.com/news-source/newsmax-opinion-media-bias", 3.5, "Right", "News Media", "National", "https://www.newsmax.com/insiders/"], ["Newsmax (News)", "https://www.allsides.com/news-source/newsmax", 3.05, "Right", "News Media", "National", "http://www.newsmax.com/"], ["Richmond Times Dispatch", "https://www.allsides.com/news-source/richmond-times-dispatch", 2.0, "Lean Right", "News Media", "Virginia", "http://www.richmond.com/"], ["Newsweek", "https://www.allsides.com/news-source/newsweek", -0.45, "Center", "News Media", "National", "https://www.newsweek.com/"], ["Daily Mail", "https://www.allsides.com/news-source/daily-mail", -4.0, "Left", "News Media", "National", "http://www.motherjones.com/"]];
+
+        // Define the dt_args
+        let dt_args = {"columnDefs": [{"width": "120px", "targets": "_all"}], "autoWidth": false, "layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+<p><strong>Columns</strong>:</p>
+<ul>
+<li>source</li>
+<li>url</li>
+<li>Bias Numeric</li>
+<li>Bias Specific</li>
+<li>Type</li>
+<li>Region</li>
+<li>Website</li>
+</ul>
+</section>
+</section>
+<section id="cleaning-and-merging" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-and-merging">Cleaning and Merging</h2>
+<p>Thus far, raw data from an API and an array of web scraping functions has been gathered. This can now be combined together to create potential labels for the complete articles associated with the NewsAPI extraction. However, some data cleaning should be performed first.</p>
+<section id="cleaning-strategy" class="level3">
+<h3 class="anchored" data-anchor-id="cleaning-strategy">Cleaning Strategy</h3>
+<p><strong>NewsAPI Extraction</strong>:</p>
+<ul>
+<li><em>author</em>
+<ul>
+<li>duplicate authors from same article removed</li>
+<li>email addresses and links removed</li>
+<li>stripped of leading, trailing, and multiple spaces</li>
+<li>if author is None then the entry from the source column is used in place</li>
+<li>line breaks removed</li>
+</ul></li>
+<li><em>description</em>
+<ul>
+<li>text before and including delimiters removed (i.e.&nbsp;delimiter could be “Date and Location –”)</li>
+</ul></li>
+<li><em>content</em>
+<ul>
+<li>ignored in lieu of scraping the entire itself</li>
+</ul></li>
+</ul>
+<p><strong>NewsAPI Scraping Extraction</strong>:</p>
+<ul>
+<li><em>paragraph</em>
+<ul>
+<li>blank paragraphs removed</li>
+<li>non-breaking space characters removed (i.e.&nbsp;“”)</li>
+<li>stripped of leading, trailing, and multiple spaces</li>
+<li>all paragraphs of a single article combined post-cleaning</li>
+</ul></li>
+</ul>
+<p><strong>AllSides Bias Ratings</strong>: no cleaning was required for this data, however a source-to-source map was created, as some sources were not identical between NewsAPI and AllSides.</p>
+</section>
+<section id="merging-strategy" class="level3">
+<h3 class="anchored" data-anchor-id="merging-strategy">Merging Strategy</h3>
+<p>The data with the completely scraped articles still retained the columns for <em>source</em> and <em>url</em>. Using those, the cleaned extraction columns can be merged in as well as the biases.</p>
+<p>This resulted in a dataframe with the following columns:</p>
+<ul>
+<li>source</li>
+<li>url</li>
+<li>article</li>
+<li>source_bias</li>
+<li>Bias Numeric</li>
+<li>Bias Specific</li>
+<li>author</li>
+<li>date</li>
+<li>title</li>
+<li>search</li>
+</ul>
+<p>Where the text data itself will likely be <em>article</em>, but interesting analyses could be extended by using <em>description</em> or <em>title</em>.</p>
+<p>The main label of interest will be <em>Bais Specific</em>, but interesting analyses could hinge upon using <em>source</em>, <em>author</em>, <em>date</em>, or <em>search (topic query parameter)</em>.</p>
+<p>Sample of the final labeled data:</p>
+<div id="6e9e0437" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<table id="itables_eac8fe48_3be3_401d_82a0_97c87aba1f13" class="display" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>source</th>
+      <th>url</th>
+      <th>article</th>
+      <th>source_bias</th>
+      <th>Bias Numeric</th>
+      <th>Bias Specific</th>
+      <th>author</th>
+      <th>description</th>
+      <th>date</th>
+      <th>title</th>
+      <th>search</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.4 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_eac8fe48_3be3_401d_82a0_97c87aba1f13:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["The Root", "https://www.theroot.com/president-bidens-final-plan-to-help-black-student-loan-1851739349", "Student loan debt remains the highest among Black families when compared to other races. According to data from the Survey of Consumer Finances, Black borrowers face notably more student loan debt tha...", "The Root", -2.0, "Lean Left", "Candace Mcduffie", "Student loan debt remains the highest among Black families when compared to other races. According to data from the Survey of Consumer Finances, Black borrowers face notably more student loan debt than their white or Hispanic counterparts. This is why Preside\u2026", "2025-01-15T14:09:00Z", "President Biden's Final Plan To Help Black Student Loan Borrowers", "student_loan_forgiveness"], ["New York Post", "https://nypost.com/2025/02/09/us-news/house-republicans-mull-changes-to-student-loan-programs/", "As Republicans in Congress look for ways to slash spending, some legislators are floating new taxes on college scholarships, an end to student loan repayment plans and a big hike in taxes on universit...", "New York Post (News)", 2.93, "Lean Right", "New York Post", "The ideas affecting higher education are among many in circulation among House committees that are exploring ways to cover the cost of extending and expanding tax cuts passed in President Donald Trump\u2019s first term.", "2025-02-09T18:27:31Z", "House Republicans mull changes to student loan programs", "student_loans"], ["HuffPost", "https://www.huffpost.com/entry/federal-judge-temporarily-blocks-trump-administration-freeze-on-federal-grants-and-loans_n_679953b7e4b0535cbc5f7b9a", "WASHINGTON (AP) \u2014 A federal judge on Tuesday temporarily blocked a push from President Donald Trump to pause federal funding while his administration conducts an across-the-board ideological review to...", "HuffPost", -4.3, "Left", "Ap", "U.S. District Judge Loren L. AliKhan blocked the action Tuesday afternoon, minutes before it was set to go into effect. The administrative stay pauses the freeze until Monday.", "2025-01-28T22:05:38Z", "Federal Judge Temporarily Blocks Trump Administration Freeze On Federal Grants And Loans", "student_loans"], ["Slate Magazine", "https://slate.com/technology/2025/01/ivf-infertility-insurance-parenthood-debt.html", "Sign up for the Slatest to get the most insightful analysis, criticism, and advice out there, delivered to your inbox daily.\\nMia used to say she\u2019d never do in vitro fertilization. It\u2019s a detail that f...", "Slate", -1.4, "Lean Left", "Melissa Dahl", "Advances in the field have created a new problem.", "2025-01-13T10:40:00Z", "They\u2019ve Done Five Rounds of IVF. All They\u2019ve Gotten Is a Miscarriage. Is It Time to Stop?", "student_loans"], ["CBS News", "https://www.cbsnews.com/news/should-i-file-for-bankruptcy-or-debt-relief/", "If you're late on any debt payments, you're likely dealing with creditors who keep calling, interest charges that keep piling up and late fees that continue accruing. In these cases, it's not just get...", "CBS News (Online)", -1.5, "Lean Left", "Angelica Leicht", "Filing for bankruptcy could be a smart move in certain cases, but in others, debt relief could make more sense.", "2025-01-30T19:41:20Z", "Should I file for bankruptcy or debt relief?", "student_loan_forgiveness"], ["Forbes", "https://www.forbes.com/sites/truetamplin/2024/12/26/7-effective-strategies-to-help-you-avoid-new-debt-in-2025/", "Avoid new debt in 2025\\nAccording to latest data from the New York Federal Reserve, total household debt in the United States has reached $17.94 trillion. This highlights the growing financial pressure...", "Forbes", -0.5, "Center", "True Tamplin, Contributor", "According to the NY Fed, total household debt in the U.S. has ballooned to $17.94 trillion. Discover helpful tips and strategies to avoid accumulating new debt in 2025.", "2024-12-26T15:00:43Z", "7 Effective Strategies To Help You Avoid New Debt In 2025", "student_loans"], ["pymnts.com", "https://www.pymnts.com/earnings/2025/sofi-ceo-were-not-just-a-lender-anymore/", "SoFi Technologies\u2019 drive toward cementing its financial services ecosystem status continues \u2014 with gains across consumer-focused lending and direct deposits. The data also showed notable momentum in i...", "NaN", NaN, "NaN", "Pymnts", "SoFi Technologies\u2019 drive toward cementing its financial services ecosystem status continues \u2014 with gains across consumer-focused lending and direct deposits. The data also showed notable momentum in its tech platform, which is geared toward linking banks and \u2026", "2025-01-27T16:08:56Z", "SoFi CEO: \u2018We\u2019re Not Just a Lender Anymore\u2019", "student_loans"], ["The Star Online", "https://www.thestar.com.my/news/nation/2025/02/08/rm2mil-boost-for-tar-umt-student-loans", "PETALING JAYA: Tunku Abdul Rahman University of Management and Technology (TAR UMT) is receiving RM2mil in funding for its TARC-Tan Sri Khaw Kai Boh Student Loan Fund.\\nThe signing ceremony for the for...", "NaN", NaN, "NaN", "The Star Online", "PETALING JAYA: Tunku Abdul Rahman University of Manage\u00adment and Technology (TAR UMT) is receiving RM2mil in funding for its TARC-Tan Sri Khaw Kai Boh Student Loan Fund. Read full story", "2025-02-07T16:00:00Z", "RM2mil boost for TAR UMT student loans", "student_loans"], ["The Week Magazine", "https://theweek.com/personal-finance/student-loan-wage-garnishment", "When you do not make payments on your student loan debt for long enough, your loan servicer may take another route to get back the money you owe. One of these avenues is seizing your wages, also known...", "NaN", NaN, "NaN", "Becca Stanek", "Your loan servicer may seize your wages if you fail to make payments on your student debt", "2025-01-29T17:40:48Z", "Student loan wage garnishment: how it works and how you can stop it", "student_loans"], ["Reason", "https://reason.com/volokh/2025/02/02/challenge-trumps-tariffs-under-the-nondelegation-and-major-questions-doctrines/", "Yesterday, Donald Trump imposed 25% tariffs on Canadian and Mexican imports, and 10% on those from China. These actions will inflict immense costs on the US economy, raise prices for many goods, and p...", "Reason", 0.28, "Center", "Ilya Somin", "Yesterday, Donald Trump imposed 25% tariffs on Canadian and Mexican imports, and 10% on those from China. These actions will inflict immense costs on the", "2025-02-02T21:20:39Z", "Challenge Trump's Tariffs Under the Nondelegation and Major Questions Doctrines", "student_loan_forgiveness"]];
+
+        // Define the dt_args
+        let dt_args = {"columnDefs": [{"width": "120px", "targets": "_all"}], "autoWidth": false, "layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="complementary-data" class="level1">
+<h1>Complementary Data</h1>
+<p>Although many of the sources were able to matched with a political bias, a number were not.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/newsapi/bias_counts_null.png" class="img-fluid figure-img"></p>
+<figcaption>Labels Known</figcaption>
+</figure>
+</div>
+<p>Normally, missing data is either interpolated in some manner or simply removed. However, a goal of the subsequent analyses will be attempting to predict through classification techniques the political biases of articles. The missing label values will therefore be retained overall, but will be removed for training, and then found afterwards.</p>
+<p>Additionally, classification is best trained on balanced data. Currently, the data with known biases is spread across five different categories:</p>
+<ul>
+<li>Left</li>
+<li>Lean Left</li>
+<li>Center</li>
+<li>Lean Right</li>
+<li>Right</li>
+</ul>
+<p>It could, however, be combined into three labels:</p>
+<ul>
+<li>Left</li>
+<li>Center</li>
+<li>Right</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:45%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/newsapi/bias_counts_full.png" class="img-fluid figure-img"></p>
+<figcaption>Five Labels</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/newsapi/bias_counts_reduced.png" class="img-fluid figure-img"></p>
+<figcaption>Three Labels</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In either the three or five category models, more data could be beneficial. Sources labeled with political biases from the AllSides data was done for the media outlet overall. In other words, the sources should have indicators of bias regardless of topic queried. Therefore, to gather more training data, articles from the top three most frequent sources across each of the five categories was gathered following the same methodologies as above. Although it does adhere specifically to the topic of <strong>student loan forgiveness</strong>, it could be a complementary traininig source for political bias.</p>
+<blockquote class="blockquote">
+<p>Note that in the case the complementary data did have duplicate articles contained within the topic-specific data, these articles were removed.</p>
+</blockquote>
+<p>The complementary data could provide the additional spread of labels:</p>
+<div class="columns">
+<div class="column" style="width:45%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/newsapi/bias_counts_full_comp.png" class="img-fluid figure-img"></p>
+<figcaption>Complementary Five Labels</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/newsapi/bias_counts_reduced_comp.png" class="img-fluid figure-img"></p>
+<figcaption>Complementary Three Labels</figcaption>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

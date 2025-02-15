@@ -1,5 +1,205 @@
 ---
 title: "Data - NewsAPI"
+execute:
+  echo: false
 ---
 
-Data acquired from NewsAPI.
+```{python}
+# import libraries
+import pandas as pd
+from itables import show
+
+# import data
+newsapi_raw = pd.read_csv('data/newsapi_data/newsapi_raw_snippet.csv')
+scraped_raw = pd.read_csv('data/newsapi_data/scraped_raw_snippet.csv')
+allsides_raw = pd.read_csv('data/allsides_data/allsides_raw_snippet.csv')
+newsapi_clean = pd.read_csv('data/newsapi_data/newsapi_clean_snippet.csv')
+```
+
+# Introduction
+
+Part of the discussion surrounding **Student Loan Forgiveness** is reporting done by different news media organizations. These organizations generally align with a certain political bias. With the realization that those on the *left* tend to *support* at least some form of student loan relief and those on the *right* tend to *oppose* it, it could be fruitful to pair news organizations with their political biases. To achieve this, two main sources of news related data were explored:
+
+- **[NewsAPI](https://newsapi.org/)**
+- **[AllSides](https://www.allsides.com/unbiased-balanced-news)**
+
+## NewsAPI Extraction
+
+NewsAPI maintains an application programming interfacae (API) which returns information on articles published around the world. For the scope of this analysis, two search parameters were queried from the API. Articles were gathered using the specific search parameter of **student loan forgiveness**, as well as a general search parameter of **student loans**. 
+
+The data is initially returned in JSON format, which was then turned into a dataframe and subsequently exported into a `csv` file.
+
+### NewsAPI Extraction Initial Data
+
+Sample of the Raw NewsAPI Data:
+
+```{python}
+show(newsapi_raw, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
+```
+
+**Columns**:
+
+- author
+- content
+- description
+- date
+- source
+- title
+- url
+
+## NewsAPI Scraping
+
+One limitation of NewsAPI is that it doesn't return the content of an article in its entirety. To account for this, numerous web scrapers were built for sources which were both scraping-eligible and appropriate for this analysis. This did reduce the number of sources and articles in the data from NewsAPI, but did result in complete article content. A list of eligible sources and their related scrapers were iteratively called to populate a dataframe with the individual paragraphs from the url associated with the article. To specify, the initial scrape through will result in a dataframe where each paragraph from the each scrapable article will have its own row.
+
+### NewsAPI Scraped Initial Data
+
+Sample of the Raw Scraped Data:
+
+```{python}
+show(scraped_raw, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
+```
+
+**Columns**:
+
+- source
+- url
+- paragraph
+- paragraph_num
+
+> Using the **source** and **url** columns as keys, these can recombined with the columns from the original extraction of data for future use.
+
+## AllSides Bias Data
+
+AllSides is a community-based political bias rating platform for media. Using web scraping, biases for the sources in the scraped data were accumulated. Pages (urls) containing information on sources were scraped and manually found, which were then in turned scraped for their specific bias ratings.
+
+### AllSides Initial Data
+
+Sample of the AllSides Data:
+
+```{python}
+show(allsides_raw, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
+```
+
+**Columns**:
+
+- source
+- url
+- Bias Numeric
+- Bias Specific
+- Type
+- Region
+- Website
+
+## Cleaning and Merging
+
+Thus far, raw data from an API and an array of web scraping functions has been gathered. This can now be combined together to create potential labels for the complete articles associated with the NewsAPI extraction. However, some data cleaning should be performed first.
+
+### Cleaning Strategy
+
+**NewsAPI Extraction**:
+
+- *author*
+  - duplicate authors from same article removed
+  - email addresses and links removed
+  - stripped of leading, trailing, and multiple spaces
+  - if author is None then the entry from the source column is used in place
+  - line breaks removed
+- *description*
+  - text before and including delimiters removed (i.e. delimiter could be "Date and Location --")
+- *content*
+  - ignored in lieu of scraping the entire itself
+
+**NewsAPI Scraping Extraction**:
+
+- *paragraph*
+  - blank paragraphs removed
+  - non-breaking space characters removed (i.e. "\xa0")
+  - stripped of leading, trailing, and multiple spaces
+  - all paragraphs of a single article combined post-cleaning
+  
+**AllSides Bias Ratings**: no cleaning was required for this data, however a source-to-source map was created, as some sources were not identical between NewsAPI and AllSides.
+
+### Merging Strategy
+
+The data with the completely scraped articles still retained the columns for *source* and *url*. Using those, the cleaned extraction columns can be merged in as well as the biases.
+
+This resulted in a dataframe with the following columns:
+
+- source
+- url
+- article
+- source_bias
+- Bias Numeric
+- Bias Specific
+- author
+- date
+- title
+- search
+
+Where the text data itself will likely be *article*, but interesting analyses could be extended by using *description* or *title*.
+
+The main label of interest will be *Bais Specific*, but interesting analyses could hinge upon using *source*, *author*, *date*, or *search (topic query parameter)*.
+
+Sample of the final labeled data:
+
+```{python}
+show(newsapi_clean, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
+```
+
+# Complementary Data
+
+Although many of the sources were able to matched with a political bias, a number were not.
+
+![Labels Known](images/newsapi/bias_counts_null.png)
+
+Normally, missing data is either interpolated in some manner or simply removed. However, a goal of the subsequent analyses will be attempting to predict through classification techniques the political biases of articles. The missing label values will therefore be retained overall, but will be removed for training, and then found afterwards.
+
+Additionally, classification is best trained on balanced data. Currently, the data with known biases is spread across five different categories:
+
+- Left
+- Lean Left
+- Center
+- Lean Right
+- Right
+
+It could, however, be combined into three labels:
+
+- Left
+- Center
+- Right
+
+::: columns
+::: {.column width=45%}
+
+![Five Labels](images/newsapi/bias_counts_full.png)
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![Three Labels](images/newsapi/bias_counts_reduced.png)
+:::
+:::
+
+In either the three or five category models, more data could be beneficial. Sources labeled with political biases from the AllSides data was done for the media outlet overall. In other words, the sources should have indicators of bias regardless of topic queried. Therefore, to gather more training data, articles from the top three most frequent sources across each of the five categories was gathered following the same methodologies as above. Although it does adhere specifically to the topic of **student loan forgiveness**, it could be a complementary traininig source for political bias.
+
+> Note that in the case the complementary data did have duplicate articles contained within the topic-specific data, these articles were removed.
+
+The complementary data could provide the additional spread of labels:
+
+::: columns
+::: {.column width=45%}
+
+![Complementary Five Labels](images/newsapi/bias_counts_full_comp.png)
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![Complementary Three Labels](images/newsapi/bias_counts_reduced_comp.png)
+:::
+:::

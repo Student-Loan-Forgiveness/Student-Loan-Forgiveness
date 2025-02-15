@@ -1,0 +1,11 @@
+source,url,Bias Numeric,Bias Specific,Type,Region,Website
+BBC News,https://www.allsides.com/news-source/bbc-news-media-bias,-0.8,Center,News Media,National,http://www.bbc.com/
+Check Your Fact,https://www.allsides.com/news-source/check-your-fact-media-bias,0.0,Center,Fact Check,National,https://checkyourfact.com/
+New York Magazine,https://www.allsides.com/news-source/new-york-magazine,-4.0,Left,News Media,National,http://nymag.com/
+NPR (Opinion) ,https://www.allsides.com/news-source/npr-editorial,0.28,Center,News Media,National,https://reason.com/
+ABC News (Online),https://www.allsides.com/news-source/abc-news-media-bias,-1.42,Lean Left,News Media,National,http://abcnews.go.com/
+Newsmax (Opinion),https://www.allsides.com/news-source/newsmax-opinion-media-bias,3.5,Right,News Media,National,https://www.newsmax.com/insiders/
+Newsmax (News),https://www.allsides.com/news-source/newsmax,3.05,Right,News Media,National,http://www.newsmax.com/
+Richmond Times Dispatch,https://www.allsides.com/news-source/richmond-times-dispatch,2.0,Lean Right,News Media,Virginia,http://www.richmond.com/
+Newsweek,https://www.allsides.com/news-source/newsweek,-0.45,Center,News Media,National,https://www.newsweek.com/
+Daily Mail,https://www.allsides.com/news-source/daily-mail,-4.0,Left,News Media,National,http://www.motherjones.com/
