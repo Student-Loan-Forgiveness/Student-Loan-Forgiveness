@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data - Reddit – Student Loan Forgiveness</title>
+<title>Data Acquisition - Reddit – Student Loan Forgiveness</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -67,6 +67,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -94,10 +97,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Introduction</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Data</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-acquisition" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Data Acquisition</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-data">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-acquisition">    
         <li>
     <a class="dropdown-item" href="./data_newsapi.html">
  <span class="dropdown-text">NewsAPI</span></a>
@@ -126,15 +129,26 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#gathering-the-data" id="toc-gathering-the-data" class="nav-link" data-scroll-target="#gathering-the-data">Gathering the Data</a></li>
+  <li><a href="#cleaning-and-restructuring" id="toc-cleaning-and-restructuring" class="nav-link" data-scroll-target="#cleaning-and-restructuring">Cleaning and Restructuring</a></li>
+  </ul></li>
+  <li><a href="#future-processing-and-potential-labels" id="toc-future-processing-and-potential-labels" class="nav-link" data-scroll-target="#future-processing-and-potential-labels">Future Processing and Potential Labels</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Data - Reddit</h1>
+<h1 class="title">Data Acquisition - Reddit</h1>
 </div>
 
 
@@ -151,9 +165,270 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Data acquired from Reddit.</p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Aside from reporting done by news media organizations, <strong>Student Loan Forgiveness</strong> is a toipc on social media and public discussion platforms such as Reddit. Reddit consists of communities known as Subreddits, where users can participate in topic specific online discourse. Although some users choose to tag their accounts with political bias leanings such as <em>liberal</em> or <em>conservative</em> which could help determine sentiment on the certain topics, this isn’t prevalent enough to use as a proper label. However, different sentiments and biases could be found for individual users and Subreddits. Additionally, interesting associations and networks could be formed between the users and communities.</p>
+<section id="gathering-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="gathering-the-data">Gathering the Data</h2>
+<p>To obtain the data from Reddit, web scraping and an API was utilized. A web scraping function was built which mimics a general search within the Reddit platform and returns the URLs for threads on a given search query. The URLs were then be iterated through with the API, which returned the posts, comments, replies, and other supporting information.</p>
+<p>Three search queries were made:</p>
+<ul>
+<li>Student Loan Forgiveness</li>
+<li>Student Loans</li>
+<li>Is a College Degree Worth It</li>
+</ul>
+<p>Specific objects and tags were created with API calls, and ultimately returned as a dataframe.</p>
+<p>Sample of the Raw Reddit Data:</p>
+<div id="38840090" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<table id="itables_b78592d4_512e_4939_840b_34f143ebd179" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>url</th>
+      <th>title</th>
+      <th>original</th>
+      <th>self</th>
+      <th>post_date</th>
+      <th>comments</th>
+      <th>author</th>
+      <th>id</th>
+      <th>upvotes</th>
+      <th>content</th>
+      <th>comment_date</th>
+      <th>replying_to</th>
+      <th>subreddit</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.4 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_b78592d4_512e_4939_840b_34f143ebd179:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["https://www.reddit.com/r/StudentLoans/comments/1gkzv9y/trump_elected_president_impact_on_student_loan/", "Trump Elected President -- Impact on Student Loan Policy Megathread", 0.0, 1.0, "2024-11-06 19:58:39", 2.0, "SD-777", "lw31w82", 6.0, "It's insane how \"fear-mongering\" quickly turned into reality.  Best case scenario at this point is for the IDR adjustment to be finished by the end of the year and a switch back to IBR.  My loans were...", "2024-11-06 19:58:39", "t1_lvrspsd", "StudentLoans"], ["https://www.reddit.com/r/FluentInFinance/comments/1dzxfq2/boom_student_loan_forgiveness/", "Boom!  Student loan forgiveness!", 0.0, 0.0, "2024-07-10 16:01:20", 0.0, "Crush-N-It", "lcmn6wz", 2.0, "Are Sallie Mae and Feddy Mac loans from a private or the federal govt", "2024-07-10 16:01:20", "t1_lclg1g9", "FluentInFinance"], ["https://www.reddit.com/r/news/comments/1g5vjrn/biden_has_approved_175_billion_in_student_loan/", "Biden has approved $175 billion in student loan forgiveness for nearly 5 million people", 0.0, 0.0, "2024-10-17 23:39:14", 0.0, "arbutus1440", "lsg2am7", 3.0, "Conservatism is just greed with extra steps.\\n\\nThere are pretty big extra steps: organized religion, unquestioning loyalty, resistance to change, xenophobia...but they all lead back to the same place.", "2024-10-17 23:39:14", "t1_lsefx62", "news"], ["https://www.reddit.com/r/StudentLoans/comments/18sa119/your_federal_student_loan_has_been_forgiven/", "\"Your Federal Student Loan Has Been Forgiven\"", 0.0, 1.0, "2023-12-28 01:15:15", 0.0, "SeaRevolutionary8569", "kf80zeb", 15.0, "Also this:  https://www.nbcnews.com/think/opinion/betsy-devos-refusal-honor-student-loan-forgiveness-shows-her-disrespect-ncna1234074", "2023-12-28 01:15:15", "t1_kf7gnrl", "StudentLoans"], ["https://www.reddit.com/r/StudentLoans/comments/1gf0ugt/have_you_lost_hope_on_loan_forgiveness/", "Have you lost hope on loan forgiveness?", 0.0, 1.0, "2024-10-30 03:13:37", 0.0, "Embarrassed-Pen-2360", "lugri7t", 1.0, "I never believed it tbh", "2024-10-30 03:13:37", "t3_1gf0ugt", "StudentLoans"]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="cleaning-and-restructuring" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-and-restructuring">Cleaning and Restructuring</h2>
+<p>The main cleaning that was required was for the content; posts, comments, and replies. The following processing occurred:</p>
+<ul>
+<li>If the first post on a thread returned blank, this likely indicated a link to an outside source. In this case, the title was used as the content.</li>
+<li>Values within the content strings such as line breaks and reply indicators were removed.</li>
+<li>Email addresses and links were removed.</li>
+<li>Emojis and other non-ASCII characters were removed.</li>
+<li>Duplicate posts were common and were removed.</li>
+</ul>
+<blockquote class="blockquote">
+<p>This initial cleaning step still left the individual posts, comments, or replies as rows themselves.</p>
+</blockquote>
+<p>Given that quite a few rows of content could be a few words, or even a single word reply, the idea for the next processing step was to have content from each author for each thread aggregated together. Additionally, author maps were created to track who communications were between. For each thread, the following restructuring was performed for a given author:</p>
+<ul>
+<li>Lists:
+<ul>
+<li>Upvotes (can be positive or negative)</li>
+<li>Posting Dates</li>
+<li>Content (posts, comments, and replies)</li>
+<li>Replies To (who the author has replied to)</li>
+<li>Replies From (who responded to the author)</li>
+</ul></li>
+<li>Values for Specific Threads:
+<ul>
+<li>URL</li>
+<li>Title</li>
+<li>Subreddit</li>
+<li>Author (Reddit username)</li>
+<li>Original Author (boolean for if the author started the thread - made the original post)</li>
+</ul></li>
+</ul>
+<p>A sample of the restructured Reddit data:</p>
+<div id="b9a94b18" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<table id="itables_720762c3_bd3f_4a04_827e_7cce3bbf44ed" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>url</th>
+      <th>title</th>
+      <th>subreddit</th>
+      <th>author</th>
+      <th>original_author</th>
+      <th>author_upvotes</th>
+      <th>author_dates</th>
+      <th>author_content</th>
+      <th>author_content_aggregated</th>
+      <th>replies_to</th>
+      <th>replies_from</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.4 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_720762c3_bd3f_4a04_827e_7cce3bbf44ed:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["https://www.reddit.com/r/politics/comments/1e683sj/president_biden_forgives_12_billion_in_student/", "President Biden Forgives $1.2 Billion in Student Loans in Latest Relief", "politics", "theavengerbutton", false, "[4.0]", "['2024-07-18 12:00:23']", "['...your winnings, sir.']", "...your winnings, sir.", "['bartnet']", "[]"], ["https://www.reddit.com/r/unusual_whales/comments/1hks78a/breaking_biden_administration_has_officially/", "BREAKING: Biden administration has officially withdrawn student loan forgiveness plans, per CNBC.", "unusual_whales", "RampantTyr", false, "[2.0]", "['2024-12-23 18:46:46']", "[\"If only the supreme court didn't illegally block student loan forgiveness earlier in his presidency we wouldn't have to worry about this bs. I fault Biden for many things, but student loan forgivene...", "If only the supreme court didn't illegally block student loan forgiveness earlier in his presidency we wouldn't have to worry about this bs. I fault Biden for many things, but student loan forgiveness...", "['soccerorfootie']", "[]"], ["https://www.reddit.com/r/politics/comments/1hyg6mr/gop_pushes_bill_to_stop_student_loan_forgiveness/", "GOP Pushes Bill to Stop Student Loan Forgiveness Ever Happening Again", "politics", "a_rabid_buffalo", false, "[2.0]", "['2025-01-11 01:03:51']", "['Did you forget the /s ?']", "Did you forget the /s ?", "[]", "[]"], ["https://www.reddit.com/r/Law_and_Politics/comments/1djqldo/trump_calls_bidens_student_loan_forgiveness_a/", "Trump calls Biden's student loan forgiveness a 'vile' publicity stunt and vows to force all borrowers to repay the balance in full", "Law_and_Politics", "shallowhuskofaperson", false, "[2.0]", "['2024-06-20 23:38:49']", "[\"It's like he's trying to lose every vote he can among large groups of people who consistently vote.\"]", "It's like he's trying to lose every vote he can among large groups of people who consistently vote.", "['wenchette']", "[]"], ["https://www.reddit.com/r/news/comments/1g5vjrn/biden_has_approved_175_billion_in_student_loan/", "Biden has approved $175 billion in student loan forgiveness for nearly 5 million people", "news", "HyruleSmash855", false, "[21.0, 9.0, 2.0]", "['2024-10-17 17:20:16', '2024-10-17 18:32:39', '2024-10-17 18:12:30']", "[\"To be fair in this specific case, Biden has been focused on cutting through the red tape that is prevented people who worked in the public service from getting their loans forgiven, which is a perk ...", "To be fair in this specific case, Biden has been focused on cutting through the red tape that is prevented people who worked in the public service from getting their loans forgiven, which is a perk of...", "['s9oons', 'yeahgoestheusername', 'Not__FBI_']", "['Rougeflashbang']"]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+</section>
+<section id="future-processing-and-potential-labels" class="level1">
+<h1>Future Processing and Potential Labels</h1>
+<p>Similar to how content can be aggregated for each author per thread, a similar process can be done for an entire thread, an entire subreddit, or even aggregated for authors across mutliple threads.</p>
+<p>Following this concept, potential labels could be search query, author, subreddit, or even popularity or approval of community by upvotes. Additionally, association rule mining could be used to identify interactions between users and communities.</p>
+<p>In relation to the two core views of <em>supports</em> and <em>does not support</em> <strong>student loan forgiveness</strong>, the NewsAPI politcal bias classification models could potentially be used to interpolate political bias for authors and Subreddits. Thus, author and Subreddit sentiment towards the topic could overall be interpolated.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

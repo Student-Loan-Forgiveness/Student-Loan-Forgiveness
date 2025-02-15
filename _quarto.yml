@@ -13,7 +13,7 @@ website:
     left:
       - href: index.qmd
         text: "Introduction"
-      - text: "Data"
+      - text: "Data Acquisition"
         menu:
           - text: "NewsAPI"
             href: data_newsapi.qmd

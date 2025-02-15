@@ -1,5 +1,5 @@
 ---
-title: "Data - NewsAPI"
+title: "Data Acquisition - NewsAPI"
 execute:
   echo: false
 ---
@@ -36,7 +36,7 @@ The data is initially returned in JSON format, which was then turned into a data
 Sample of the Raw NewsAPI Data:
 
 ```{python}
-show(newsapi_raw.head(5), columnDefs=[{"width": "25%", "targets": [1, 2]}], autoWidth=False, classes="display", style="width:100%;margin:auto")
+show(newsapi_raw.head(5), style="width:100%;margin:auto")
 ```
 
 **Columns**:
@@ -58,7 +58,7 @@ One limitation of NewsAPI is that it doesn't return the content of an article in
 Sample of the Raw Scraped Data:
 
 ```{python}
-show(scraped_raw.head(5), columnDefs=[{"width": "25%", "targets": [1, 2]}], autoWidth=False, classes="display", style="width:100%;margin:auto")
+show(scraped_raw.head(5), style="width:100%;margin:auto")
 ```
 
 **Columns**:
@@ -145,14 +145,12 @@ The main label of interest will be *Bais Specific*, but interesting analyses cou
 Sample of the final labeled data:
 
 ```{python}
-show(newsapi_clean.head(5), columnDefs=[{"width": "200px", "targets": [1, 2, 7]}], autoWidth=False, classes="display", style="width:100%;margin:auto")
+show(newsapi_clean.head(5), style="width:100%;margin:auto")
 ```
 
 # Complementary Data
 
 Although many of the sources were able to matched with a political bias, a number were not.
-
-![Labels Known](images/newsapi/bias_counts_null.png)
 
 Normally, missing data is either interpolated in some manner or simply removed. However, a goal of the subsequent analyses will be attempting to predict through classification techniques the political biases of articles. The missing label values will therefore be retained overall, but will be removed for training, and then found afterwards.
 
@@ -171,17 +169,25 @@ It could, however, be combined into three labels:
 - Right
 
 ::: columns
-::: {.column width=45%}
+::: {.column width=30%}
 
-![Five Labels](images/newsapi/bias_counts_full.png)
+![](images/newsapi/bias_counts_full.png)
 :::
 
-::: {.column width=10%}
+::: {.column width=5%}
 :::
 
-::: {.column width=45%}
+::: {.column width=30%}
 
-![Three Labels](images/newsapi/bias_counts_reduced.png)
+![](images/newsapi/bias_counts_reduced.png)
+:::
+
+::: {.column width=5%}
+:::
+
+::: {.column width=30%}
+
+![](images/newsapi/bias_counts_null.png)
 :::
 :::
 
@@ -194,7 +200,7 @@ The complementary data could provide the additional spread of labels:
 ::: columns
 ::: {.column width=45%}
 
-![Complementary Five Labels](images/newsapi/bias_counts_full_comp.png)
+![](images/newsapi/bias_counts_full_comp.png)
 :::
 
 ::: {.column width=10%}
@@ -202,6 +208,6 @@ The complementary data could provide the additional spread of labels:
 
 ::: {.column width=45%}
 
-![Complementary Three Labels](images/newsapi/bias_counts_reduced_comp.png)
+![](images/newsapi/bias_counts_reduced_comp.png)
 :::
 :::

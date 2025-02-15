@@ -1,5 +1,80 @@
 ---
-title: "Data - Reddit"
+title: "Data Acquisition - Reddit"
+execute:
+  echo: false
 ---
 
-Data acquired from Reddit.
+```{python}
+# import libraries
+import pandas as pd
+from itables import show
+
+# import data
+reddit_raw = pd.read_csv('data/reddit_data/reddit_raw_snippet.csv')
+reddit_structured = pd.read_csv('data/reddit_data/reddit_clean_snippet.csv')
+
+#show(newsapi_raw, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
+```
+
+# Introduction
+
+Aside from reporting done by news media organizations, **Student Loan Forgiveness** is a toipc on social media and public discussion platforms such as Reddit. Reddit consists of communities known as Subreddits, where users can participate in topic specific online discourse. Although some users choose to tag their accounts with political bias leanings such as *liberal* or *conservative* which could help determine sentiment on the certain topics, this isn't prevalent enough to use as a proper label. However, different sentiments and biases could be found for individual users and Subreddits. Additionally, interesting associations and networks could be formed between the users and communities.
+
+## Gathering the Data
+
+To obtain the data from Reddit, web scraping and an API was utilized. A web scraping function was built which mimics a general search within the Reddit platform and returns the URLs for threads on a given search query. The URLs were then be iterated through with the API, which returned the posts, comments, replies, and other supporting information.
+
+Three search queries were made:
+
+- Student Loan Forgiveness
+- Student Loans
+- Is a College Degree Worth It
+
+Specific objects and tags were created with API calls, and ultimately returned as a dataframe.
+
+Sample of the Raw Reddit Data:
+
+```{python}
+show(reddit_raw.head(5), style="width:100%;margin:auto")
+```
+
+## Cleaning and Restructuring
+
+The main cleaning that was required was for the content; posts, comments, and replies. The following processing occurred:
+
+- If the first post on a thread returned blank, this likely indicated a link to an outside source. In this case, the title was used as the content.
+- Values within the content strings such as line breaks and reply indicators were removed.
+- Email addresses and links were removed.
+- Emojis and other non-ASCII characters were removed.
+- Duplicate posts were common and were removed.
+
+> This initial cleaning step still left the individual posts, comments, or replies as rows themselves.
+
+Given that quite a few rows of content could be a few words, or even a single word reply, the idea for the next processing step was to have content from each author for each thread aggregated together. Additionally, author maps were created to track who communications were between. For each thread, the following restructuring was performed for a given author:
+
+- Lists:
+  - Upvotes (can be positive or negative)
+  - Posting Dates
+  - Content (posts, comments, and replies)
+  - Replies To (who the author has replied to)
+  - Replies From (who responded to the author)
+- Values for Specific Threads:
+  - URL
+  - Title
+  - Subreddit
+  - Author (Reddit username)
+  - Original Author (boolean for if the author started the thread - made the original post)
+
+A sample of the restructured Reddit data:
+
+```{python}
+show(reddit_structured.head(5), style="width:100%;margin:auto")
+```
+
+# Future Processing and Potential Labels
+
+Similar to how content can be aggregated for each author per thread, a similar process can be done for an entire thread, an entire subreddit, or even aggregated for authors across mutliple threads.
+
+Following this concept, potential labels could be search query, author, subreddit, or even popularity or approval of community by upvotes. Additionally, association rule mining could be used to identify interactions between users and communities.
+
+In relation to the two core views of *supports* and *does not support* **student loan forgiveness**, the NewsAPI politcal bias classification models could potentially be used to interpolate political bias for authors and Subreddits. Thus, author and Subreddit sentiment towards the topic could overall be interpolated.

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data - NewsAPI – Student Loan Forgiveness</title>
+<title>Data Acquisition - NewsAPI – Student Loan Forgiveness</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -97,10 +97,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Introduction</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Data</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-acquisition" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Data Acquisition</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-data">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-acquisition">    
         <li>
     <a class="dropdown-item" href="./data_newsapi.html">
  <span class="dropdown-text">NewsAPI</span></a>
@@ -163,7 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Data - NewsAPI</h1>
+<h1 class="title">Data Acquisition - NewsAPI</h1>
 </div>
 
 
@@ -194,9 +194,9 @@ ul.task-list li input[type="checkbox"] {
 <section id="newsapi-extraction-initial-data" class="level3">
 <h3 class="anchored" data-anchor-id="newsapi-extraction-initial-data">NewsAPI Extraction Initial Data</h3>
 <p>Sample of the Raw NewsAPI Data:</p>
-<div id="4812aa51" class="cell" data-execution_count="2">
+<div id="90b18025" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_f5fe4fba_0c90_4bba_bf2c_43e97cc6f924" class="display" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_10c340e3_9125_4718_b4a3_5aae937cae09" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -275,7 +275,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_f5fe4fba_0c90_4bba_bf2c_43e97cc6f924:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_10c340e3_9125_4718_b4a3_5aae937cae09:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -283,7 +283,7 @@ Loading ITables v2.2.4 from the internet...
         const data = [["AP :: Setopati", "A federal judge on Tuesday temporarily blocked a push from President Donald Trump to pause federal funding while his administration conducts an across-the-board ideological review to uproot progressi\u2026 [+8039 chars]", "A federal judge on Tuesday temporarily blocked a push from President Donald Trump to pause federal funding while his administration conducts an across-the-board ideological review to uproot progressive initiatives.", "2025-01-29T09:30:01Z", "Setopati.com", "Federal judge temporarily blocks Trump administration freeze on federal grants and loans", "https://en.setopati.com/International/164233"], ["Chris Pandolfo", "Join Fox News for access to this content\\r\\nYou have reached your maximum number of articles. Log in or create an account FREE of charge to continue reading.\\r\\nBy entering your email and pushing continu\u2026 [+4852 chars]", "Senate Democrats announced they would coordinate with blue state governors to fight back against Trump's federal funding freeze, which could hold up trillions of dollars in assistance.", "2025-01-29T19:27:19Z", "Fox News", "Democrats coordinate multi-state response to Trump's funding freeze", "https://www.foxnews.com/politics/democrats-coordinate-multi-state-response-trumps-funding-freeze"], ["Newswire Editor", "\"Another giant Trump tax giveaway to price gouging corporations won't lift up working people, but it will put Social Security and Medicare at risk,\" Carrk continued. \"A national Trump sales tax won't\u2026 [+4386 chars]", "Last night, the White House Office of Management and Budget ordered\\r\\n a halt to all federal grants and loan disbursement. Groundwork Collaborative Senior Fellow Kitty Richards reacted with the following statement: \u201cThis blatantly illegal and authoritarian act\u2026", "2025-01-28T15:57:51Z", "Common Dreams", "Groundwork\u2019s Kitty Richards on OMB Freeze: \u201cA shocking power grab\u201d", "https://www.commondreams.org/newswire/groundworks-kitty-richards-on-omb-freeze-a-shocking-power-grab"], ["CHRIS MEGERIAN Associated Press", "WASHINGTON A federal judge temporarily blocked a Trump administration freeze on federal grants and loans that could total trillions of dollars.\\r\\nThe White House had planned to pause federal grants an\u2026 [+4998 chars]", "The White House had planned the pause as President Donald Trump's administration begins an ideological review of spending.", "2025-01-28T22:15:00Z", "Roanoke Times", "Federal judge temporarily blocks Trump administration freeze on federal grants and loans", "https://roanoke.com/news/nation-world/government-politics/donald-trump-federal-aid-loans-grants-pause/article_e11e588e-57f4-5f5e-a46d-fcc84f1a7e11.html"], ["Ilya Somin", "(NA)\\r\\nYesterday, Donald Trump imposed 25% tariffs on Canadian and Mexican imports, and 10% on those from China. These actions will inflict immense costs on the US economy, raise prices for many goods\u2026 [+5475 chars]", "Yesterday, Donald Trump imposed 25% tariffs on Canadian and Mexican imports, and 10% on those from China. These actions will inflict immense costs on the", "2025-02-02T21:20:39Z", "Reason", "Challenge Trump's Tariffs Under the Nondelegation and Major Questions Doctrines", "https://reason.com/volokh/2025/02/02/challenge-trumps-tariffs-under-the-nondelegation-and-major-questions-doctrines/"]];
 
         // Define the dt_args
-        let dt_args = {"columnDefs": [{"width": "25%", "targets": [1, 2]}], "autoWidth": false, "layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
         dt_args["data"] = data;
 
         
@@ -310,9 +310,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="newsapi-scraped-initial-data" class="level3">
 <h3 class="anchored" data-anchor-id="newsapi-scraped-initial-data">NewsAPI Scraped Initial Data</h3>
 <p>Sample of the Raw Scraped Data:</p>
-<div id="e1dabf16" class="cell" data-execution_count="3">
+<div id="75070bca" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_1e194324_11c9_49b5_b83f_998c5373a4bd" class="display" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_c85e2b61_cc80_4fec_8c9d_2d1f7a6b88e0" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -388,7 +388,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_1e194324_11c9_49b5_b83f_998c5373a4bd:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_c85e2b61_cc80_4fec_8c9d_2d1f7a6b88e0:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -396,7 +396,7 @@ Loading ITables v2.2.4 from the internet...
         const data = [["Catholicnewsagency.com", "https://www.catholicnewsagency.com/news/261659/what-would-happen-if-the-department-of-education-closed-under-trump", "Reestablished under President Jimmy Carter in 1978 to collect data, the Department of Education now manages funding for various programs for elementary and secondary students as well as federal studen...", 4], ["Richmond.com", "https://richmond.com/news/nation-world/education/higher-education-college-student-loan-debt-financial-aid/article_00061eaf-5c4b-5488-a56c-6356ff5263c0.html", "- Acceptance rate: 45%", 387], ["CNET", "https://www.cnet.com/personal-finance/loans/the-2025-26-fafsa-is-open-experts-say-not-to-wait-to-apply-for-financial-aid-for-school/", "Before you hit submit, review everything to ensure all your answers are correct. Errors could result in delays, which could impact your financial aid awards.\u00a0", 31], ["LADbible", "https://www.ladbible.com/news/uk-news/martin-lewis-student-loans-2025-change-155697-20241231", "Loads of people have recently been claiming money back due to having overpaid on their repayments.", 9], ["BusinessLine", "https://www.thehindubusinessline.com/markets/stock-market-highlights-1-february-2025/article69164334.ece", " \u2022 Shipping Corp Ltd", 652]];
 
         // Define the dt_args
-        let dt_args = {"columnDefs": [{"width": "25%", "targets": [1, 2]}], "autoWidth": false, "layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
         dt_args["data"] = data;
 
         
@@ -423,9 +423,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="allsides-initial-data" class="level3">
 <h3 class="anchored" data-anchor-id="allsides-initial-data">AllSides Initial Data</h3>
 <p>Sample of the AllSides Data:</p>
-<div id="f82ddf45" class="cell" data-execution_count="4">
+<div id="312c6572" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<table id="itables_aeb071b0_baca_4e60_8781_16b6fb43e114" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_cb88448c_0a9c_4e5c_affb_73ed5c67a0bb" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -504,7 +504,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_aeb071b0_baca_4e60_8781_16b6fb43e114:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_cb88448c_0a9c_4e5c_affb_73ed5c67a0bb:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -588,9 +588,9 @@ Loading ITables v2.2.4 from the internet...
 <p>Where the text data itself will likely be <em>article</em>, but interesting analyses could be extended by using <em>description</em> or <em>title</em>.</p>
 <p>The main label of interest will be <em>Bais Specific</em>, but interesting analyses could hinge upon using <em>source</em>, <em>author</em>, <em>date</em>, or <em>search (topic query parameter)</em>.</p>
 <p>Sample of the final labeled data:</p>
-<div id="348aae1d" class="cell" data-execution_count="5">
+<div id="de3ae700" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
-<table id="itables_76b68b5f_ad50_4ce2_b5b1_88b42687e2f9" class="display" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_73bc4cc5_0c4f_46a7_a8f2_09dd1bec068e" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -673,7 +673,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_76b68b5f_ad50_4ce2_b5b1_88b42687e2f9:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_73bc4cc5_0c4f_46a7_a8f2_09dd1bec068e:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -681,7 +681,7 @@ Loading ITables v2.2.4 from the internet...
         const data = [["The Root", "https://www.theroot.com/president-bidens-final-plan-to-help-black-student-loan-1851739349", "Student loan debt remains the highest among Black families when compared to other races. According to data from the Survey of Consumer Finances, Black borrowers face notably more student loan debt tha...", "The Root", -2.0, "Lean Left", "Candace Mcduffie", "Student loan debt remains the highest among Black families when compared to other races. According to data from the Survey of Consumer Finances, Black borrowers face notably more student loan debt than their white or Hispanic counterparts. This is why Preside\u2026", "2025-01-15T14:09:00Z", "President Biden's Final Plan To Help Black Student Loan Borrowers", "student_loan_forgiveness"], ["New York Post", "https://nypost.com/2025/02/09/us-news/house-republicans-mull-changes-to-student-loan-programs/", "As Republicans in Congress look for ways to slash spending, some legislators are floating new taxes on college scholarships, an end to student loan repayment plans and a big hike in taxes on universit...", "New York Post (News)", 2.93, "Lean Right", "New York Post", "The ideas affecting higher education are among many in circulation among House committees that are exploring ways to cover the cost of extending and expanding tax cuts passed in President Donald Trump\u2019s first term.", "2025-02-09T18:27:31Z", "House Republicans mull changes to student loan programs", "student_loans"], ["HuffPost", "https://www.huffpost.com/entry/federal-judge-temporarily-blocks-trump-administration-freeze-on-federal-grants-and-loans_n_679953b7e4b0535cbc5f7b9a", "WASHINGTON (AP) \u2014 A federal judge on Tuesday temporarily blocked a push from President Donald Trump to pause federal funding while his administration conducts an across-the-board ideological review to...", "HuffPost", -4.3, "Left", "Ap", "U.S. District Judge Loren L. AliKhan blocked the action Tuesday afternoon, minutes before it was set to go into effect. The administrative stay pauses the freeze until Monday.", "2025-01-28T22:05:38Z", "Federal Judge Temporarily Blocks Trump Administration Freeze On Federal Grants And Loans", "student_loans"], ["Slate Magazine", "https://slate.com/technology/2025/01/ivf-infertility-insurance-parenthood-debt.html", "Sign up for the Slatest to get the most insightful analysis, criticism, and advice out there, delivered to your inbox daily.\\nMia used to say she\u2019d never do in vitro fertilization. It\u2019s a detail that f...", "Slate", -1.4, "Lean Left", "Melissa Dahl", "Advances in the field have created a new problem.", "2025-01-13T10:40:00Z", "They\u2019ve Done Five Rounds of IVF. All They\u2019ve Gotten Is a Miscarriage. Is It Time to Stop?", "student_loans"], ["CBS News", "https://www.cbsnews.com/news/should-i-file-for-bankruptcy-or-debt-relief/", "If you're late on any debt payments, you're likely dealing with creditors who keep calling, interest charges that keep piling up and late fees that continue accruing. In these cases, it's not just get...", "CBS News (Online)", -1.5, "Lean Left", "Angelica Leicht", "Filing for bankruptcy could be a smart move in certain cases, but in others, debt relief could make more sense.", "2025-01-30T19:41:20Z", "Should I file for bankruptcy or debt relief?", "student_loan_forgiveness"]];
 
         // Define the dt_args
-        let dt_args = {"columnDefs": [{"width": "200px", "targets": [1, 2, 7]}], "autoWidth": false, "layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
         dt_args["data"] = data;
 
         
@@ -696,12 +696,6 @@ Loading ITables v2.2.4 from the internet...
 <section id="complementary-data" class="level1">
 <h1>Complementary Data</h1>
 <p>Although many of the sources were able to matched with a political bias, a number were not.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/newsapi/bias_counts_null.png" class="img-fluid figure-img"></p>
-<figcaption>Labels Known</figcaption>
-</figure>
-</div>
 <p>Normally, missing data is either interpolated in some manner or simply removed. However, a goal of the subsequent analyses will be attempting to predict through classification techniques the political biases of articles. The missing label values will therefore be retained overall, but will be removed for training, and then found afterwards.</p>
 <p>Additionally, classification is best trained on balanced data. Currently, the data with known biases is spread across five different categories:</p>
 <ul>
@@ -718,22 +712,16 @@ Loading ITables v2.2.4 from the internet...
 <li>Right</li>
 </ul>
 <div class="columns">
-<div class="column" style="width:45%;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/newsapi/bias_counts_full.png" class="img-fluid figure-img"></p>
-<figcaption>Five Labels</figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:10%;">
+<div class="column" style="width:30%;">
+<p><img src="images/newsapi/bias_counts_full.png" class="img-fluid"></p>
+</div><div class="column" style="width:5%;">
 
-</div><div class="column" style="width:45%;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/newsapi/bias_counts_reduced.png" class="img-fluid figure-img"></p>
-<figcaption>Three Labels</figcaption>
-</figure>
-</div>
+</div><div class="column" style="width:30%;">
+<p><img src="images/newsapi/bias_counts_reduced.png" class="img-fluid"></p>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:30%;">
+<p><img src="images/newsapi/bias_counts_null.png" class="img-fluid"></p>
 </div>
 </div>
 <p>In either the three or five category models, more data could be beneficial. Sources labeled with political biases from the AllSides data was done for the media outlet overall. In other words, the sources should have indicators of bias regardless of topic queried. Therefore, to gather more training data, articles from the top three most frequent sources across each of the five categories was gathered following the same methodologies as above. Although it does adhere specifically to the topic of <strong>student loan forgiveness</strong>, it could be a complementary traininig source for political bias.</p>
@@ -743,21 +731,11 @@ Loading ITables v2.2.4 from the internet...
 <p>The complementary data could provide the additional spread of labels:</p>
 <div class="columns">
 <div class="column" style="width:45%;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/newsapi/bias_counts_full_comp.png" class="img-fluid figure-img"></p>
-<figcaption>Complementary Five Labels</figcaption>
-</figure>
-</div>
+<p><img src="images/newsapi/bias_counts_full_comp.png" class="img-fluid"></p>
 </div><div class="column" style="width:10%;">
 
 </div><div class="column" style="width:45%;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/newsapi/bias_counts_reduced_comp.png" class="img-fluid figure-img"></p>
-<figcaption>Complementary Three Labels</figcaption>
-</figure>
-</div>
+<p><img src="images/newsapi/bias_counts_reduced_comp.png" class="img-fluid"></p>
 </div>
 </div>
 
