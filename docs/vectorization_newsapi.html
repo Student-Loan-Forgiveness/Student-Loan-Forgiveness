@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About – Student Loan Forgiveness</title>
+<title>Vectorization - NewsAPI – Student Loan Forgiveness</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,44 +20,10 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -101,6 +67,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -175,15 +144,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#strategy---further-preprocessing" id="toc-strategy---further-preprocessing" class="nav-link" data-scroll-target="#strategy---further-preprocessing">Strategy - Further Preprocessing</a></li>
+  <li><a href="#strategy---vectorizing" id="toc-strategy---vectorizing" class="nav-link" data-scroll-target="#strategy---vectorizing">Strategy - Vectorizing</a></li>
+  <li><a href="#vectorizing---overall" id="toc-vectorizing---overall" class="nav-link" data-scroll-target="#vectorizing---overall">Vectorizing - Overall</a>
+  <ul class="collapse">
+  <li><a href="#countvectorizer---200-words" id="toc-countvectorizer---200-words" class="nav-link" data-scroll-target="#countvectorizer---200-words">CountVectorizer - 200 Words</a></li>
+  <li><a href="#tfidfvectorizer---200-words" id="toc-tfidfvectorizer---200-words" class="nav-link" data-scroll-target="#tfidfvectorizer---200-words">TfidfVectorizer - 200 Words</a></li>
+  </ul></li>
+  <li><a href="#vectorizing---overall-lemmatized" id="toc-vectorizing---overall-lemmatized" class="nav-link" data-scroll-target="#vectorizing---overall-lemmatized">Vectorizing - Overall Lemmatized</a>
+  <ul class="collapse">
+  <li><a href="#countvectorizer---200-words-1" id="toc-countvectorizer---200-words-1" class="nav-link" data-scroll-target="#countvectorizer---200-words-1">CountVectorizer - 200 Words</a></li>
+  <li><a href="#tfidfvectorizer---200-words-1" id="toc-tfidfvectorizer---200-words-1" class="nav-link" data-scroll-target="#tfidfvectorizer---200-words-1">TfidfVectorizer - 200 Words</a></li>
+  </ul></li>
+  <li><a href="#vectorizing---overall-stemmatized" id="toc-vectorizing---overall-stemmatized" class="nav-link" data-scroll-target="#vectorizing---overall-stemmatized">Vectorizing - Overall Stemmatized</a>
+  <ul class="collapse">
+  <li><a href="#countvectorizer---200-words-2" id="toc-countvectorizer---200-words-2" class="nav-link" data-scroll-target="#countvectorizer---200-words-2">CountVectorizer - 200 Words</a></li>
+  <li><a href="#tfidfvectorizer---200-words-2" id="toc-tfidfvectorizer---200-words-2" class="nav-link" data-scroll-target="#tfidfvectorizer---200-words-2">TfidfVectorizer - 200 Words</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About</h1>
+<h1 class="title">Vectorization - NewsAPI</h1>
 </div>
 
 
@@ -200,18 +194,172 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>About this site</p>
-<div id="98870ee7" class="cell" data-execution_count="1">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>2</code></pre>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Using the data which has been prepared and merged with potential labels, as seen in <a href="./data_newsapi.html">Data Acquisition - NewsAPI</a>, a few more steps can be taken to turn the news articles into numerical representations which can then be used for further analyses and machine learning applications.</p>
+<section id="strategy---further-preprocessing" class="level2">
+<h2 class="anchored" data-anchor-id="strategy---further-preprocessing">Strategy - Further Preprocessing</h2>
+<p>Recall that the prepared data looks like this:</p>
+<div id="e950a9f8" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<table id="itables_6e264edf_b0c6_4b6e_816e_964d0c093d38" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>source</th>
+      <th>url</th>
+      <th>article</th>
+      <th>source_bias</th>
+      <th>Bias Numeric</th>
+      <th>Bias Specific</th>
+      <th>author</th>
+      <th>description</th>
+      <th>date</th>
+      <th>title</th>
+      <th>search</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.4 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_6e264edf_b0c6_4b6e_816e_964d0c093d38:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["The Root", "https://www.theroot.com/president-bidens-final-plan-to-help-black-student-loan-1851739349", "Student loan debt remains the highest among Black families when compared to other races. According to data from the Survey of Consumer Finances, Black borrowers face notably more student loan debt tha...", "The Root", -2.0, "Lean Left", "Candace Mcduffie", "Student loan debt remains the highest among Black families when compared to other races. According to data from the Survey of Consumer Finances, Black borrowers face notably more student loan debt than their white or Hispanic counterparts. This is why Preside\u2026", "2025-01-15T14:09:00Z", "President Biden's Final Plan To Help Black Student Loan Borrowers", "student_loan_forgiveness"], ["New York Post", "https://nypost.com/2025/02/09/us-news/house-republicans-mull-changes-to-student-loan-programs/", "As Republicans in Congress look for ways to slash spending, some legislators are floating new taxes on college scholarships, an end to student loan repayment plans and a big hike in taxes on universit...", "New York Post (News)", 2.93, "Lean Right", "New York Post", "The ideas affecting higher education are among many in circulation among House committees that are exploring ways to cover the cost of extending and expanding tax cuts passed in President Donald Trump\u2019s first term.", "2025-02-09T18:27:31Z", "House Republicans mull changes to student loan programs", "student_loans"], ["HuffPost", "https://www.huffpost.com/entry/federal-judge-temporarily-blocks-trump-administration-freeze-on-federal-grants-and-loans_n_679953b7e4b0535cbc5f7b9a", "WASHINGTON (AP) \u2014 A federal judge on Tuesday temporarily blocked a push from President Donald Trump to pause federal funding while his administration conducts an across-the-board ideological review to...", "HuffPost", -4.3, "Left", "Ap", "U.S. District Judge Loren L. AliKhan blocked the action Tuesday afternoon, minutes before it was set to go into effect. The administrative stay pauses the freeze until Monday.", "2025-01-28T22:05:38Z", "Federal Judge Temporarily Blocks Trump Administration Freeze On Federal Grants And Loans", "student_loans"], ["Slate Magazine", "https://slate.com/technology/2025/01/ivf-infertility-insurance-parenthood-debt.html", "Sign up for the Slatest to get the most insightful analysis, criticism, and advice out there, delivered to your inbox daily.\\nMia used to say she\u2019d never do in vitro fertilization. It\u2019s a detail that f...", "Slate", -1.4, "Lean Left", "Melissa Dahl", "Advances in the field have created a new problem.", "2025-01-13T10:40:00Z", "They\u2019ve Done Five Rounds of IVF. All They\u2019ve Gotten Is a Miscarriage. Is It Time to Stop?", "student_loans"], ["CBS News", "https://www.cbsnews.com/news/should-i-file-for-bankruptcy-or-debt-relief/", "If you're late on any debt payments, you're likely dealing with creditors who keep calling, interest charges that keep piling up and late fees that continue accruing. In these cases, it's not just get...", "CBS News (Online)", -1.5, "Lean Left", "Angelica Leicht", "Filing for bankruptcy could be a smart move in certain cases, but in others, debt relief could make more sense.", "2025-01-30T19:41:20Z", "Should I file for bankruptcy or debt relief?", "student_loan_forgiveness"]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
 </div>
 </div>
+<p>The main label of interest for this data is <em>Political Bias</em>, however other potential labels include:</p>
+<ul>
+<li><em>News Organization Source</em></li>
+<li><em>Author</em></li>
+<li><em>Date</em></li>
+<li><em>Search Query Parameter</em></li>
+</ul>
+<p>The data itself will be the <em>News Article</em>, however other potential data sources include:</p>
+<ul>
+<li><em>Title</em></li>
+<li><em>Description</em></li>
+</ul>
+<p>This page will focus just on the entire <em>News Article</em> for data, but it could be worth comparing <em>Title</em> and <em>Description</em> in the future.</p>
+<p>For this text data, the additional preprocessing will take place for each article:</p>
+<ul>
+<li>Remove line breaks.</li>
+<li>Remove punctuation.</li>
+<li>Remove words containing numbers.</li>
+<li>Remove standalone numbers.</li>
+<li>Remove leading and trailing spaces.</li>
+<li>Lowercase the remaining words.</li>
+<li>Remove any single-length text remaining.</li>
+</ul>
+</section>
+<section id="strategy---vectorizing" class="level2">
+<h2 class="anchored" data-anchor-id="strategy---vectorizing">Strategy - Vectorizing</h2>
+<p>Now that the articles have been properly prepared to create a vectorized dataframe, several versions will be created. Namely, word count dataframes will be created using <code>CountVectorizer()</code> and normalized word count dataframes will be created using <code>TfidfVectorizer()</code>, both from scikit-learn. Stopwords will removed using these functions as well. Dataframes will be further subsetted along the political bias labels. <strong>Lemmatizing</strong> and <strong>Stemming</strong> will also be used to create different versions available for further analyses. One additional option could be further versions of maximum words allowed in a dataframe.</p>
+</section>
+<section id="vectorizing---overall" class="level2">
+<h2 class="anchored" data-anchor-id="vectorizing---overall">Vectorizing - Overall</h2>
+<section id="countvectorizer---200-words" class="level3">
+<h3 class="anchored" data-anchor-id="countvectorizer---200-words">CountVectorizer - 200 Words</h3>
+</section>
+<section id="tfidfvectorizer---200-words" class="level3">
+<h3 class="anchored" data-anchor-id="tfidfvectorizer---200-words">TfidfVectorizer - 200 Words</h3>
+</section>
+</section>
+<section id="vectorizing---overall-lemmatized" class="level2">
+<h2 class="anchored" data-anchor-id="vectorizing---overall-lemmatized">Vectorizing - Overall Lemmatized</h2>
+<section id="countvectorizer---200-words-1" class="level3">
+<h3 class="anchored" data-anchor-id="countvectorizer---200-words-1">CountVectorizer - 200 Words</h3>
+</section>
+<section id="tfidfvectorizer---200-words-1" class="level3">
+<h3 class="anchored" data-anchor-id="tfidfvectorizer---200-words-1">TfidfVectorizer - 200 Words</h3>
+</section>
+</section>
+<section id="vectorizing---overall-stemmatized" class="level2">
+<h2 class="anchored" data-anchor-id="vectorizing---overall-stemmatized">Vectorizing - Overall Stemmatized</h2>
+<section id="countvectorizer---200-words-2" class="level3">
+<h3 class="anchored" data-anchor-id="countvectorizer---200-words-2">CountVectorizer - 200 Words</h3>
+</section>
+<section id="tfidfvectorizer---200-words-2" class="level3">
+<h3 class="anchored" data-anchor-id="tfidfvectorizer---200-words-2">TfidfVectorizer - 200 Words</h3>
 
 
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

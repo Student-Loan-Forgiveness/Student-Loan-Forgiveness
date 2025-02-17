@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "vectorization_reddit.html",
+    "href": "vectorization_reddit.html",
+    "title": "Vectorization - Reddit",
+    "section": "",
+    "text": "Introduction"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Introduction",
@@ -75,5 +82,26 @@
     "title": "Data Acquisition - Reddit",
     "section": "Top Ten Authors Across Scenarios",
     "text": "Top Ten Authors Across Scenarios\n\n\n\n\n\n\n\n\n\n\n\n\n\nFrom left to right in the above images:\n\nMost Frequent Authors Across Reddit Queries: illustrates the top ten most frequent for the total number of posts, comments, and replies by author across all Reddit threads.\nMost Frequent Authors Across Multiple Threads: illustrates the the top ten authors who have at least a single piece of content in a Reddit thread.\nMost Frequent Authors Across Multiple Subreddits: illustrates the the top ten authors who have at least a single piece of content in a Subreddit.\n\nThere were a few takeaways from these illustrations. Although many authors only had a single appearance, there were a few who frequently post in these Reddit topic-specific communities. One user is actually a Reddit sanctioned bot, known as a Moderator, which helps to control inappropriate or misplaced discussion. This bot, AutoModerator, has its post shown in orange above and will be removed in the subsequent analyses."
+  },
+  {
+    "objectID": "vectorization_newsapi.html",
+    "href": "vectorization_newsapi.html",
+    "title": "Vectorization - NewsAPI",
+    "section": "",
+    "text": "Using the data which has been prepared and merged with potential labels, as seen in Data Acquisition - NewsAPI, a few more steps can be taken to turn the news articles into numerical representations which can then be used for further analyses and machine learning applications.\n\n\nRecall that the prepared data looks like this:\n\n\n\n\n    \n      \n      source\n      url\n      article\n      source_bias\n      Bias Numeric\n      Bias Specific\n      author\n      description\n      date\n      title\n      search\n    \n  \n\n\n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\nLoading ITables v2.2.4 from the internet...\n(need help?)\n\n\n\n\n\n\nThe main label of interest for this data is Political Bias, however other potential labels include:\n\nNews Organization Source\nAuthor\nDate\nSearch Query Parameter\n\nThe data itself will be the News Article, however other potential data sources include:\n\nTitle\nDescription\n\nThis page will focus just on the entire News Article for data, but it could be worth comparing Title and Description in the future.\nFor this text data, the additional preprocessing will take place for each article:\n\nRemove line breaks.\nRemove punctuation.\nRemove words containing numbers.\nRemove standalone numbers.\nRemove leading and trailing spaces.\nLowercase the remaining words.\nRemove any single-length text remaining.\n\n\n\n\nNow that the articles have been properly prepared to create a vectorized dataframe, several versions will be created. Namely, word count dataframes will be created using CountVectorizer() and normalized word count dataframes will be created using TfidfVectorizer(), both from scikit-learn. Stopwords will removed using these functions as well. Dataframes will be further subsetted along the political bias labels. Lemmatizing and Stemming will also be used to create different versions available for further analyses. One additional option could be further versions of maximum words allowed in a dataframe."
+  },
+  {
+    "objectID": "vectorization_newsapi.html#strategy---further-preprocessing",
+    "href": "vectorization_newsapi.html#strategy---further-preprocessing",
+    "title": "Vectorization - NewsAPI",
+    "section": "",
+    "text": "Recall that the prepared data looks like this:\n\n\n\n\n    \n      \n      source\n      url\n      article\n      source_bias\n      Bias Numeric\n      Bias Specific\n      author\n      description\n      date\n      title\n      search\n    \n  \n\n\n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\nLoading ITables v2.2.4 from the internet...\n(need help?)\n\n\n\n\n\n\nThe main label of interest for this data is Political Bias, however other potential labels include:\n\nNews Organization Source\nAuthor\nDate\nSearch Query Parameter\n\nThe data itself will be the News Article, however other potential data sources include:\n\nTitle\nDescription\n\nThis page will focus just on the entire News Article for data, but it could be worth comparing Title and Description in the future.\nFor this text data, the additional preprocessing will take place for each article:\n\nRemove line breaks.\nRemove punctuation.\nRemove words containing numbers.\nRemove standalone numbers.\nRemove leading and trailing spaces.\nLowercase the remaining words.\nRemove any single-length text remaining."
+  },
+  {
+    "objectID": "vectorization_newsapi.html#strategy---vectorizing",
+    "href": "vectorization_newsapi.html#strategy---vectorizing",
+    "title": "Vectorization - NewsAPI",
+    "section": "",
+    "text": "Now that the articles have been properly prepared to create a vectorized dataframe, several versions will be created. Namely, word count dataframes will be created using CountVectorizer() and normalized word count dataframes will be created using TfidfVectorizer(), both from scikit-learn. Stopwords will removed using these functions as well. Dataframes will be further subsetted along the political bias labels. Lemmatizing and Stemming will also be used to create different versions available for further analyses. One additional option could be further versions of maximum words allowed in a dataframe."
   }
 ]

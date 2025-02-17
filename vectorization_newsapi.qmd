@@ -1,0 +1,74 @@
+---
+title: "Vectorization - NewsAPI"
+execute:
+  echo: false
+---
+
+```{python}
+# import libraries
+import pandas as pd
+from itables import show
+
+# import data
+newsapi_clean = pd.read_csv('data/newsapi_data/newsapi_clean_snippet.csv')
+
+#show(newsapi_raw, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
+```
+
+# Introduction
+
+Using the data which has been prepared and merged with potential labels, as seen in [Data Acquisition - NewsAPI](data_newsapi.qmd), a few more steps can be taken to turn the news articles into numerical representations which can then be used for further analyses and machine learning applications.
+
+## Strategy - Further Preprocessing
+
+Recall that the prepared data looks like this:
+
+```{python}
+show(newsapi_clean.head(5), style="width:100%;margin:auto")
+```
+
+The main label of interest for this data is *Political Bias*, however other potential labels include:
+
+- *News Organization Source*
+- *Author*
+- *Date*
+- *Search Query Parameter*
+
+The data itself will be the *News Article*, however other potential data sources include:
+
+- *Title*
+- *Description*
+
+This page will focus just on the entire *News Article* for data, but it could be worth comparing *Title* and *Description* in the future.
+
+For this text data, the additional preprocessing will take place for each article:
+
+- Remove line breaks.
+- Remove punctuation.
+- Remove words containing numbers.
+- Remove standalone numbers.
+- Remove leading and trailing spaces.
+- Lowercase the remaining words.
+- Remove any single-length text remaining.
+
+## Strategy - Vectorizing
+
+Now that the articles have been properly prepared to create a vectorized dataframe, several versions will be created. Namely, word count dataframes will be created using `CountVectorizer()` and normalized word count dataframes will be created using `TfidfVectorizer()`, both from scikit-learn. Stopwords will removed using these functions as well. Dataframes will be further subsetted along the political bias labels. **Lemmatizing** and **Stemming** will also be used to create different versions available for further analyses. One additional option could be further versions of maximum words allowed in a dataframe.
+
+## Vectorizing - Overall
+
+### CountVectorizer - 200 Words
+
+### TfidfVectorizer - 200 Words
+
+## Vectorizing - Overall Lemmatized
+
+### CountVectorizer - 200 Words
+
+### TfidfVectorizer - 200 Words
+
+## Vectorizing - Overall Stemmatized
+
+### CountVectorizer - 200 Words
+
+### TfidfVectorizer - 200 Words

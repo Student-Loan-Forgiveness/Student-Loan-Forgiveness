@@ -111,6 +111,21 @@ ul.task-list li input[type="checkbox"] {
   </li>  
     </ul>
   </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-vectorization" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Data Vectorization</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-vectorization">    
+        <li>
+    <a class="dropdown-item" href="./vectorization_newsapi.html">
+ <span class="dropdown-text">NewsAPI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./vectorization_reddit.html">
+ <span class="dropdown-text">Reddit</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
@@ -188,9 +203,9 @@ ul.task-list li input[type="checkbox"] {
 <p>However, <strong>Is a College Degree Worth It</strong> data may not be utilized, as it’s not as precise to the topic of this analysis.</p>
 <p>Specific objects and tags were created with API calls, and ultimately returned as a dataframe.</p>
 <p>Sample of the Raw Reddit Data:</p>
-<div id="44febe90" class="cell" data-execution_count="2">
+<div id="184e1414" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_0a6237f9_f932_481f_9ea8_43e423f308a7" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_1352bbac_a01d_425e_a74e_cfc3003de2ff" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -275,7 +290,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_0a6237f9_f932_481f_9ea8_43e423f308a7:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_1352bbac_a01d_425e_a74e_cfc3003de2ff:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -326,9 +341,9 @@ Loading ITables v2.2.4 from the internet...
 </ul></li>
 </ul>
 <p>A sample of the restructured Reddit data:</p>
-<div id="944ab95c" class="cell" data-execution_count="3">
+<div id="ac92c00d" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_610b82e3_5302_4ea2_becc_05e0825f2bb0" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_3745c2a0_6198_433d_b38b_f9469f7730c2" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -411,7 +426,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_610b82e3_5302_4ea2_becc_05e0825f2bb0:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_3745c2a0_6198_433d_b38b_f9469f7730c2:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -472,9 +487,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="potential-aggregations" class="level1">
 <h1>Potential Aggregations</h1>
 <p>The authors are one point of aggregation, however, what are the numbers associated with all potential aggregations? Recall that content will be aggregated via authors, threads, and subreddits to analyze different sentiments. The illustrations above show some intersection between authors across the threads and communites, but the following table will show some count data overall:</p>
-<div id="a80c572b" class="cell" data-execution_count="4">
+<div id="86a6de59" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<table id="itables_f04d36c5_0835_4535_af5e_09cf7527738c" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<table id="itables_c7bbc7d5_8669_4213_aecc_982689d356cf" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
 <thead>
     <tr style="text-align: right;">
       
@@ -548,7 +563,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_f04d36c5_0835_4535_af5e_09cf7527738c:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_c7bbc7d5_8669_4213_aecc_982689d356cf:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 

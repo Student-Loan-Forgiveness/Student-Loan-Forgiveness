@@ -19,6 +19,12 @@ website:
             href: data_newsapi.qmd
           - text: "Reddit"
             href: data_reddit.qmd
+      - text: "Data Vectorization"
+        menu:
+          - text: "NewsAPI"
+            href: vectorization_newsapi.qmd
+          - text: "Reddit"
+            href: vectorization_reddit.qmd
     right:
       - icon: github
         href: https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness
