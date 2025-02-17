@@ -9,8 +9,23 @@ execute:
 import pandas as pd
 from itables import show
 
-# import data
+# import initial data
 newsapi_clean = pd.read_csv('data/newsapi_data/newsapi_clean_snippet.csv')
+
+# import data - overall
+newsapi_overall_cv = pd.read_csv('data/newsapi_data/vectorized/newsapi_overall_cv.csv')
+newsapi_overall_tf = pd.read_csv('data/newsapi_data/vectorized/newsapi_overall_tf.csv')
+newsapi_overall_cv_lemmatized = pd.read_csv('data/newsapi_data/vectorized/newsapi_overall_cv_lemmatized.csv')
+newsapi_overall_tf_lemmatized = pd.read_csv('data/newsapi_data/vectorized/newsapi_overall_tf_lemmatized.csv')
+newsapi_overall_cv_stemmatized = pd.read_csv('data/newsapi_data/vectorized/newsapi_overall_cv_stemmatized.csv')
+newsapi_overall_tf_stemmatized = pd.read_csv('data/newsapi_data/vectorized/newsapi_overall_tf_stemmatized.csv')
+
+# import data - political biases
+newsapi_left = pd.read_csv('data/newsapi_data/vectorized/left.csv')
+newsapi_lean_left = pd.read_csv('data/newsapi_data/vectorized/lean_left.csv')
+newsapi_center = pd.read_csv('data/newsapi_data/vectorized/center.csv')
+newsapi_lean_right = pd.read_csv('data/newsapi_data/vectorized/lean_right.csv')
+newsapi_right = pd.read_csv('data/newsapi_data/vectorized/right.csv')
 
 #show(newsapi_raw, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
 ```
@@ -57,18 +72,170 @@ Now that the articles have been properly prepared to create a vectorized datafra
 
 ## Vectorizing - Overall
 
-### CountVectorizer - 200 Words
+These versions will vectorize the completely preprocessed NewsAPI data in its entirety, remove stopwords and use a maximum of 200 features. A sample of the datasets for both vectorized versions will be shown. Additionally, a wordcloud and a top ten feature visualization will be shown for the `CountVectorizer()` versions.
 
-### TfidfVectorizer - 200 Words
+### CountVectorizer
+
+**Labeled Sample**
+
+```{python}
+show(newsapi_overall_cv, style="width:100%;margin:auto")
+```
+
+**Wordcloud**
+
+![](images/newsapi/vectorized/newsapi_overall_cv.png)
+
+**Most Frequent Words**
+
+![](images/newsapi/vectorized/most_frequent_words_overall.png)
+
+### TfidfVectorizer
+
+**Labeled Sample**
+
+```{python}
+show(newsapi_overall_tf, style="width:100%;margin:auto")
+```
 
 ## Vectorizing - Overall Lemmatized
 
-### CountVectorizer - 200 Words
+### CountVectorizer
 
-### TfidfVectorizer - 200 Words
+**Labeled Sample**
+
+```{python}
+show(newsapi_overall_cv_lemmatized, style="width:100%;margin:auto")
+```
+
+**Wordcloud**
+
+![](images/newsapi/vectorized/newsapi_overall_cv_lemmatized.png)
+
+**Most Frequent Words**
+
+![](images/newsapi/vectorized/most_frequent_words_overall_lemmatized.png)
+
+### TfidfVectorizer
+
+**Labeled Sample**
+
+```{python}
+show(newsapi_overall_tf_lemmatized, style="width:100%;margin:auto")
+```
 
 ## Vectorizing - Overall Stemmatized
 
-### CountVectorizer - 200 Words
+### CountVectorizer
 
-### TfidfVectorizer - 200 Words
+**Labeled Sample**
+
+```{python}
+show(newsapi_overall_cv_stemmatized, style="width:100%;margin:auto")
+```
+
+**Wordcloud**
+
+![](images/newsapi/vectorized/newsapi_overall_cv_stemmatized.png)
+
+**Most Frequent Words**
+
+![](images/newsapi/vectorized/most_frequent_words_overall_stemmatized.png)
+
+### TfidfVectorizer
+
+**Labeled Sample**
+
+```{python}
+show(newsapi_overall_tf_stemmatized, style="width:100%;margin:auto")
+```
+
+## Vectorizing - Political Bias
+
+Lemmatizing seems to aggregate the text data while retaining meaning in the words. For instance, *students* are aggregated into *student* and *loans* into *loan*, while words like *education* are not reduced to something like *educ*. Moving forward, lemmatizing is a logical preprocessing step. Thus, lemmatization and stopwords removal for creating vectorized versions of the political bias will be used. For the process of creating subsets of the political bias data, there are two methods that could be used.
+
+- Subsetting Second: vectorize the entire dataset $\rightarrow$ append labels $\rightarrow$ subset on political bias
+- Subsetting First: subset the dataset on political bias $\rightarrow$ vectorize the subset $\rightarrow$ append labels
+
+By subsetting first, the maximum word count will be reflective of the corpus associated with the respective political bias. Therefore, it might be more useful in this comparative analysis to subset first.
+
+Additionally, `CountVectorizer()` will be used over `TfidfVectorizer()` for a first pass. A normalized version of the features could be useful in some cases, such as when dealing with varying sizes of content (i.e. total word count of content), but feature appearance counts will be more useful for visualizing in this analysis.
+
+### Political Bias: Left
+
+**Labeled Sample**
+
+```{python}
+show(newsapi_left, style="width:100%;margin:auto")
+```
+
+**Wordcloud**
+![](images/newsapi/vectorized/newsapi_left.png)
+
+**Most Frequent Words**
+
+![](images/newsapi/vectorized/most_frequent_words_left.png)
+
+### Political Bias: Lean Left
+
+**Labeled Sample**
+
+```{python}
+show(newsapi_lean_left, style="width:100%;margin:auto")
+```
+
+**Wordcloud**
+![](images/newsapi/vectorized/newsapi_lean_left.png)
+
+**Most Frequent Words**
+
+![](images/newsapi/vectorized/most_frequent_words_lean_left.png)
+
+### Political Bias: Center
+
+**Labeled Sample**
+
+```{python}
+show(newsapi_center, style="width:100%;margin:auto")
+```
+
+**Wordcloud**
+![](images/newsapi/vectorized/newsapi_center.png)
+
+**Most Frequent Words**
+
+![](images/newsapi/vectorized/most_frequent_words_center.png)
+
+### Political Bias: Lean Right
+
+**Labeled Sample**
+
+```{python}
+show(newsapi_lean_right, style="width:100%;margin:auto")
+```
+
+**Wordcloud**
+![](images/newsapi/vectorized/newsapi_lean_right.png)
+
+**Most Frequent Words**
+
+![](images/newsapi/vectorized/most_frequent_words_lean_right.png)
+
+### Political Bias: Right
+
+**Labeled Sample**
+
+```{python}
+show(newsapi_right, style="width:100%;margin:auto")
+```
+
+**Wordcloud**
+![](images/newsapi/vectorized/newsapi_right.png)
+
+**Most Frequent Words**
+
+![](images/newsapi/vectorized/most_frequent_words_right.png)
+
+# Summary
+
+Lemmatizing aggregates nicely while retaining the meaning within words, so this will likely be a consistently utilized preprocessing step moving forward. Although word counts over normalized word counts were shown for the political biases section, this was mainly for illustrative purposes. Normalized word counts could be useful when interpolating towards much smaller or much larger text files. Maximum number of features can be altered in future analyses, and words which are similar across all biases could be removed in future analyses to help illuminate the differences more between them.
