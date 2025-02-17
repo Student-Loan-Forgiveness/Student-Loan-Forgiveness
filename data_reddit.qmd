@@ -12,6 +12,7 @@ from itables import show
 # import data
 reddit_raw = pd.read_csv('data/reddit_data/reddit_raw_snippet.csv')
 reddit_structured = pd.read_csv('data/reddit_data/reddit_clean_snippet.csv')
+reddit_counts = pd.read_csv('data/reddit_data/reddit_counts.csv')
 
 #show(newsapi_raw, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
 ```
@@ -19,6 +20,8 @@ reddit_structured = pd.read_csv('data/reddit_data/reddit_clean_snippet.csv')
 # Introduction
 
 Aside from reporting done by news media organizations, **Student Loan Forgiveness** is a toipc on social media and public discussion platforms such as Reddit. Reddit consists of communities known as Subreddits, where users can participate in topic specific online discourse. Although some users choose to tag their accounts with political bias leanings such as *liberal* or *conservative* which could help determine sentiment on the certain topics, this isn't prevalent enough to use as a proper label. However, different sentiments and biases could be found for individual users and Subreddits. Additionally, interesting associations and networks could be formed between the users and communities.
+
+> Note that Reddit Users, Reddit Usernames, and Reddit Authors will be used synonymously.
 
 ## Gathering the Data
 
@@ -29,6 +32,8 @@ Three search queries were made:
 - Student Loan Forgiveness
 - Student Loans
 - Is a College Degree Worth It
+
+However, **Is a College Degree Worth It** data may not be utilized, as it's not as precise to the topic of this analysis.
 
 Specific objects and tags were created with API calls, and ultimately returned as a dataframe.
 
@@ -75,6 +80,57 @@ show(reddit_structured.head(5), style="width:100%;margin:auto")
 
 Similar to how content can be aggregated for each author per thread, a similar process can be done for an entire thread, an entire subreddit, or even aggregated for authors across mutliple threads.
 
-Following this concept, potential labels could be search query, author, subreddit, or even popularity or approval of community by upvotes. Additionally, association rule mining could be used to identify interactions between users and communities.
+Following this concept, potential labels could be search query, author, subreddit, or even popularity or approval of community by upvotes. Additionally, unsupervised methods such as association rule mining and clustering could be a logical choices for examining this data. Associations and interactions may become apparent with these methods.
 
-In relation to the two core views of *supports* and *does not support* **student loan forgiveness**, the NewsAPI politcal bias classification models could potentially be used to interpolate political bias for authors and Subreddits. Thus, author and Subreddit sentiment towards the topic could overall be interpolated.
+In relation to the two core views of *supports* and *does not support* **student loan forgiveness**, the NewsAPI politcal bias classification models could potentially be used to interpolate political bias for authors and Subreddits. Thus, author and Subreddit sentiment towards the topic could overall be interpolated. It would interesting to examine clusters and associations along with the classification predictions.
+
+# Reddit Authors
+
+To proceed with the plans of analyzing the content of a specific Reddit user (author) as a whole, it could be useful to see if there is enough data for individual authors.
+
+The restructured dataframes of the Reddit search queries **Student Loan Forgiveness** and **Student Loans** were combined. The idea is to look at the appearances of authors across three different scenarios:
+
+- How many authors have multiple submissions in a single thread?
+- How many authors have submissions in multiple threads?
+- How many authors have submissions in mulitple Subreddits?
+
+## Top Ten Authors Across Scenarios
+
+::: columns
+::: {.column width=30%}
+
+![](images/reddit/frequent_authors_overall.png)
+:::
+
+::: {.column width=5%}
+:::
+
+::: {.column width=30%}
+
+![](images/reddit/frequent_authors_thread_appearances.png)
+:::
+
+::: {.column width=5%}
+:::
+
+::: {.column width=30%}
+
+![](images/reddit/frequent_authors_subreddit_appearances.png)
+:::
+:::
+
+From left to right in the above images:
+
+- **Most Frequent Authors Across Reddit Queries**: illustrates the top ten most frequent for the total number of posts, comments, and replies by author across all Reddit threads.
+- **Most Frequent Authors Across Multiple Threads**: illustrates the the top ten authors who have at least a single piece of content in a Reddit thread.
+- **Most Frequent Authors Across Multiple Subreddits**: illustrates the the top ten authors who have at least a single piece of content in a Subreddit.
+
+There were a few takeaways from these illustrations. Although many authors only had a single appearance, there were a few who frequently post in these Reddit topic-specific communities. One user is actually a Reddit sanctioned bot, known as a Moderator, which helps to control inappropriate or misplaced discussion. This bot, **AutoModerator**, has its post shown in *orange* above and will be removed in the subsequent analyses.
+
+# Potential Aggregations
+
+The authors are one point of aggregation, however, what are the numbers associated with all potential aggregations? Recall that content will be aggregated via authors, threads, and subreddits to analyze different sentiments. The illustrations above show some intersection between authors across the threads and communites, but the following table will show some count data overall:
+
+```{python}
+show(reddit_counts)
+```

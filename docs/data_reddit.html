@@ -140,6 +140,11 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#cleaning-and-restructuring" id="toc-cleaning-and-restructuring" class="nav-link" data-scroll-target="#cleaning-and-restructuring">Cleaning and Restructuring</a></li>
   </ul></li>
   <li><a href="#future-processing-and-potential-labels" id="toc-future-processing-and-potential-labels" class="nav-link" data-scroll-target="#future-processing-and-potential-labels">Future Processing and Potential Labels</a></li>
+  <li><a href="#reddit-authors" id="toc-reddit-authors" class="nav-link" data-scroll-target="#reddit-authors">Reddit Authors</a>
+  <ul class="collapse">
+  <li><a href="#top-ten-authors-across-scenarios" id="toc-top-ten-authors-across-scenarios" class="nav-link" data-scroll-target="#top-ten-authors-across-scenarios">Top Ten Authors Across Scenarios</a></li>
+  </ul></li>
+  <li><a href="#potential-aggregations" id="toc-potential-aggregations" class="nav-link" data-scroll-target="#potential-aggregations">Potential Aggregations</a></li>
   </ul>
 </nav>
     </div>
@@ -168,6 +173,9 @@ ul.task-list li input[type="checkbox"] {
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>Aside from reporting done by news media organizations, <strong>Student Loan Forgiveness</strong> is a toipc on social media and public discussion platforms such as Reddit. Reddit consists of communities known as Subreddits, where users can participate in topic specific online discourse. Although some users choose to tag their accounts with political bias leanings such as <em>liberal</em> or <em>conservative</em> which could help determine sentiment on the certain topics, this isn’t prevalent enough to use as a proper label. However, different sentiments and biases could be found for individual users and Subreddits. Additionally, interesting associations and networks could be formed between the users and communities.</p>
+<blockquote class="blockquote">
+<p>Note that Reddit Users, Reddit Usernames, and Reddit Authors will be used synonymously.</p>
+</blockquote>
 <section id="gathering-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="gathering-the-data">Gathering the Data</h2>
 <p>To obtain the data from Reddit, web scraping and an API was utilized. A web scraping function was built which mimics a general search within the Reddit platform and returns the URLs for threads on a given search query. The URLs were then be iterated through with the API, which returned the posts, comments, replies, and other supporting information.</p>
@@ -177,11 +185,12 @@ ul.task-list li input[type="checkbox"] {
 <li>Student Loans</li>
 <li>Is a College Degree Worth It</li>
 </ul>
+<p>However, <strong>Is a College Degree Worth It</strong> data may not be utilized, as it’s not as precise to the topic of this analysis.</p>
 <p>Specific objects and tags were created with API calls, and ultimately returned as a dataframe.</p>
 <p>Sample of the Raw Reddit Data:</p>
-<div id="38840090" class="cell" data-execution_count="2">
+<div id="44febe90" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_b78592d4_512e_4939_840b_34f143ebd179" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_0a6237f9_f932_481f_9ea8_43e423f308a7" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -266,7 +275,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_b78592d4_512e_4939_840b_34f143ebd179:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_0a6237f9_f932_481f_9ea8_43e423f308a7:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -317,9 +326,9 @@ Loading ITables v2.2.4 from the internet...
 </ul></li>
 </ul>
 <p>A sample of the restructured Reddit data:</p>
-<div id="b9a94b18" class="cell" data-execution_count="3">
+<div id="944ab95c" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_720762c3_bd3f_4a04_827e_7cce3bbf44ed" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_610b82e3_5302_4ea2_becc_05e0825f2bb0" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -402,7 +411,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_720762c3_bd3f_4a04_827e_7cce3bbf44ed:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_610b82e3_5302_4ea2_becc_05e0825f2bb0:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -424,8 +433,138 @@ Loading ITables v2.2.4 from the internet...
 <section id="future-processing-and-potential-labels" class="level1">
 <h1>Future Processing and Potential Labels</h1>
 <p>Similar to how content can be aggregated for each author per thread, a similar process can be done for an entire thread, an entire subreddit, or even aggregated for authors across mutliple threads.</p>
-<p>Following this concept, potential labels could be search query, author, subreddit, or even popularity or approval of community by upvotes. Additionally, association rule mining could be used to identify interactions between users and communities.</p>
-<p>In relation to the two core views of <em>supports</em> and <em>does not support</em> <strong>student loan forgiveness</strong>, the NewsAPI politcal bias classification models could potentially be used to interpolate political bias for authors and Subreddits. Thus, author and Subreddit sentiment towards the topic could overall be interpolated.</p>
+<p>Following this concept, potential labels could be search query, author, subreddit, or even popularity or approval of community by upvotes. Additionally, unsupervised methods such as association rule mining and clustering could be a logical choices for examining this data. Associations and interactions may become apparent with these methods.</p>
+<p>In relation to the two core views of <em>supports</em> and <em>does not support</em> <strong>student loan forgiveness</strong>, the NewsAPI politcal bias classification models could potentially be used to interpolate political bias for authors and Subreddits. Thus, author and Subreddit sentiment towards the topic could overall be interpolated. It would interesting to examine clusters and associations along with the classification predictions.</p>
+</section>
+<section id="reddit-authors" class="level1">
+<h1>Reddit Authors</h1>
+<p>To proceed with the plans of analyzing the content of a specific Reddit user (author) as a whole, it could be useful to see if there is enough data for individual authors.</p>
+<p>The restructured dataframes of the Reddit search queries <strong>Student Loan Forgiveness</strong> and <strong>Student Loans</strong> were combined. The idea is to look at the appearances of authors across three different scenarios:</p>
+<ul>
+<li>How many authors have multiple submissions in a single thread?</li>
+<li>How many authors have submissions in multiple threads?</li>
+<li>How many authors have submissions in mulitple Subreddits?</li>
+</ul>
+<section id="top-ten-authors-across-scenarios" class="level2">
+<h2 class="anchored" data-anchor-id="top-ten-authors-across-scenarios">Top Ten Authors Across Scenarios</h2>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><img src="images/reddit/frequent_authors_overall.png" class="img-fluid"></p>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:30%;">
+<p><img src="images/reddit/frequent_authors_thread_appearances.png" class="img-fluid"></p>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:30%;">
+<p><img src="images/reddit/frequent_authors_subreddit_appearances.png" class="img-fluid"></p>
+</div>
+</div>
+<p>From left to right in the above images:</p>
+<ul>
+<li><strong>Most Frequent Authors Across Reddit Queries</strong>: illustrates the top ten most frequent for the total number of posts, comments, and replies by author across all Reddit threads.</li>
+<li><strong>Most Frequent Authors Across Multiple Threads</strong>: illustrates the the top ten authors who have at least a single piece of content in a Reddit thread.</li>
+<li><strong>Most Frequent Authors Across Multiple Subreddits</strong>: illustrates the the top ten authors who have at least a single piece of content in a Subreddit.</li>
+</ul>
+<p>There were a few takeaways from these illustrations. Although many authors only had a single appearance, there were a few who frequently post in these Reddit topic-specific communities. One user is actually a Reddit sanctioned bot, known as a Moderator, which helps to control inappropriate or misplaced discussion. This bot, <strong>AutoModerator</strong>, has its post shown in <em>orange</em> above and will be removed in the subsequent analyses.</p>
+</section>
+</section>
+<section id="potential-aggregations" class="level1">
+<h1>Potential Aggregations</h1>
+<p>The authors are one point of aggregation, however, what are the numbers associated with all potential aggregations? Recall that content will be aggregated via authors, threads, and subreddits to analyze different sentiments. The illustrations above show some intersection between authors across the threads and communites, but the following table will show some count data overall:</p>
+<div id="a80c572b" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<table id="itables_f04d36c5_0835_4535_af5e_09cf7527738c" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>Category</th>
+      <th>Counts</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.4 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_f04d36c5_0835_4535_af5e_09cf7527738c:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["Authors", 8919], ["Threads", 44], ["Subreddits", 25]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
 
 
 </section>
