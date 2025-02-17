@@ -4,4 +4,200 @@ execute:
   echo: false
 ---
 
+```{python}
+# import libraries
+import pandas as pd
+from itables import show
+
+# import initial data
+reddit_clean = pd.read_csv('data/reddit_data/reddit_clean_snippet.csv')
+
+# import schema data
+thread_author = pd.read_csv('data/reddit_data/vectorized/thread_author.csv')
+subreddit_author = pd.read_csv('data/reddit_data/vectorized/subreddit_author.csv')
+threads = pd.read_csv('data/reddit_data/vectorized/threads.csv')
+subreddits = pd.read_csv('data/reddit_data/vectorized/subreddits.csv')
+authors = pd.read_csv('data/reddit_data/vectorized/authors.csv')
+
+#show(newsapi_raw, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
+```
+
 # Introduction
+
+Using the data which has been prepared and merged with potential labels, as seen in [Data Acquisition - Reddit](data_reddit.qmd), a few more steps can be taken to turn the Reddit posts into numerical representations which can then be used for further analyses and machine learning applications.
+
+## Strategy - Further Preprocessing
+
+Recall that the prepared data looks like this:
+
+```{python}
+show(reddit_clean.head(5), style="width:100%;margin:auto")
+```
+
+As explained in the linked section above, the Reddit text data may be best fit for unsupervised methods, thus the labels may not be applicaple. However, potential labels of interest are:
+
+- *Author (Reddit user)*
+- *URL (Reddit Thread)*
+- *Subreddit (Reddit Community)*
+- *Search (Reddit Search Query)*
+
+The data itself will be the content posted by the Reddit users, or authors. In the inital data above, the column containing every post, comment, and reply by an author on a single Reddit thread was aggregated. This will be the first aggregation schema. A few other aggregation schemas will be considered.
+
+**Aggregation Schemas**:
+
+- Thread - Author (INITIAL FORMAT): corpus where each file is an author's aggregated text within a unique thread.
+- Subreddit - Author: corpus where each file is an author's aggregated text within a unique Subreddit.
+- Threads: corpus where each file is the overall aggregated text within unique Threads (author's combined)
+- Subreddits: corpus where each file is the overall aggregated text within unique Subreddits (threads combined).
+- Authors: corpus where each file is the overall aggregated text by authors across every thread.
+
+Using the initial format for the first schema, some additional preprocessing will take take place for the author's aggregated posts on a single Reddit thread. This will include:
+
+- Remove line breaks.
+- Remove punctuation.
+- Remove words containing numbers.
+- Remove standalone numbers.
+- Remove leading and trailing spaces.
+- Lowercase the remaining words.
+- Remove any single-length text remaining.
+
+As prescribed in the linked section in the **Introduction** on this page, the author *AutoModerator* will be removed before proceeding.
+
+## Strategy - Vectorizing
+
+Following queues from the [Data Vectorizing - NewsAPI](vectorization_newsapi.qmd) page, this initial pass will lemmatize the data and use `CountVectorizer()` from the scikit-learn library, and compare the different aggregation schemas. The `TfidfVectorizer()` could be invaluable in later use cases, as the length of the text content for many of the Reddit aggregation schemas vary wildly.
+
+> Lemmatizing is still a useful data dimensionality reduction technique. However, when it comes to Reddit posts, lemmatizing and especially stemmatizing should be used cautiously. News articles mostly use proper and accepted language, structure, and terms, whereas social media and other online community discussion boards, like Reddit, are likely to follow a more unofficial disucssion format. Social media may feature slang, text speak, mispellings, and incomplete sentences. Incomplete sentences could be due to single word responses or reactions, or simply due to improperly structured sentences. Nuances in Reddit-type posts could be lost with cleaning and simplification methods.
+
+## Vectorizing - Thread-Author Schema
+
+**Labeled Sample**
+
+```{python}
+show(thread_author, style="width:100%;margin:auto")
+```
+
+::: columns
+::: {.column width=45%}
+**Wordcloud**
+
+![](images/reddit/vectorized/wc_thread_author.png)
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+**Most Frequent Words**
+
+![](images/reddit/vectorized/most_frequent_words_thread_author.png)
+:::
+:::
+
+## Vectorizing - Subreddit-Author Schema
+
+**Labeled Sample**
+
+```{python}
+show(subreddit_author, style="width:100%;margin:auto")
+```
+
+::: columns
+::: {.column width=45%}
+**Wordcloud**
+
+![](images/reddit/vectorized/wc_subreddit_author.png)
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+**Most Frequent Words**
+
+![](images/reddit/vectorized/most_frequent_words_subreddit_author.png)
+:::
+:::
+
+## Vectorizing - Threads Schema
+
+**Labeled Sample**
+
+```{python}
+show(threads, style="width:100%;margin:auto")
+```
+
+::: columns
+::: {.column width=45%}
+**Wordcloud**
+
+![](images/reddit/vectorized/wc_threads.png)
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+**Most Frequent Words**
+
+![](images/reddit/vectorized/most_frequent_words_threads.png)
+:::
+:::
+
+## Vectorizing - Subreddits Schema
+
+**Labeled Sample**
+
+```{python}
+show(subreddits, style="width:100%;margin:auto")
+```
+
+::: columns
+::: {.column width=45%}
+**Wordcloud**
+
+![](images/reddit/vectorized/wc_subreddits.png)
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+**Most Frequent Words**
+
+![](images/reddit/vectorized/most_frequent_words_subreddits.png)
+:::
+:::
+
+## Vectorizing - Authors Schema
+
+**Labeled Sample**
+
+```{python}
+show(authors, style="width:100%;margin:auto")
+```
+
+::: columns
+::: {.column width=45%}
+**Wordcloud**
+
+![](images/reddit/vectorized/wc_authors.png)
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+**Most Frequent Words**
+
+![](images/reddit/vectorized/most_frequent_words_authors.png)
+:::
+:::
+
+# Summary
+
+
+
+
+
+

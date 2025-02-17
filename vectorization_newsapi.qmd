@@ -82,13 +82,23 @@ These versions will vectorize the completely preprocessed NewsAPI data in its en
 show(newsapi_overall_cv, style="width:100%;margin:auto")
 ```
 
+::: columns
+::: {.column width=45%}
 **Wordcloud**
 
 ![](images/newsapi/vectorized/newsapi_overall_cv.png)
+:::
 
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
 **Most Frequent Words**
 
 ![](images/newsapi/vectorized/most_frequent_words_overall.png)
+:::
+:::
+
 
 ### TfidfVectorizer
 
@@ -108,13 +118,22 @@ show(newsapi_overall_tf, style="width:100%;margin:auto")
 show(newsapi_overall_cv_lemmatized, style="width:100%;margin:auto")
 ```
 
+::: columns
+::: {.column width=45%}
 **Wordcloud**
 
 ![](images/newsapi/vectorized/newsapi_overall_cv_lemmatized.png)
+:::
 
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
 **Most Frequent Words**
 
 ![](images/newsapi/vectorized/most_frequent_words_overall_lemmatized.png)
+:::
+:::
 
 ### TfidfVectorizer
 
@@ -134,13 +153,23 @@ show(newsapi_overall_tf_lemmatized, style="width:100%;margin:auto")
 show(newsapi_overall_cv_stemmatized, style="width:100%;margin:auto")
 ```
 
+::: columns
+::: {.column width=45%}
+
 **Wordcloud**
 
 ![](images/newsapi/vectorized/newsapi_overall_cv_stemmatized.png)
+:::
 
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
 **Most Frequent Words**
 
 ![](images/newsapi/vectorized/most_frequent_words_overall_stemmatized.png)
+:::
+:::
 
 ### TfidfVectorizer
 
@@ -169,12 +198,22 @@ Additionally, `CountVectorizer()` will be used over `TfidfVectorizer()` for a fi
 show(newsapi_left, style="width:100%;margin:auto")
 ```
 
+::: columns
+::: {.column width=45%}
+
 **Wordcloud**
 ![](images/newsapi/vectorized/newsapi_left.png)
+:::
 
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
 **Most Frequent Words**
 
 ![](images/newsapi/vectorized/most_frequent_words_left.png)
+:::
+:::
 
 ### Political Bias: Lean Left
 
@@ -184,12 +223,22 @@ show(newsapi_left, style="width:100%;margin:auto")
 show(newsapi_lean_left, style="width:100%;margin:auto")
 ```
 
+::: columns
+::: {.column width=45%}
+
 **Wordcloud**
 ![](images/newsapi/vectorized/newsapi_lean_left.png)
+:::
 
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
 **Most Frequent Words**
 
 ![](images/newsapi/vectorized/most_frequent_words_lean_left.png)
+:::
+:::
 
 ### Political Bias: Center
 
@@ -199,12 +248,23 @@ show(newsapi_lean_left, style="width:100%;margin:auto")
 show(newsapi_center, style="width:100%;margin:auto")
 ```
 
+::: columns
+::: {.column width=45%}
+
 **Wordcloud**
 ![](images/newsapi/vectorized/newsapi_center.png)
 
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
 **Most Frequent Words**
 
 ![](images/newsapi/vectorized/most_frequent_words_center.png)
+:::
+:::
 
 ### Political Bias: Lean Right
 
@@ -214,12 +274,22 @@ show(newsapi_center, style="width:100%;margin:auto")
 show(newsapi_lean_right, style="width:100%;margin:auto")
 ```
 
+::: columns
+::: {.column width=45%}
+
 **Wordcloud**
 ![](images/newsapi/vectorized/newsapi_lean_right.png)
+:::
 
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
 **Most Frequent Words**
 
 ![](images/newsapi/vectorized/most_frequent_words_lean_right.png)
+:::
+:::
 
 ### Political Bias: Right
 
@@ -229,13 +299,23 @@ show(newsapi_lean_right, style="width:100%;margin:auto")
 show(newsapi_right, style="width:100%;margin:auto")
 ```
 
+::: columns
+::: {.column width=45%}
+
 **Wordcloud**
 ![](images/newsapi/vectorized/newsapi_right.png)
+:::
 
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
 **Most Frequent Words**
 
 ![](images/newsapi/vectorized/most_frequent_words_right.png)
+:::
+:::
 
 # Summary
 
-Lemmatizing aggregates nicely while retaining the meaning within words, so this will likely be a consistently utilized preprocessing step moving forward. Although word counts over normalized word counts were shown for the political biases section, this was mainly for illustrative purposes. Normalized word counts could be useful when interpolating towards much smaller or much larger text files. Maximum number of features can be altered in future analyses, and words which are similar across all biases could be removed in future analyses to help illuminate the differences more between them.
+Lemmatizing aggregates nicely while retaining the meaning within words, so this will likely be a consistently utilized preprocessing step moving forward. Although word counts over normalized word counts were shown for the political biases section, this was mainly for illustrative purposes. Normalized word counts could be useful when interpolating towards much smaller or much larger text files. Maximum number of features can be altered in future analyses, and words which are similar across all biases could be removed in future analyses to help illuminate the differences more between them. Additionally, the political biases of Lean Left and Left may be combined as well with Lean Right and Right for future analyses.
