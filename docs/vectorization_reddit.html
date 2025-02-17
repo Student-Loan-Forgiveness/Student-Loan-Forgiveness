@@ -191,9 +191,9 @@ ul.task-list li input[type="checkbox"] {
 <section id="strategy---further-preprocessing" class="level2">
 <h2 class="anchored" data-anchor-id="strategy---further-preprocessing">Strategy - Further Preprocessing</h2>
 <p>Recall that the prepared data looks like this:</p>
-<div id="b8b01d4a" class="cell" data-execution_count="2">
+<div id="1f277e5d" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_21b79a5d_8aef_4268_8d71_72dff19c7da9" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_0f1343d9_c889_49e1_aabd_35aeb802043a" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -276,7 +276,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_21b79a5d_8aef_4268_8d71_72dff19c7da9:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_0f1343d9_c889_49e1_aabd_35aeb802043a:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -293,7 +293,7 @@ Loading ITables v2.2.4 from the internet...
 </script>
 </div>
 </div>
-<p>As explained in the linked section above, the Reddit text data may be best fit for unsupervised methods, thus the labels may not be applicaple. However, potential labels of interest are:</p>
+<p>As explained in the linked section above, the Reddit text data may be best fit for unsupervised learning methods, thus the labels may not be applicaple. However, potential labels of interest are:</p>
 <ul>
 <li><em>Author (Reddit user)</em></li>
 <li><em>URL (Reddit Thread)</em></li>
@@ -327,13 +327,14 @@ Loading ITables v2.2.4 from the internet...
 <blockquote class="blockquote">
 <p>Lemmatizing is still a useful data dimensionality reduction technique. However, when it comes to Reddit posts, lemmatizing and especially stemmatizing should be used cautiously. News articles mostly use proper and accepted language, structure, and terms, whereas social media and other online community discussion boards, like Reddit, are likely to follow a more unofficial disucssion format. Social media may feature slang, text speak, mispellings, and incomplete sentences. Incomplete sentences could be due to single word responses or reactions, or simply due to improperly structured sentences. Nuances in Reddit-type posts could be lost with cleaning and simplification methods.</p>
 </blockquote>
+<p>Additionally, stopwords will be removed and 200 maximum features will be used.</p>
 </section>
 <section id="vectorizing---thread-author-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---thread-author-schema">Vectorizing - Thread-Author Schema</h2>
 <p><strong>Labeled Sample</strong></p>
-<div id="a3049c04" class="cell" data-execution_count="3">
+<div id="223b87d0" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_03166338_ac7f_44cd_9760_0b5435cec016" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_61ea9f29_9beb_428f_91c4_e565a6d7b63a" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -605,7 +606,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_03166338_ac7f_44cd_9760_0b5435cec016:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_61ea9f29_9beb_428f_91c4_e565a6d7b63a:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -637,9 +638,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="vectorizing---subreddit-author-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---subreddit-author-schema">Vectorizing - Subreddit-Author Schema</h2>
 <p><strong>Labeled Sample</strong></p>
-<div id="59f91e4e" class="cell" data-execution_count="4">
+<div id="1a0cd25a" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<table id="itables_fbf765a6_5aaa_4d5e_bae0_a43c50b97b55" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_04488f00_fcdf_4288_84a4_f81fe6f375f3" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -911,7 +912,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_fbf765a6_5aaa_4d5e_bae0_a43c50b97b55:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_04488f00_fcdf_4288_84a4_f81fe6f375f3:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -943,9 +944,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="vectorizing---threads-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---threads-schema">Vectorizing - Threads Schema</h2>
 <p><strong>Labeled Sample</strong></p>
-<div id="cf376d7f" class="cell" data-execution_count="5">
+<div id="570ceb9a" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
-<table id="itables_310fdafb_0931_4e08_a1ed_f8d336f8ddf6" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_dbca803b_e84c_4daa_9449_44b80e4fc6cb" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1217,7 +1218,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_310fdafb_0931_4e08_a1ed_f8d336f8ddf6:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_dbca803b_e84c_4daa_9449_44b80e4fc6cb:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1249,9 +1250,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="vectorizing---subreddits-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---subreddits-schema">Vectorizing - Subreddits Schema</h2>
 <p><strong>Labeled Sample</strong></p>
-<div id="39d55491" class="cell" data-execution_count="6">
+<div id="d610c147" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
-<table id="itables_fd4dd3b3_c37e_4d3f_95c7_23188bd2c184" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_085e9469_61b8_4744_b039_00d97b35b985" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1523,7 +1524,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_fd4dd3b3_c37e_4d3f_95c7_23188bd2c184:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_085e9469_61b8_4744_b039_00d97b35b985:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1555,9 +1556,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="vectorizing---authors-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---authors-schema">Vectorizing - Authors Schema</h2>
 <p><strong>Labeled Sample</strong></p>
-<div id="55c56422" class="cell" data-execution_count="7">
+<div id="b54fcef7" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
-<table id="itables_20ca7a98_a1f4_42ff_b0ea_e6738d87d8a8" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_632efcdf_8f82_49c7_8393_5140468421c5" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1829,7 +1830,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_20ca7a98_a1f4_42ff_b0ea_e6738d87d8a8:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_632efcdf_8f82_49c7_8393_5140468421c5:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1861,6 +1862,7 @@ Loading ITables v2.2.4 from the internet...
 </section>
 <section id="summary" class="level1">
 <h1>Summary</h1>
+<p>With the initial pass above, there are very minor differences between the aggregation schemas and respective corpuses. Stronger differences would likely be found if further subsetting on the authors, threads, and subreddits. In future analyses, unsupervised learning methods and potentially supervised learnings methods (when paired with NewsAPI) could help indicate these subsets. Furthermore, pairings from upvotes and length of content within the data could be subset parameter as well.</p>
 
 
 </section>

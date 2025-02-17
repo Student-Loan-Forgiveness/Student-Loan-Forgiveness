@@ -34,7 +34,7 @@ Recall that the prepared data looks like this:
 show(reddit_clean.head(5), style="width:100%;margin:auto")
 ```
 
-As explained in the linked section above, the Reddit text data may be best fit for unsupervised methods, thus the labels may not be applicaple. However, potential labels of interest are:
+As explained in the linked section above, the Reddit text data may be best fit for unsupervised learning methods, thus the labels may not be applicaple. However, potential labels of interest are:
 
 - *Author (Reddit user)*
 - *URL (Reddit Thread)*
@@ -68,6 +68,8 @@ As prescribed in the linked section in the **Introduction** on this page, the au
 Following queues from the [Data Vectorizing - NewsAPI](vectorization_newsapi.qmd) page, this initial pass will lemmatize the data and use `CountVectorizer()` from the scikit-learn library, and compare the different aggregation schemas. The `TfidfVectorizer()` could be invaluable in later use cases, as the length of the text content for many of the Reddit aggregation schemas vary wildly.
 
 > Lemmatizing is still a useful data dimensionality reduction technique. However, when it comes to Reddit posts, lemmatizing and especially stemmatizing should be used cautiously. News articles mostly use proper and accepted language, structure, and terms, whereas social media and other online community discussion boards, like Reddit, are likely to follow a more unofficial disucssion format. Social media may feature slang, text speak, mispellings, and incomplete sentences. Incomplete sentences could be due to single word responses or reactions, or simply due to improperly structured sentences. Nuances in Reddit-type posts could be lost with cleaning and simplification methods.
+
+Additionally, stopwords will be removed and 200 maximum features will be used.
 
 ## Vectorizing - Thread-Author Schema
 
@@ -196,8 +198,4 @@ show(authors, style="width:100%;margin:auto")
 
 # Summary
 
-
-
-
-
-
+With the initial pass above, there are very minor differences between the aggregation schemas and respective corpuses. Stronger differences would likely be found if further subsetting on the authors, threads, and subreddits. In future analyses, unsupervised learning methods and potentially supervised learnings methods (when paired with NewsAPI) could help indicate these subsets. Furthermore, pairings from upvotes and length of content within the data could be subset parameter as well.
