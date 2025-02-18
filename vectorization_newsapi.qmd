@@ -68,7 +68,7 @@ For this text data, the additional preprocessing will take place for each articl
 
 ## Strategy - Vectorizing
 
-Now that the articles have been properly prepared to create a vectorized dataframe, several versions will be created. Namely, word count dataframes will be created using `CountVectorizer()` and normalized word count dataframes will be created using `TfidfVectorizer()`, both from scikit-learn. Stopwords will removed using these functions as well. Dataframes will be further subsetted along the political bias labels. **Lemmatizing** and **Stemming** will also be used to create different versions available for further analyses. One additional option could be further versions of maximum words allowed in a dataframe.
+Now that the articles have been properly prepared to create a vectorized dataframe, several versions will be created. Namely, word count dataframes will be created using `CountVectorizer()` and normalized word count dataframes will be created using `TfidfVectorizer()`, both from scikit-learn. Stopwords will be removed using these functions as well. Dataframes will be further subsetted along the political bias labels. **Lemmatizing** and **Stemming** will also be used to create different versions available for further analyses. One additional option could be further versions of maximum words allowed in a dataframe.
 
 ## Vectorizing - Overall
 
@@ -318,11 +318,11 @@ show(newsapi_right, style="width:100%;margin:auto")
 
 # Summary
 
-Lemmatizing aggregates nicely while retaining the meaning within words, so this will likely be a consistently utilized preprocessing step moving forward. Although word counts over normalized word counts were shown for the political biases section, this was mainly for illustrative purposes. Normalized word counts could be useful when interpolating towards much smaller or much larger text files. Maximum number of features can be altered in future analyses, and words which are similar across all biases could be removed in future analyses to help illuminate the differences more between them. Additionally, the political biases of Lean Left and Left may be combined as well with Lean Right and Right for future analyses.
+Lemmatizing aggregates nicely while retaining the meaning within words, so this will likely be a consistently utilized preprocessing step moving forward. Although word counts over normalized word counts were shown for the political biases section, this was mainly for illustrative purposes. Normalized word counts could be useful when interpolating towards much smaller or much larger text files. Maximum number of features can be altered in future analyses, and words which are similar across all biases could be removed in future analyses to help better illuminate the differences. Additionally, the political biases of Lean Left and Left may be combined as well as with Lean Right and Right for future analyses.
 
 ---
 
 # Code Links
 
-- [Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/vectorizing_functions.py): script with functions for the vectorization process
-- [NewsAPI Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/newsapi_vectorizing_application.py): script with appliaction of **Vectorizing Script**
+- [Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/vectorizing_functions.py): functions for the vectorization process
+- [NewsAPI Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/newsapi_vectorizing_application.py): application of **Vectorizing Script**

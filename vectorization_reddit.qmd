@@ -67,7 +67,7 @@ As prescribed in the linked section in the **Introduction** on this page, the au
 
 Following queues from the [Data Vectorizing - NewsAPI](vectorization_newsapi.qmd) page, this initial pass will lemmatize the data and use `CountVectorizer()` from the scikit-learn library, and compare the different aggregation schemas. The `TfidfVectorizer()` could be invaluable in later use cases, as the length of the text content for many of the Reddit aggregation schemas vary wildly.
 
-> Lemmatizing is still a useful data dimensionality reduction technique. However, when it comes to Reddit posts, lemmatizing and especially stemmatizing should be used cautiously. News articles mostly use proper and accepted language, structure, and terms, whereas social media and other online community discussion boards, like Reddit, are likely to follow a more unofficial disucssion format. Social media may feature slang, text speak, mispellings, and incomplete sentences. Incomplete sentences could be due to single word responses or reactions, or simply due to improperly structured sentences. Nuances in Reddit-type posts could be lost with cleaning and simplification methods.
+> Lemmatizing is still a useful data dimensionality reduction technique. However, when it comes to Reddit posts, lemmatizing and especially stemmatizing should be used cautiously. News articles mostly use proper and accepted language, structure, and terms, whereas social media and other online community discussion boards, like Reddit, are likely to follow a more unofficial format. Social media may feature slang, text speak, mispellings, and incomplete sentences. Incomplete sentences could be due to single word responses or reactions, or simply due to improperly structured sentences. Nuances in Reddit-type posts could be lost with cleaning and simplification methods.
 
 Additionally, stopwords will be removed and 200 maximum features will be used.
 
@@ -198,11 +198,11 @@ show(authors, style="width:100%;margin:auto")
 
 # Summary
 
-With the initial pass above, there are very minor differences between the aggregation schemas and respective corpuses. Stronger differences would likely be found if further subsetting on the authors, threads, and subreddits. In future analyses, unsupervised learning methods and potentially supervised learnings methods (when paired with NewsAPI) could help indicate these subsets. Furthermore, pairings from upvotes and length of content within the data could be subset parameter as well.
+With the initial pass above, there are very minor differences between the aggregation schemas and respective corpuses. Stronger differences would likely be found if further subsetting on the authors, threads, and Subreddits. In future analyses, unsupervised learning methods and potentially supervised learnings methods (when paired with NewsAPI) could help indicate these subsets. Furthermore, pairings from upvotes and length of content within the data could be potential subsetting parameters as well.
 
 ---
 
 # Code Links
 
-- [Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/vectorizing_functions.py): script with functions for the vectorization process
-- [Reddit Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/reddit_vectorizing_application.py): script with appliaction of **Vectorizing Script**
+- [Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/vectorizing_functions.py): functions for the vectorization process
+- [Reddit Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/reddit_vectorizing_application.py): application of **Vectorizing Script**

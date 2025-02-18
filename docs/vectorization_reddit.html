@@ -192,9 +192,9 @@ ul.task-list li input[type="checkbox"] {
 <section id="strategy---further-preprocessing" class="level2">
 <h2 class="anchored" data-anchor-id="strategy---further-preprocessing">Strategy - Further Preprocessing</h2>
 <p>Recall that the prepared data looks like this:</p>
-<div id="d5cf8001" class="cell" data-execution_count="2">
+<div id="ad013724" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_363bd824_2f38_4bd8_bd5d_182fdaa70ccd" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_398d86eb_f391_4e65_98c4_fc7b2dec9ef5" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -277,7 +277,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_363bd824_2f38_4bd8_bd5d_182fdaa70ccd:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_398d86eb_f391_4e65_98c4_fc7b2dec9ef5:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -326,16 +326,16 @@ Loading ITables v2.2.4 from the internet...
 <h2 class="anchored" data-anchor-id="strategy---vectorizing">Strategy - Vectorizing</h2>
 <p>Following queues from the <a href="./vectorization_newsapi.html">Data Vectorizing - NewsAPI</a> page, this initial pass will lemmatize the data and use <code>CountVectorizer()</code> from the scikit-learn library, and compare the different aggregation schemas. The <code>TfidfVectorizer()</code> could be invaluable in later use cases, as the length of the text content for many of the Reddit aggregation schemas vary wildly.</p>
 <blockquote class="blockquote">
-<p>Lemmatizing is still a useful data dimensionality reduction technique. However, when it comes to Reddit posts, lemmatizing and especially stemmatizing should be used cautiously. News articles mostly use proper and accepted language, structure, and terms, whereas social media and other online community discussion boards, like Reddit, are likely to follow a more unofficial disucssion format. Social media may feature slang, text speak, mispellings, and incomplete sentences. Incomplete sentences could be due to single word responses or reactions, or simply due to improperly structured sentences. Nuances in Reddit-type posts could be lost with cleaning and simplification methods.</p>
+<p>Lemmatizing is still a useful data dimensionality reduction technique. However, when it comes to Reddit posts, lemmatizing and especially stemmatizing should be used cautiously. News articles mostly use proper and accepted language, structure, and terms, whereas social media and other online community discussion boards, like Reddit, are likely to follow a more unofficial format. Social media may feature slang, text speak, mispellings, and incomplete sentences. Incomplete sentences could be due to single word responses or reactions, or simply due to improperly structured sentences. Nuances in Reddit-type posts could be lost with cleaning and simplification methods.</p>
 </blockquote>
 <p>Additionally, stopwords will be removed and 200 maximum features will be used.</p>
 </section>
 <section id="vectorizing---thread-author-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---thread-author-schema">Vectorizing - Thread-Author Schema</h2>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/thread_author.csv">Labeled Sample</a></p>
-<div id="00a15a65" class="cell" data-execution_count="3">
+<div id="e93b9709" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_ec4c1206_0635_4de7_94fc_d3a35410e9ed" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_6b0298fb_46ba_4f54_afe2_86bdc3133a96" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -607,7 +607,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_ec4c1206_0635_4de7_94fc_d3a35410e9ed:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_6b0298fb_46ba_4f54_afe2_86bdc3133a96:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -639,9 +639,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="vectorizing---subreddit-author-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---subreddit-author-schema">Vectorizing - Subreddit-Author Schema</h2>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/subreddit_author.csv">Labeled Sample</a></p>
-<div id="b0fa0a52" class="cell" data-execution_count="4">
+<div id="65fe2b10" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<table id="itables_5d6e4c2d_8b1d_4935_992a_76e590cb8e95" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_bef38c75_1689_47eb_b7ea_f81920c10941" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -913,7 +913,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_5d6e4c2d_8b1d_4935_992a_76e590cb8e95:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_bef38c75_1689_47eb_b7ea_f81920c10941:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -945,9 +945,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="vectorizing---threads-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---threads-schema">Vectorizing - Threads Schema</h2>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/threads.csv">Labeled Sample</a></p>
-<div id="52774c62" class="cell" data-execution_count="5">
+<div id="0ed9a13f" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
-<table id="itables_8d90f0c9_a97e_4e22_aa76_5c253a38d21c" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_43a5c73a_f6ec_4714_a266_64abf19a564d" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1219,7 +1219,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_8d90f0c9_a97e_4e22_aa76_5c253a38d21c:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_43a5c73a_f6ec_4714_a266_64abf19a564d:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1251,9 +1251,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="vectorizing---subreddits-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---subreddits-schema">Vectorizing - Subreddits Schema</h2>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/subreddits.csv">Labeled Sample</a></p>
-<div id="e746d19a" class="cell" data-execution_count="6">
+<div id="a66b9f19" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
-<table id="itables_abb997cc_c6b4_4dad_b75a_339821d9c30b" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_12971c44_d4fb_45da_89fc_9b7a17382126" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1525,7 +1525,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_abb997cc_c6b4_4dad_b75a_339821d9c30b:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_12971c44_d4fb_45da_89fc_9b7a17382126:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1557,9 +1557,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="vectorizing---authors-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---authors-schema">Vectorizing - Authors Schema</h2>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/authors.csv">Labeled Sample</a></p>
-<div id="cc35e982" class="cell" data-execution_count="7">
+<div id="bfc50d98" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
-<table id="itables_d5a95506_f959_4f8f_9847_a500af78777d" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_ccf90ac8_2d8a_4aeb_b6c9_60ee1af0acea" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1831,7 +1831,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_d5a95506_f959_4f8f_9847_a500af78777d:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_ccf90ac8_2d8a_4aeb_b6c9_60ee1af0acea:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1863,14 +1863,14 @@ Loading ITables v2.2.4 from the internet...
 </section>
 <section id="summary" class="level1">
 <h1>Summary</h1>
-<p>With the initial pass above, there are very minor differences between the aggregation schemas and respective corpuses. Stronger differences would likely be found if further subsetting on the authors, threads, and subreddits. In future analyses, unsupervised learning methods and potentially supervised learnings methods (when paired with NewsAPI) could help indicate these subsets. Furthermore, pairings from upvotes and length of content within the data could be subset parameter as well.</p>
+<p>With the initial pass above, there are very minor differences between the aggregation schemas and respective corpuses. Stronger differences would likely be found if further subsetting on the authors, threads, and Subreddits. In future analyses, unsupervised learning methods and potentially supervised learnings methods (when paired with NewsAPI) could help indicate these subsets. Furthermore, pairings from upvotes and length of content within the data could be potential subsetting parameters as well.</p>
 <hr>
 </section>
 <section id="code-links" class="level1">
 <h1>Code Links</h1>
 <ul>
-<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/vectorizing_functions.py">Vectorizing Script</a>: script with functions for the vectorization process</li>
-<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/reddit_vectorizing_application.py">Reddit Vectorizing Script</a>: script with appliaction of <strong>Vectorizing Script</strong></li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/vectorizing_functions.py">Vectorizing Script</a>: functions for the vectorization process</li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/reddit_vectorizing_application.py">Reddit Vectorizing Script</a>: application of <strong>Vectorizing Script</strong></li>
 </ul>
 
 

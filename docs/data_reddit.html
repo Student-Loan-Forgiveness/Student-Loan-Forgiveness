@@ -188,13 +188,13 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Aside from reporting done by news media organizations, <strong>Student Loan Forgiveness</strong> is a toipc on social media and public discussion platforms such as Reddit. Reddit consists of communities known as Subreddits, where users can participate in topic specific online discourse. Although some users choose to tag their accounts with political bias leanings such as <em>liberal</em> or <em>conservative</em> which could help determine sentiment on the certain topics, this isn’t prevalent enough to use as a proper label. However, different sentiments and biases could be found for individual users and Subreddits. Additionally, interesting associations and networks could be formed between the users and communities.</p>
+<p>Aside from reporting done by news media organizations, <strong>Student Loan Forgiveness</strong> is a toipc on social media and public discussion platforms such as Reddit. Reddit consists of communities known as Subreddits, where users can participate in topic specific online discourse. Although some users choose to tag their accounts with political bias leanings such as <em>liberal</em> or <em>conservative</em> which could help determine sentiment on certain topics, this isn’t prevalent enough to use as a proper label. However, different sentiments and biases could be found for individual users and Subreddits. Additionally, interesting associations and networks could be formed between the users and communities.</p>
 <blockquote class="blockquote">
-<p>Note that Reddit Users, Reddit Usernames, and Reddit Authors will be used synonymously.</p>
+<p>Note that the terms “Reddit Users”, “Reddit Usernames”, and “Reddit Authors” will be used synonymously throughout this analysis.</p>
 </blockquote>
 <section id="gathering-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="gathering-the-data">Gathering the Data</h2>
-<p>To obtain the data from Reddit, web scraping and an API was utilized. A web scraping function was built which mimics a general search within the Reddit platform and returns the URLs for threads on a given search query. The URLs were then be iterated through with the API, which returned the posts, comments, replies, and other supporting information.</p>
+<p>To obtain the data from Reddit, web scraping and an API was utilized. A web scraping function was built which mimics a general search within the Reddit platform and returns the URLs for threads on a given search query. The URLs were then iterated through with the API, which returned the posts, comments, replies, and other supporting information.</p>
 <p>Three search queries were made:</p>
 <ul>
 <li>Student Loan Forgiveness</li>
@@ -204,9 +204,9 @@ ul.task-list li input[type="checkbox"] {
 <p>However, <strong>Is a College Degree Worth It</strong> data may not be utilized, as it’s not as precise to the topic of this analysis.</p>
 <p>Specific objects and tags were created with API calls, and ultimately returned as a dataframe.</p>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/reddit_raw_snippet.csv">Sample of the Raw Reddit Data</a></p>
-<div id="f3829bad" class="cell" data-execution_count="2">
+<div id="2c25b370" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_263bfb91_d77e_4d25_bc09_c64b37ce5f47" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_a9e51218_f1ae_4882_af9a_ce16194d6840" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -291,7 +291,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_263bfb91_d77e_4d25_bc09_c64b37ce5f47:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_a9e51218_f1ae_4882_af9a_ce16194d6840:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -322,7 +322,7 @@ Loading ITables v2.2.4 from the internet...
 <blockquote class="blockquote">
 <p>This initial cleaning step still left the individual posts, comments, or replies as rows themselves.</p>
 </blockquote>
-<p>Given that quite a few rows of content could be a few words, or even a single word reply, the idea for the next processing step was to have content from each author for each thread aggregated together. Additionally, author maps were created to track who communications were between. For each thread, the following restructuring was performed for a given author:</p>
+<p>Given that quite a few rows of content could be a few words, or even a single word reply, the idea for the next processing step was to have content from each author for each thread aggregated together. Additionally, data maps were created to track communications between authors. For each thread, the following restructuring was performed for a given author:</p>
 <ul>
 <li>Lists:
 <ul>
@@ -342,9 +342,9 @@ Loading ITables v2.2.4 from the internet...
 </ul></li>
 </ul>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/reddit_clean_snippet.csv">A sample of the Restructured Reddit data</a></p>
-<div id="d3ad215c" class="cell" data-execution_count="3">
+<div id="398e12b0" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_15b8aabe_39d8_4073_997b_4acfab62ad32" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_6c6d0de2_7b91_46cb_a11f_4779d31e7bec" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -427,7 +427,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_15b8aabe_39d8_4073_997b_4acfab62ad32:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_6c6d0de2_7b91_46cb_a11f_4779d31e7bec:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -449,8 +449,8 @@ Loading ITables v2.2.4 from the internet...
 <section id="future-processing-and-potential-labels" class="level1">
 <h1>Future Processing and Potential Labels</h1>
 <p>Similar to how content can be aggregated for each author per thread, a similar process can be done for an entire thread, an entire subreddit, or even aggregated for authors across mutliple threads.</p>
-<p>Following this concept, potential labels could be search query, author, subreddit, or even popularity or approval of community by upvotes. Additionally, unsupervised methods such as association rule mining and clustering could be a logical choices for examining this data. Associations and interactions may become apparent with these methods.</p>
-<p>In relation to the two core views of <em>supports</em> and <em>does not support</em> <strong>student loan forgiveness</strong>, the NewsAPI politcal bias classification models could potentially be used to interpolate political bias for authors and Subreddits. Thus, author and Subreddit sentiment towards the topic could overall be interpolated. It would interesting to examine clusters and associations along with the classification predictions.</p>
+<p>Following this concept, potential labels could be search query, author, subreddit, or even popularity or approval of community by upvotes. Additionally, unsupervised methods such as association rule mining and clustering could be logical choices for examining this data. Associations and interactions may become apparent with these methods.</p>
+<p>In relation to the two core views of <em>supports</em> and <em>does not support</em> <strong>student loan forgiveness</strong>, the NewsAPI politcal bias classification models could potentially be used to interpolate political bias for authors and Subreddits. Thus, author and Subreddit sentiment towards the topic could potentially be predicted. Another application could be to examine clusters and associations along with their classifications.</p>
 </section>
 <section id="reddit-authors" class="level1">
 <h1>Reddit Authors</h1>
@@ -488,9 +488,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="potential-aggregations" class="level1">
 <h1>Potential Aggregations</h1>
 <p>The authors are one point of aggregation, however, what are the numbers associated with all potential aggregations? Recall that content will be aggregated via authors, threads, and subreddits to analyze different sentiments. The illustrations above show some intersection between authors across the threads and communites, but the following table will show some count data overall:</p>
-<div id="d8a028b8" class="cell" data-execution_count="4">
+<div id="e9a0f596" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<table id="itables_72559dad_12bf_4217_8ba8_e4d3f27e52dd" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<table id="itables_c5693fae_589f_4cae_80ea_4a1cd8854704" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
 <thead>
     <tr style="text-align: right;">
       
@@ -564,7 +564,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_72559dad_12bf_4217_8ba8_e4d3f27e52dd:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_c5693fae_589f_4cae_80ea_4a1cd8854704:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 

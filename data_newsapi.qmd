@@ -41,17 +41,17 @@ show(newsapi_raw.head(5), style="width:100%;margin:auto")
 
 **Columns**:
 
-- author
-- content
-- description
-- date
-- source
-- title
-- url
+- *Author*: author of the article, sometimes source of the article
+- *Content*: truncated version of the article itself
+- *Description*: summary of the article
+- *Date*: date the article was published
+- *Source*: news media organization the article was published by
+- *Title*: the title of the article
+- *URL*: the url of the article on the news media organization source
 
 ## NewsAPI Scraping
 
-One limitation of NewsAPI is that it doesn't return the content of an article in its entirety. To account for this, numerous web scrapers were built for sources which were both scraping-eligible and appropriate for this analysis. This did reduce the number of sources and articles in the data from NewsAPI, but did result in complete article content. A list of eligible sources and their related scrapers were iteratively called to populate a dataframe with the individual paragraphs from the url associated with the article. To specify, the initial scrape through will result in a dataframe where each paragraph from the each scrapable article will have its own row.
+One limitation of NewsAPI is that it doesn't return the content of an article in its entirety. To account for this, numerous web scrapers were built for sources which were both scraping-eligible and appropriate for this analysis. This did reduce the number of sources and articles in the data from NewsAPI, but did result in complete article content. A list of eligible sources and their related scrapers were iteratively called to populate a dataframe with the individual paragraphs from the url associated with the article. Procedurally, the initial scrape through will result in a dataframe where each paragraph from each scrapable article will have its own row.
 
 ### NewsAPI Scraped Initial Data
 
@@ -61,12 +61,7 @@ One limitation of NewsAPI is that it doesn't return the content of an article in
 show(scraped_raw.head(5), style="width:100%;margin:auto")
 ```
 
-**Columns**:
-
-- source
-- url
-- paragraph
-- paragraph_num
+Above shows a random sample of 5 rows after the scraping. Paragraphs and paragraph numbers are new compared to the initial extracted data.
 
 > Using the **source** and **url** columns as keys, these can recombined with the columns from the original extraction of data for future use.
 
@@ -84,13 +79,13 @@ show(allsides_raw.head(5), style="width:100%;margin:auto")
 
 **Columns**:
 
-- source
-- url
-- Bias Numeric
-- Bias Specific
-- Type
-- Region
-- Website
+- *Source*: Source as listed in AllSides
+- *URL*: link to the rating page in AllSides
+- *Bias Numeric*: numeric version of the bias, from -6 to +6 (left to right, respectively)
+- *Bias Specific*: categorically binned version of the bias
+- *Type*: news media, etc.
+- *Region*: regional location and coverage area of the news media organization
+- *Website*: home website of the news media organization
 
 ## Cleaning and Merging
 
@@ -115,7 +110,7 @@ Thus far, raw data from an API and an array of web scraping functions has been g
 
 - *paragraph*
   - blank paragraphs removed
-  - non-breaking space characters removed (i.e. "\xa0")
+  - non-breaking space characters removed
   - stripped of leading, trailing, and multiple spaces
   - all paragraphs of a single article combined post-cleaning
   
@@ -140,7 +135,7 @@ This resulted in a dataframe with the following columns:
 
 Where the text data itself will likely be *article*, but interesting analyses could be extended by using *description* or *title*.
 
-The main label of interest will be *Bais Specific*, but interesting analyses could hinge upon using *source*, *author*, *date*, or *search (topic query parameter)*.
+The main label of interest will be *Bias Specific*, but interesting analyses could hinge upon using *source*, *author*, *date*, or *search (topic query parameter)*.
 
 [Sample of the Final Labeled Data](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/newsapi_clean_snippet.csv)
 
@@ -152,7 +147,7 @@ show(newsapi_clean.head(5), style="width:100%;margin:auto")
 
 Although many of the sources were able to matched with a political bias, a number were not.
 
-Normally, missing data is either interpolated in some manner or simply removed. However, a goal of the subsequent analyses will be attempting to predict through classification techniques the political biases of articles. The missing label values will therefore be retained overall, but will be removed for training, and then found afterwards.
+Normally, missing data is either interpolated in some manner or simply removed. However, a goal of the subsequent analyses will be attempting to predict through classification techniques the political biases of articles (and potentially regression for the numeric representation of political bias). The missing label values will therefore be retained overall, but will be removed for training, and then found afterwards.
 
 Additionally, classification is best trained on balanced data. Currently, the data with known biases is spread across five different categories:
 
@@ -191,7 +186,7 @@ It could, however, be combined into three labels:
 :::
 :::
 
-In either the three or five category models, more data could be beneficial. Sources labeled with political biases from the AllSides data was done for the media outlet overall. In other words, the sources should have indicators of bias regardless of topic queried. Therefore, to gather more training data, articles from the top three most frequent sources across each of the five categories was gathered following the same methodologies as above. Although it does adhere specifically to the topic of **student loan forgiveness**, it could be a complementary traininig source for political bias.
+In either the three or five category models, more data could be beneficial. Sources labeled with political biases from the AllSides data was done for the media outlet overall. In other words, the sources should have indicators of bias regardless of topic queried. Therefore, to gather more training data, articles from the top three most frequent sources across each of the five categories was gathered following the same methodologies as above. Although it does adhere specifically to the topic of **student loan forgiveness**, it could be a complementary training source for political bias.
 
 > Note that in the case the complementary data did have duplicate articles contained within the topic-specific data, these articles were removed.
 
