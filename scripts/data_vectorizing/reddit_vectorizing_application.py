@@ -220,7 +220,7 @@ plt.show()
 '''
 Part 6: Author Schema
 '''
-# aggregation schema 4
+# aggregation schema 5
 cv_5 = vectorize_to_df(text_authors, input_type='content', vectorizer_type='count', params=schema_params)
 cv_5_labeled = pd.concat([authors[authors_labels], cv_5], axis=1)
 cv_5_labeled.to_csv('reddit_vectorized/authors.csv', index=False)
@@ -248,6 +248,45 @@ plt.savefig('reddit_vectorized/most_frequent_words_authors.png', dpi=300)
 plt.show()
 
 '''
+One Additional CountVectorizer for max_df and min_df using the first schema
+
+- min_df: 0.25
+- max_df: 0.75
+'''
+# additional parameters
+additional_params = {'stop_words': 'english',
+                     'min_df': 0.1,
+                     'max_df': 0.9}
+
+# additional parameters cv
+cv_add = vectorize_to_df(text_thread_author, input_type='content', vectorizer_type='count', params=additional_params)
+cv_add_labeled = pd.concat([thread_author[thread_author_labels], cv_add], axis=1)
+cv_add_labeled.to_csv('reddit_vectorized/thread_author_additional.csv', index=False)
+
+# wordcloud overall - countvectorizer
+cv_add_wc = create_word_cloud(cv_add.sum(axis=0).to_dict(), cloud_method='frequency')
+plt.figure(figsize=(12, 8))
+plt.imshow(cv_add_wc, interpolation='bilinear')
+plt.axis('off')
+plt.savefig('reddit_vectorized/wc_thread_author_additional.png', dpi=500)
+plt.show()
+
+# top frequency barplot - countvectorizer
+cv_add_top = cv_add.sum(axis=0).reset_index()
+cv_add_top.columns = ['word', 'count']
+cv_add_top = cv_add_top.nlargest(10, 'count')
+
+# plot
+plt.figure(figsize=(12, 8))
+sns.barplot(cv_add_top, x='count', y='word')
+plt.xlabel('Counts')
+plt.ylabel('Words')
+plt.title('Most Frequent Words - Authors by Thread Additional')
+plt.savefig('reddit_vectorized/most_frequent_words_thread_author_additional.png', dpi=300)
+plt.show()
+
+
+'''
 Snippets Section
 '''
 # schema 1: thread-author
@@ -264,3 +303,6 @@ cv_4_labeled.head(10).to_csv('reddit_vectorized/snippets/subreddits.csv', index=
 
 # schema 5: authors
 cv_5_labeled.head(10).to_csv('reddit_vectorized/snippets/authors.csv', index=False)
+
+# additional parameters
+cv_add_labeled.head(10).to_csv('reddit_vectorized/snippets/thread_author_additional.csv', index=False)

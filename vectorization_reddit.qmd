@@ -18,6 +18,7 @@ subreddit_author = pd.read_csv('data/reddit_data/vectorized/subreddit_author.csv
 threads = pd.read_csv('data/reddit_data/vectorized/threads.csv')
 subreddits = pd.read_csv('data/reddit_data/vectorized/subreddits.csv')
 authors = pd.read_csv('data/reddit_data/vectorized/authors.csv')
+thread_author_additional = pd.read_csv('data/reddit_data/vectorized/thread_author_additional.csv')
 
 #show(newsapi_raw, columnDefs=[{"width": "120px", "targets": "_all"}], autoWidth=False, classes="display")
 ```
@@ -196,9 +197,36 @@ show(authors, style="width:100%;margin:auto")
 :::
 :::
 
+## Vectorizing - Additional Parameters
+
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/thread_author_additional.csv)
+
+```{python}
+show(thread_author_additional, style="width:100%;margin:auto")
+```
+
+::: columns
+::: {.column width=45%}
+**Wordcloud**
+
+![](images/reddit/vectorized/wc_thread_author_additional.png)
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+**Most Frequent Words**
+
+![](images/reddit/vectorized/most_frequent_words_thread_author_additional.png)
+:::
+:::
+
 # Summary
 
 With the initial pass above, there are very minor differences between the aggregation schemas and respective corpuses. Stronger differences would likely be found if further subsetting on the authors, threads, and Subreddits. In future analyses, unsupervised learning methods and potentially supervised learnings methods (when paired with NewsAPI) could help indicate these subsets. Furthermore, pairings from upvotes and length of content within the data could be potential subsetting parameters as well.
+
+However, when taking away the maximum features parameter and then restraining the data from a minimum frequency of $0.1$ and a maximum frequency of $0.9$ reveals a much different wordcloud. The range is rather large, but there are a limited number of words. 
 
 ---
 

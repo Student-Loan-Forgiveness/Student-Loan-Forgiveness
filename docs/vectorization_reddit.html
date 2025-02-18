@@ -71,6 +71,35 @@ ul.task-list li input[type="checkbox"] {
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -158,6 +187,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#vectorizing---threads-schema" id="toc-vectorizing---threads-schema" class="nav-link" data-scroll-target="#vectorizing---threads-schema">Vectorizing - Threads Schema</a></li>
   <li><a href="#vectorizing---subreddits-schema" id="toc-vectorizing---subreddits-schema" class="nav-link" data-scroll-target="#vectorizing---subreddits-schema">Vectorizing - Subreddits Schema</a></li>
   <li><a href="#vectorizing---authors-schema" id="toc-vectorizing---authors-schema" class="nav-link" data-scroll-target="#vectorizing---authors-schema">Vectorizing - Authors Schema</a></li>
+  <li><a href="#vectorizing---additional-parameters" id="toc-vectorizing---additional-parameters" class="nav-link" data-scroll-target="#vectorizing---additional-parameters">Vectorizing - Additional Parameters</a></li>
   </ul></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   <li><a href="#code-links" id="toc-code-links" class="nav-link" data-scroll-target="#code-links">Code Links</a></li>
@@ -192,9 +222,9 @@ ul.task-list li input[type="checkbox"] {
 <section id="strategy---further-preprocessing" class="level2">
 <h2 class="anchored" data-anchor-id="strategy---further-preprocessing">Strategy - Further Preprocessing</h2>
 <p>Recall that the prepared data looks like this:</p>
-<div id="ad013724" class="cell" data-execution_count="2">
+<div id="aeaec44b" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_398d86eb_f391_4e65_98c4_fc7b2dec9ef5" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_228afdab_a981_417d_8d12_ae98be4aeb32" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -277,7 +307,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_398d86eb_f391_4e65_98c4_fc7b2dec9ef5:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_228afdab_a981_417d_8d12_ae98be4aeb32:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -333,9 +363,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="vectorizing---thread-author-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---thread-author-schema">Vectorizing - Thread-Author Schema</h2>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/thread_author.csv">Labeled Sample</a></p>
-<div id="e93b9709" class="cell" data-execution_count="3">
+<div id="127e9dbd" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_6b0298fb_46ba_4f54_afe2_86bdc3133a96" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_ed2cef57_14c9_45ed_bfd9_b75d86447c0c" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -607,7 +637,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_6b0298fb_46ba_4f54_afe2_86bdc3133a96:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_ed2cef57_14c9_45ed_bfd9_b75d86447c0c:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -639,9 +669,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="vectorizing---subreddit-author-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---subreddit-author-schema">Vectorizing - Subreddit-Author Schema</h2>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/subreddit_author.csv">Labeled Sample</a></p>
-<div id="65fe2b10" class="cell" data-execution_count="4">
+<div id="1b7dd2b5" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<table id="itables_bef38c75_1689_47eb_b7ea_f81920c10941" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_2944c7a3_0548_45e9_8f7f_427a5281a0ae" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -913,7 +943,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_bef38c75_1689_47eb_b7ea_f81920c10941:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_2944c7a3_0548_45e9_8f7f_427a5281a0ae:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -945,9 +975,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="vectorizing---threads-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---threads-schema">Vectorizing - Threads Schema</h2>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/threads.csv">Labeled Sample</a></p>
-<div id="0ed9a13f" class="cell" data-execution_count="5">
+<div id="7a86743b" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
-<table id="itables_43a5c73a_f6ec_4714_a266_64abf19a564d" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_a7403904_4db2_4583_98c7_0ca355e08568" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1219,7 +1249,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_43a5c73a_f6ec_4714_a266_64abf19a564d:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_a7403904_4db2_4583_98c7_0ca355e08568:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1251,9 +1281,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="vectorizing---subreddits-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---subreddits-schema">Vectorizing - Subreddits Schema</h2>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/subreddits.csv">Labeled Sample</a></p>
-<div id="a66b9f19" class="cell" data-execution_count="6">
+<div id="9d525be1" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
-<table id="itables_12971c44_d4fb_45da_89fc_9b7a17382126" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_e1eb1dd2_3409_458e_b482_11ffc29a3047" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1525,7 +1555,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_12971c44_d4fb_45da_89fc_9b7a17382126:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_e1eb1dd2_3409_458e_b482_11ffc29a3047:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1557,9 +1587,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="vectorizing---authors-schema" class="level2">
 <h2 class="anchored" data-anchor-id="vectorizing---authors-schema">Vectorizing - Authors Schema</h2>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/authors.csv">Labeled Sample</a></p>
-<div id="bfc50d98" class="cell" data-execution_count="7">
+<div id="c3420705" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
-<table id="itables_ccf90ac8_2d8a_4aeb_b6c9_60ee1af0acea" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_83c3fb18_1e3d_4e2d_b578_ff009ad955bd" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1831,7 +1861,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_ccf90ac8_2d8a_4aeb_b6c9_60ee1af0acea:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_83c3fb18_1e3d_4e2d_b578_ff009ad955bd:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1860,10 +1890,132 @@ Loading ITables v2.2.4 from the internet...
 </div>
 </div>
 </section>
+<section id="vectorizing---additional-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="vectorizing---additional-parameters">Vectorizing - Additional Parameters</h2>
+<p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/thread_author_additional.csv">Labeled Sample</a></p>
+<div id="a69d179d" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<table id="itables_0c5637bf_5ad9_4cca_9dd2_db78c21107eb" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>author</th>
+      <th>url</th>
+      <th>subreddit</th>
+      <th>search</th>
+      <th>debt</th>
+      <th>don</th>
+      <th>just</th>
+      <th>like</th>
+      <th>loan</th>
+      <th>make</th>
+      <th>pay</th>
+      <th>people</th>
+      <th>student</th>
+      <th>wa</th>
+      <th>year</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.4 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_0c5637bf_5ad9_4cca_9dd2_db78c21107eb:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["soccerorfootie", "https://www.reddit.com/r/unusual_whales/comments/1hks78a/breaking_biden_administration_has_officially/", "unusual_whales", "student_loan_forgiveness", 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0], ["HashRunner", "https://www.reddit.com/r/unusual_whales/comments/1hks78a/breaking_biden_administration_has_officially/", "unusual_whales", "student_loan_forgiveness", 0, 0, 0, 0, 2, 1, 0, 0, 2, 1, 0], ["bearbear0723", "https://www.reddit.com/r/unusual_whales/comments/1hks78a/breaking_biden_administration_has_officially/", "unusual_whales", "student_loan_forgiveness", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0], ["lalatina169", "https://www.reddit.com/r/unusual_whales/comments/1hks78a/breaking_biden_administration_has_officially/", "unusual_whales", "student_loan_forgiveness", 0, 0, 0, 0, 0, 2, 0, 0, 0, 1, 0], ["Stunning-Use-7052", "https://www.reddit.com/r/unusual_whales/comments/1hks78a/breaking_biden_administration_has_officially/", "unusual_whales", "student_loan_forgiveness", 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0], ["No_Poet_9767", "https://www.reddit.com/r/unusual_whales/comments/1hks78a/breaking_biden_administration_has_officially/", "unusual_whales", "student_loan_forgiveness", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ["apenchantfortrolling", "https://www.reddit.com/r/unusual_whales/comments/1hks78a/breaking_biden_administration_has_officially/", "unusual_whales", "student_loan_forgiveness", 0, 0, 0, 0, 1, 0, 0, 1, 0, 2, 0], ["Dreamer1317", "https://www.reddit.com/r/unusual_whales/comments/1hks78a/breaking_biden_administration_has_officially/", "unusual_whales", "student_loan_forgiveness", 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], ["ThisGuyLovesSunshine", "https://www.reddit.com/r/unusual_whales/comments/1hks78a/breaking_biden_administration_has_officially/", "unusual_whales", "student_loan_forgiveness", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], ["Elloby", "https://www.reddit.com/r/unusual_whales/comments/1hks78a/breaking_biden_administration_has_officially/", "unusual_whales", "student_loan_forgiveness", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><strong>Wordcloud</strong></p>
+<p><img src="images/reddit/vectorized/wc_thread_author_additional.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><strong>Most Frequent Words</strong></p>
+<p><img src="images/reddit/vectorized/most_frequent_words_thread_author_additional.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
 </section>
 <section id="summary" class="level1">
 <h1>Summary</h1>
 <p>With the initial pass above, there are very minor differences between the aggregation schemas and respective corpuses. Stronger differences would likely be found if further subsetting on the authors, threads, and Subreddits. In future analyses, unsupervised learning methods and potentially supervised learnings methods (when paired with NewsAPI) could help indicate these subsets. Furthermore, pairings from upvotes and length of content within the data could be potential subsetting parameters as well.</p>
+<p>However, when taking away the maximum features parameter and then restraining the data from a minimum frequency of <span class="math inline">\(0.1\)</span> and a maximum frequency of <span class="math inline">\(0.9\)</span> reveals a much different wordcloud. The range is rather large, but there are a limited number of words.</p>
 <hr>
 </section>
 <section id="code-links" class="level1">
