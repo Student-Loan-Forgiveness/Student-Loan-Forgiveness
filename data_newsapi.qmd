@@ -33,7 +33,7 @@ The data is initially returned in JSON format, which was then turned into a data
 
 ### NewsAPI Extraction Initial Data
 
-Sample of the Raw NewsAPI Data:
+[Sample of the Raw NewsAPI Data](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/newsapi_raw_snippet.csv)
 
 ```{python}
 show(newsapi_raw.head(5), style="width:100%;margin:auto")
@@ -55,7 +55,7 @@ One limitation of NewsAPI is that it doesn't return the content of an article in
 
 ### NewsAPI Scraped Initial Data
 
-Sample of the Raw Scraped Data:
+[Sample of the Raw Scraped Data](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/scraped_raw_snippet.csv)
 
 ```{python}
 show(scraped_raw.head(5), style="width:100%;margin:auto")
@@ -76,7 +76,7 @@ AllSides is a community-based political bias rating platform for media. Using we
 
 ### AllSides Initial Data
 
-Sample of the AllSides Data:
+[Sample of the AllSides Data](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/allsides_data/allsides_raw_snippet.csv)
 
 ```{python}
 show(allsides_raw.head(5), style="width:100%;margin:auto")
@@ -142,13 +142,13 @@ Where the text data itself will likely be *article*, but interesting analyses co
 
 The main label of interest will be *Bais Specific*, but interesting analyses could hinge upon using *source*, *author*, *date*, or *search (topic query parameter)*.
 
-Sample of the final labeled data:
+[Sample of the Final Labeled Data](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/newsapi_clean_snippet.csv)
 
 ```{python}
 show(newsapi_clean.head(5), style="width:100%;margin:auto")
 ```
 
-# Complementary Data
+# Specific and Complementary Data
 
 Although many of the sources were able to matched with a political bias, a number were not.
 
@@ -211,3 +211,15 @@ The complementary data could provide the additional spread of labels:
 ![](images/newsapi/bias_counts_reduced_comp.png)
 :::
 :::
+
+---
+
+# Code Links
+
+- [NewsAPI Functions Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_acquisition/newsapi_functions.py): functions related to extracting and scraping NewsAPI Data
+- [NewsAPI Application Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_acquisition/newsapi_application.py): application of **NewsAPI Functions Script**
+- [AllSides Media Bias Functions Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_acquisition/media_bias_functions.py): functions related to extracting and scraping AllSides data
+- [AllSides Media Bias Application Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_acquisition/media_bias_application.py): application of **AllSides Media Bias Application Script**
+- [Labeling News Sources Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_cleaning/label_news_sources.py): script to append the AllSides Media Bias labels
+- [NewsAPI Cleaning Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_cleaning/label_news_sources.py): functions related to cleaning the NewsAPI data
+- [NewsAPI Cleaning Application Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_cleaning/newsapi_cleaning_application.py): application of **NewsAPI Cleaning Script**

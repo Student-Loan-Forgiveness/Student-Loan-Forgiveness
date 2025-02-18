@@ -169,7 +169,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#merging-strategy" id="toc-merging-strategy" class="nav-link" data-scroll-target="#merging-strategy">Merging Strategy</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#complementary-data" id="toc-complementary-data" class="nav-link" data-scroll-target="#complementary-data">Complementary Data</a></li>
+  <li><a href="#specific-and-complementary-data" id="toc-specific-and-complementary-data" class="nav-link" data-scroll-target="#specific-and-complementary-data">Specific and Complementary Data</a></li>
+  <li><a href="#code-links" id="toc-code-links" class="nav-link" data-scroll-target="#code-links">Code Links</a></li>
   </ul>
 </nav>
     </div>
@@ -208,10 +209,10 @@ ul.task-list li input[type="checkbox"] {
 <p>The data is initially returned in JSON format, which was then turned into a dataframe and subsequently exported into a <code>csv</code> file.</p>
 <section id="newsapi-extraction-initial-data" class="level3">
 <h3 class="anchored" data-anchor-id="newsapi-extraction-initial-data">NewsAPI Extraction Initial Data</h3>
-<p>Sample of the Raw NewsAPI Data:</p>
-<div id="4ba3babc" class="cell" data-execution_count="2">
+<p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/newsapi_raw_snippet.csv">Sample of the Raw NewsAPI Data</a></p>
+<div id="d40ad280" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_9bd79e68_c6be_4bc5_a1d0_fa740264b8c6" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_67f60b54_0b8f_4079_958c_60a9d6932d1d" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -290,7 +291,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_9bd79e68_c6be_4bc5_a1d0_fa740264b8c6:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_67f60b54_0b8f_4079_958c_60a9d6932d1d:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -324,10 +325,10 @@ Loading ITables v2.2.4 from the internet...
 <p>One limitation of NewsAPI is that it doesn’t return the content of an article in its entirety. To account for this, numerous web scrapers were built for sources which were both scraping-eligible and appropriate for this analysis. This did reduce the number of sources and articles in the data from NewsAPI, but did result in complete article content. A list of eligible sources and their related scrapers were iteratively called to populate a dataframe with the individual paragraphs from the url associated with the article. To specify, the initial scrape through will result in a dataframe where each paragraph from the each scrapable article will have its own row.</p>
 <section id="newsapi-scraped-initial-data" class="level3">
 <h3 class="anchored" data-anchor-id="newsapi-scraped-initial-data">NewsAPI Scraped Initial Data</h3>
-<p>Sample of the Raw Scraped Data:</p>
-<div id="ddd92d9d" class="cell" data-execution_count="3">
+<p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/scraped_raw_snippet.csv">Sample of the Raw Scraped Data</a></p>
+<div id="58f2c39d" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_f807d6ec_bc0f_4e83_886c_f90b0fe437cf" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_03d5a542_76d7_47ed_a429_e5730b681706" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -403,7 +404,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_f807d6ec_bc0f_4e83_886c_f90b0fe437cf:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_03d5a542_76d7_47ed_a429_e5730b681706:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -437,10 +438,10 @@ Loading ITables v2.2.4 from the internet...
 <p>AllSides is a community-based political bias rating platform for media. Using web scraping, biases for the sources in the scraped data were accumulated. Pages (urls) containing information on sources were scraped and manually found, which were then in turned scraped for their specific bias ratings.</p>
 <section id="allsides-initial-data" class="level3">
 <h3 class="anchored" data-anchor-id="allsides-initial-data">AllSides Initial Data</h3>
-<p>Sample of the AllSides Data:</p>
-<div id="afc1df3e" class="cell" data-execution_count="4">
+<p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/allsides_data/allsides_raw_snippet.csv">Sample of the AllSides Data</a></p>
+<div id="1c86dbcb" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<table id="itables_ea1a7875_6c19_417c_9da1_08ed1b5f606c" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_1bf2b772_4d9d_4226_835b_b28101cc9d65" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -519,7 +520,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_ea1a7875_6c19_417c_9da1_08ed1b5f606c:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_1bf2b772_4d9d_4226_835b_b28101cc9d65:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -602,10 +603,10 @@ Loading ITables v2.2.4 from the internet...
 </ul>
 <p>Where the text data itself will likely be <em>article</em>, but interesting analyses could be extended by using <em>description</em> or <em>title</em>.</p>
 <p>The main label of interest will be <em>Bais Specific</em>, but interesting analyses could hinge upon using <em>source</em>, <em>author</em>, <em>date</em>, or <em>search (topic query parameter)</em>.</p>
-<p>Sample of the final labeled data:</p>
-<div id="b7aedd59" class="cell" data-execution_count="5">
+<p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/newsapi_clean_snippet.csv">Sample of the Final Labeled Data</a></p>
+<div id="bbafd50d" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
-<table id="itables_800298c8_9205_46c1_ac53_addbd17b1f2e" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_4ecabdf1_ad04_49ff_a84a_d30c4bdbeddb" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -688,7 +689,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_800298c8_9205_46c1_ac53_addbd17b1f2e:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_4ecabdf1_ad04_49ff_a84a_d30c4bdbeddb:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -708,8 +709,8 @@ Loading ITables v2.2.4 from the internet...
 </section>
 </section>
 </section>
-<section id="complementary-data" class="level1">
-<h1>Complementary Data</h1>
+<section id="specific-and-complementary-data" class="level1">
+<h1>Specific and Complementary Data</h1>
 <p>Although many of the sources were able to matched with a political bias, a number were not.</p>
 <p>Normally, missing data is either interpolated in some manner or simply removed. However, a goal of the subsequent analyses will be attempting to predict through classification techniques the political biases of articles. The missing label values will therefore be retained overall, but will be removed for training, and then found afterwards.</p>
 <p>Additionally, classification is best trained on balanced data. Currently, the data with known biases is spread across five different categories:</p>
@@ -753,6 +754,19 @@ Loading ITables v2.2.4 from the internet...
 <p><img src="images/newsapi/bias_counts_reduced_comp.png" class="img-fluid"></p>
 </div>
 </div>
+<hr>
+</section>
+<section id="code-links" class="level1">
+<h1>Code Links</h1>
+<ul>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_acquisition/newsapi_functions.py">NewsAPI Functions Script</a>: functions related to extracting and scraping NewsAPI Data</li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_acquisition/newsapi_application.py">NewsAPI Application Script</a>: application of <strong>NewsAPI Functions Script</strong></li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_acquisition/media_bias_functions.py">AllSides Media Bias Functions Script</a>: functions related to extracting and scraping AllSides data</li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_acquisition/media_bias_application.py">AllSides Media Bias Application Script</a>: application of <strong>AllSides Media Bias Application Script</strong></li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_cleaning/label_news_sources.py">Labeling News Sources Script</a>: script to append the AllSides Media Bias labels</li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_cleaning/label_news_sources.py">NewsAPI Cleaning Script</a>: functions related to cleaning the NewsAPI data</li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_cleaning/newsapi_cleaning_application.py">NewsAPI Cleaning Application Script</a>: application of <strong>NewsAPI Cleaning Script</strong></li>
+</ul>
 
 
 </section>

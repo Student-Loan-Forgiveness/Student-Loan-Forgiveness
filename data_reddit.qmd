@@ -37,7 +37,7 @@ However, **Is a College Degree Worth It** data may not be utilized, as it's not 
 
 Specific objects and tags were created with API calls, and ultimately returned as a dataframe.
 
-Sample of the Raw Reddit Data:
+[Sample of the Raw Reddit Data](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/reddit_raw_snippet.csv)
 
 ```{python}
 show(reddit_raw.head(5), style="width:100%;margin:auto")
@@ -70,7 +70,7 @@ Given that quite a few rows of content could be a few words, or even a single wo
   - Author (Reddit username)
   - Original Author (boolean for if the author started the thread - made the original post)
 
-A sample of the restructured Reddit data:
+[A sample of the Restructured Reddit data](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/reddit_clean_snippet.csv)
 
 ```{python}
 show(reddit_structured.head(5), style="width:100%;margin:auto")
@@ -134,3 +134,11 @@ The authors are one point of aggregation, however, what are the numbers associat
 ```{python}
 show(reddit_counts)
 ```
+
+---
+
+# Code Links
+
+- [Reddit Extraction Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_acquisition/reddit.py): script with functions and code to extract the necessary Reddit data
+- [Reddit Cleaning Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_acquisition/reddit.py): functions related to cleaning extracted Reddit data
+- [Reddit Cleaning Application Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_acquisition/reddit.py): application of the **Reddit Cleaning Script**

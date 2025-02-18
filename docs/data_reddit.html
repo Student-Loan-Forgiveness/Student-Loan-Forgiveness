@@ -160,6 +160,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#top-ten-authors-across-scenarios" id="toc-top-ten-authors-across-scenarios" class="nav-link" data-scroll-target="#top-ten-authors-across-scenarios">Top Ten Authors Across Scenarios</a></li>
   </ul></li>
   <li><a href="#potential-aggregations" id="toc-potential-aggregations" class="nav-link" data-scroll-target="#potential-aggregations">Potential Aggregations</a></li>
+  <li><a href="#code-links" id="toc-code-links" class="nav-link" data-scroll-target="#code-links">Code Links</a></li>
   </ul>
 </nav>
     </div>
@@ -202,10 +203,10 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>However, <strong>Is a College Degree Worth It</strong> data may not be utilized, as it’s not as precise to the topic of this analysis.</p>
 <p>Specific objects and tags were created with API calls, and ultimately returned as a dataframe.</p>
-<p>Sample of the Raw Reddit Data:</p>
-<div id="2e134549" class="cell" data-execution_count="2">
+<p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/reddit_raw_snippet.csv">Sample of the Raw Reddit Data</a></p>
+<div id="f3829bad" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_6b368aaa_5684_49e3_bea4_c96bcd38ae71" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_263bfb91_d77e_4d25_bc09_c64b37ce5f47" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -290,7 +291,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_6b368aaa_5684_49e3_bea4_c96bcd38ae71:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_263bfb91_d77e_4d25_bc09_c64b37ce5f47:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -340,10 +341,10 @@ Loading ITables v2.2.4 from the internet...
 <li>Original Author (boolean for if the author started the thread - made the original post)</li>
 </ul></li>
 </ul>
-<p>A sample of the restructured Reddit data:</p>
-<div id="45d7b684" class="cell" data-execution_count="3">
+<p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/reddit_clean_snippet.csv">A sample of the Restructured Reddit data</a></p>
+<div id="d3ad215c" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_fa9c3d06_c256_47d5_a46b_2efdf2ed2174" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_15b8aabe_39d8_4073_997b_4acfab62ad32" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -426,7 +427,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_fa9c3d06_c256_47d5_a46b_2efdf2ed2174:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_15b8aabe_39d8_4073_997b_4acfab62ad32:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -487,9 +488,9 @@ Loading ITables v2.2.4 from the internet...
 <section id="potential-aggregations" class="level1">
 <h1>Potential Aggregations</h1>
 <p>The authors are one point of aggregation, however, what are the numbers associated with all potential aggregations? Recall that content will be aggregated via authors, threads, and subreddits to analyze different sentiments. The illustrations above show some intersection between authors across the threads and communites, but the following table will show some count data overall:</p>
-<div id="7fe120a8" class="cell" data-execution_count="4">
+<div id="d8a028b8" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<table id="itables_d33b7504_c37d_48b2_abda_66467a6c00a1" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<table id="itables_72559dad_12bf_4217_8ba8_e4d3f27e52dd" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
 <thead>
     <tr style="text-align: right;">
       
@@ -563,7 +564,7 @@ Loading ITables v2.2.4 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_d33b7504_c37d_48b2_abda_66467a6c00a1:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_72559dad_12bf_4217_8ba8_e4d3f27e52dd:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -580,6 +581,15 @@ Loading ITables v2.2.4 from the internet...
 </script>
 </div>
 </div>
+<hr>
+</section>
+<section id="code-links" class="level1">
+<h1>Code Links</h1>
+<ul>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_acquisition/reddit.py">Reddit Extraction Script</a>: script with functions and code to extract the necessary Reddit data</li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_acquisition/reddit.py">Reddit Cleaning Script</a>: functions related to cleaning extracted Reddit data</li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_acquisition/reddit.py">Reddit Cleaning Application Script</a>: application of the <strong>Reddit Cleaning Script</strong></li>
+</ul>
 
 
 </section>

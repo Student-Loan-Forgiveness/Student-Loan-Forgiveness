@@ -76,7 +76,7 @@ These versions will vectorize the completely preprocessed NewsAPI data in its en
 
 ### CountVectorizer
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/newsapi_overall_cv.csv)
 
 ```{python}
 show(newsapi_overall_cv, style="width:100%;margin:auto")
@@ -102,7 +102,7 @@ show(newsapi_overall_cv, style="width:100%;margin:auto")
 
 ### TfidfVectorizer
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/newsapi_overall_tf.csv)
 
 ```{python}
 show(newsapi_overall_tf, style="width:100%;margin:auto")
@@ -112,7 +112,7 @@ show(newsapi_overall_tf, style="width:100%;margin:auto")
 
 ### CountVectorizer
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/newsapi_overall_cv_lemmatized.csv)
 
 ```{python}
 show(newsapi_overall_cv_lemmatized, style="width:100%;margin:auto")
@@ -137,7 +137,7 @@ show(newsapi_overall_cv_lemmatized, style="width:100%;margin:auto")
 
 ### TfidfVectorizer
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/newsapi_overall_tf_lemmatized.csv)
 
 ```{python}
 show(newsapi_overall_tf_lemmatized, style="width:100%;margin:auto")
@@ -147,7 +147,7 @@ show(newsapi_overall_tf_lemmatized, style="width:100%;margin:auto")
 
 ### CountVectorizer
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/newsapi_overall_cv_stemmatized.csv)
 
 ```{python}
 show(newsapi_overall_cv_stemmatized, style="width:100%;margin:auto")
@@ -173,7 +173,7 @@ show(newsapi_overall_cv_stemmatized, style="width:100%;margin:auto")
 
 ### TfidfVectorizer
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/newsapi_overall_tf_stemmatized.csv)
 
 ```{python}
 show(newsapi_overall_tf_stemmatized, style="width:100%;margin:auto")
@@ -192,7 +192,7 @@ Additionally, `CountVectorizer()` will be used over `TfidfVectorizer()` for a fi
 
 ### Political Bias: Left
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/left.csv)
 
 ```{python}
 show(newsapi_left, style="width:100%;margin:auto")
@@ -217,7 +217,7 @@ show(newsapi_left, style="width:100%;margin:auto")
 
 ### Political Bias: Lean Left
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/lean_left.csv)
 
 ```{python}
 show(newsapi_lean_left, style="width:100%;margin:auto")
@@ -242,7 +242,7 @@ show(newsapi_lean_left, style="width:100%;margin:auto")
 
 ### Political Bias: Center
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/center.csv)
 
 ```{python}
 show(newsapi_center, style="width:100%;margin:auto")
@@ -268,7 +268,7 @@ show(newsapi_center, style="width:100%;margin:auto")
 
 ### Political Bias: Lean Right
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/lean_right.csv)
 
 ```{python}
 show(newsapi_lean_right, style="width:100%;margin:auto")
@@ -293,7 +293,7 @@ show(newsapi_lean_right, style="width:100%;margin:auto")
 
 ### Political Bias: Right
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/right.csv)
 
 ```{python}
 show(newsapi_right, style="width:100%;margin:auto")
@@ -319,3 +319,10 @@ show(newsapi_right, style="width:100%;margin:auto")
 # Summary
 
 Lemmatizing aggregates nicely while retaining the meaning within words, so this will likely be a consistently utilized preprocessing step moving forward. Although word counts over normalized word counts were shown for the political biases section, this was mainly for illustrative purposes. Normalized word counts could be useful when interpolating towards much smaller or much larger text files. Maximum number of features can be altered in future analyses, and words which are similar across all biases could be removed in future analyses to help illuminate the differences more between them. Additionally, the political biases of Lean Left and Left may be combined as well with Lean Right and Right for future analyses.
+
+---
+
+# Code Links
+
+- [Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/vectorizing_functions.py): script with functions for the vectorization process
+- [NewsAPI Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/newsapi_vectorizing_application.py): script with appliaction of **Vectorizing Script**

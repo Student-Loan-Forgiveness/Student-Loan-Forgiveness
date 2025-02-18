@@ -73,7 +73,7 @@ Additionally, stopwords will be removed and 200 maximum features will be used.
 
 ## Vectorizing - Thread-Author Schema
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/thread_author.csv)
 
 ```{python}
 show(thread_author, style="width:100%;margin:auto")
@@ -98,7 +98,7 @@ show(thread_author, style="width:100%;margin:auto")
 
 ## Vectorizing - Subreddit-Author Schema
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/subreddit_author.csv)
 
 ```{python}
 show(subreddit_author, style="width:100%;margin:auto")
@@ -123,7 +123,7 @@ show(subreddit_author, style="width:100%;margin:auto")
 
 ## Vectorizing - Threads Schema
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/threads.csv)
 
 ```{python}
 show(threads, style="width:100%;margin:auto")
@@ -148,7 +148,7 @@ show(threads, style="width:100%;margin:auto")
 
 ## Vectorizing - Subreddits Schema
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/subreddits.csv)
 
 ```{python}
 show(subreddits, style="width:100%;margin:auto")
@@ -173,7 +173,7 @@ show(subreddits, style="width:100%;margin:auto")
 
 ## Vectorizing - Authors Schema
 
-**Labeled Sample**
+[Labeled Sample](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/reddit_data/vectorized/authors.csv)
 
 ```{python}
 show(authors, style="width:100%;margin:auto")
@@ -199,3 +199,10 @@ show(authors, style="width:100%;margin:auto")
 # Summary
 
 With the initial pass above, there are very minor differences between the aggregation schemas and respective corpuses. Stronger differences would likely be found if further subsetting on the authors, threads, and subreddits. In future analyses, unsupervised learning methods and potentially supervised learnings methods (when paired with NewsAPI) could help indicate these subsets. Furthermore, pairings from upvotes and length of content within the data could be subset parameter as well.
+
+---
+
+# Code Links
+
+- [Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/vectorizing_functions.py): script with functions for the vectorization process
+- [Reddit Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/reddit_vectorizing_application.py): script with appliaction of **Vectorizing Script**
