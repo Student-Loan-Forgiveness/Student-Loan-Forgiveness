@@ -16,6 +16,8 @@ One side argues “yes” or “does support” while the other argues “no” 
 The stances are also generally drawn along political party lines, with the left supporting the idea more than the right.
 In fact, one national poll shows 58% of Democrats were in favor of relief, versus just 15% of Republicans [@theweekProsCons].
 
+![@intro_image_1](images/intro_image_1.jpg){width=50% fig-align="center"}
+
 How are news organizations reporting on this?
 What is the general population saying about this?
 Given that the dichotomy extends along political lines, are there differences in dialogue between left-leaning and right-leaning entities?
@@ -26,6 +28,8 @@ Many of those with student loan repayments are overwhelmed by the system and str
 These life goals include creating emergency or retirement funds, investing, owning a home, and postponing starting a family. However, many opponents ask the question, “Where does this money come from?”
 A number of Republicans say that government sponsored plans could “increase the federal budget and tax costs.”
 There’s an echo of unfairness in increasing taxes on those who don’t have student loans or didn’t even attend college.
+
+![@intro_image_2](images/intro_image_2.jpg){width=50% fig-align="center"}
 
 Is there any common ground between the two sides of the arguments?
 What is the “cruelty” in the system that proponents use as an argument?
