@@ -1,0 +1,34 @@
+---
+title: "Association Rule Mining (ARM)"
+execute:
+  echo: false
+---
+
+# Introduction
+
+# Results
+
+## News Article Network
+
+---
+
+```{=html}
+<iframe src="images/arm/newsapi_network.html" width="100%" height="600px"></iframe>
+```
+
+---
+
+## Reddit Author Schema Network
+
+---
+
+```{=html}
+<iframe src="images/arm/reddit_network.html" width="100%" height="600px"></iframe>
+```
+
+---
+
+
+
+
+

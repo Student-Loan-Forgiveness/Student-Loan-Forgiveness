@@ -25,6 +25,12 @@ website:
             href: vectorization_newsapi.qmd
           - text: "Reddit"
             href: vectorization_reddit.qmd
+      - href: clustering.qmd
+        text: "Clustering"
+      - href: arm.qmd
+        text: "Association Rule Mining"
+      - href: lda.qmd
+        text: "Latent Dirichlet Allocation"
     right:
       - icon: github
         href: https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness

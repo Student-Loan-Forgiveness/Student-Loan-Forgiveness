@@ -1,0 +1,2343 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Clustering – Student Loan Forgiveness</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./images/dollar_sign.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5f3c358ee78b9d0d8421e9158f524a34.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Student Loan Forgiveness</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-acquisition" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Data Acquisition</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-acquisition">    
+        <li>
+    <a class="dropdown-item" href="./data_newsapi.html">
+ <span class="dropdown-text">NewsAPI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./data_reddit.html">
+ <span class="dropdown-text">Reddit</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-vectorization" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Data Vectorization</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-vectorization">    
+        <li>
+    <a class="dropdown-item" href="./vectorization_newsapi.html">
+ <span class="dropdown-text">NewsAPI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./vectorization_reddit.html">
+ <span class="dropdown-text">Reddit</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="./clustering.html" aria-current="page"> 
+<span class="menu-text">Clustering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./arm.html"> 
+<span class="menu-text">Association Rule Mining</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./lda.html"> 
+<span class="menu-text">Latent Dirichlet Allocation</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#strategy" id="toc-strategy" class="nav-link" data-scroll-target="#strategy">Strategy</a>
+  <ul class="collapse">
+  <li><a href="#clustering-methodologies" id="toc-clustering-methodologies" class="nav-link" data-scroll-target="#clustering-methodologies">Clustering Methodologies</a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">Data Preparation</a>
+  <ul class="collapse">
+  <li><a href="#newsapi-data" id="toc-newsapi-data" class="nav-link" data-scroll-target="#newsapi-data">NewsAPI Data</a></li>
+  <li><a href="#reddit-data" id="toc-reddit-data" class="nav-link" data-scroll-target="#reddit-data">Reddit Data</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#k-means-clustering-results" id="toc-k-means-clustering-results" class="nav-link" data-scroll-target="#k-means-clustering-results">K-Means Clustering Results</a>
+  <ul class="collapse">
+  <li><a href="#principal-component-analysis" id="toc-principal-component-analysis" class="nav-link" data-scroll-target="#principal-component-analysis">Principal Component Analysis</a>
+  <ul class="collapse">
+  <li><a href="#newsapi" id="toc-newsapi" class="nav-link" data-scroll-target="#newsapi">NewsAPI</a></li>
+  <li><a href="#reddit-base-schema" id="toc-reddit-base-schema" class="nav-link" data-scroll-target="#reddit-base-schema">Reddit Base Schema</a></li>
+  <li><a href="#reddit-author-schema" id="toc-reddit-author-schema" class="nav-link" data-scroll-target="#reddit-author-schema">Reddit Author Schema</a></li>
+  <li><a href="#reddit-thread-schema" id="toc-reddit-thread-schema" class="nav-link" data-scroll-target="#reddit-thread-schema">Reddit Thread Schema</a></li>
+  <li><a href="#reddit-subreddit-schema" id="toc-reddit-subreddit-schema" class="nav-link" data-scroll-target="#reddit-subreddit-schema">Reddit Subreddit Schema</a></li>
+  </ul></li>
+  <li><a href="#silhouette-coefficients" id="toc-silhouette-coefficients" class="nav-link" data-scroll-target="#silhouette-coefficients">Silhouette Coefficients</a>
+  <ul class="collapse">
+  <li><a href="#newsapi-1" id="toc-newsapi-1" class="nav-link" data-scroll-target="#newsapi-1">NewsAPI</a></li>
+  <li><a href="#reddit-base-schema-1" id="toc-reddit-base-schema-1" class="nav-link" data-scroll-target="#reddit-base-schema-1">Reddit Base Schema</a></li>
+  <li><a href="#reddit-author-schema-1" id="toc-reddit-author-schema-1" class="nav-link" data-scroll-target="#reddit-author-schema-1">Reddit Author Schema</a></li>
+  <li><a href="#reddit-thread-schema-1" id="toc-reddit-thread-schema-1" class="nav-link" data-scroll-target="#reddit-thread-schema-1">Reddit Thread Schema</a></li>
+  <li><a href="#reddit-subreddit-schema-1" id="toc-reddit-subreddit-schema-1" class="nav-link" data-scroll-target="#reddit-subreddit-schema-1">Reddit Subreddit Schema</a></li>
+  </ul></li>
+  <li><a href="#choosing-cluster-values" id="toc-choosing-cluster-values" class="nav-link" data-scroll-target="#choosing-cluster-values">Choosing Cluster Values</a>
+  <ul class="collapse">
+  <li><a href="#newsapi-2" id="toc-newsapi-2" class="nav-link" data-scroll-target="#newsapi-2">NewsAPI</a></li>
+  <li><a href="#reddit-base-schema-2" id="toc-reddit-base-schema-2" class="nav-link" data-scroll-target="#reddit-base-schema-2">Reddit Base Schema</a></li>
+  <li><a href="#reddit-author-schema-2" id="toc-reddit-author-schema-2" class="nav-link" data-scroll-target="#reddit-author-schema-2">Reddit Author Schema</a></li>
+  <li><a href="#reddit-thread-schema-2" id="toc-reddit-thread-schema-2" class="nav-link" data-scroll-target="#reddit-thread-schema-2">Reddit Thread Schema</a></li>
+  <li><a href="#reddit-subreddit-schema-2" id="toc-reddit-subreddit-schema-2" class="nav-link" data-scroll-target="#reddit-subreddit-schema-2">Reddit Subreddit Schema</a></li>
+  </ul></li>
+  <li><a href="#final-k-means-discussion" id="toc-final-k-means-discussion" class="nav-link" data-scroll-target="#final-k-means-discussion">Final K-Means Discussion</a>
+  <ul class="collapse">
+  <li><a href="#newsapi-3" id="toc-newsapi-3" class="nav-link" data-scroll-target="#newsapi-3">NewsAPI</a></li>
+  <li><a href="#reddit-base-schema-3" id="toc-reddit-base-schema-3" class="nav-link" data-scroll-target="#reddit-base-schema-3">Reddit Base Schema</a></li>
+  <li><a href="#reddit-author-schema-3" id="toc-reddit-author-schema-3" class="nav-link" data-scroll-target="#reddit-author-schema-3">Reddit Author Schema</a></li>
+  <li><a href="#reddit-thread-schema-3" id="toc-reddit-thread-schema-3" class="nav-link" data-scroll-target="#reddit-thread-schema-3">Reddit Thread Schema</a></li>
+  <li><a href="#reddit-subreddit-schema-3" id="toc-reddit-subreddit-schema-3" class="nav-link" data-scroll-target="#reddit-subreddit-schema-3">Reddit Subreddit Schema</a></li>
+  </ul></li>
+  <li><a href="#bringing-in-labels" id="toc-bringing-in-labels" class="nav-link" data-scroll-target="#bringing-in-labels">Bringing in Labels</a></li>
+  </ul></li>
+  <li><a href="#hierarchical-clustering-results" id="toc-hierarchical-clustering-results" class="nav-link" data-scroll-target="#hierarchical-clustering-results">Hierarchical Clustering Results</a>
+  <ul class="collapse">
+  <li><a href="#newsapi-data-1" id="toc-newsapi-data-1" class="nav-link" data-scroll-target="#newsapi-data-1">NewsAPI Data</a></li>
+  <li><a href="#newsapi-clustering-results" id="toc-newsapi-clustering-results" class="nav-link" data-scroll-target="#newsapi-clustering-results">NewsAPI Clustering Results</a></li>
+  <li><a href="#newsapi-clustering-analysis" id="toc-newsapi-clustering-analysis" class="nav-link" data-scroll-target="#newsapi-clustering-analysis">NewsAPI Clustering Analysis</a></li>
+  <li><a href="#reddit-extension" id="toc-reddit-extension" class="nav-link" data-scroll-target="#reddit-extension">Reddit Extension</a>
+  <ul class="collapse">
+  <li><a href="#content-distributions" id="toc-content-distributions" class="nav-link" data-scroll-target="#content-distributions">Content Distributions</a></li>
+  </ul></li>
+  <li><a href="#newsapi-reddit-extension-clustering-analysis" id="toc-newsapi-reddit-extension-clustering-analysis" class="nav-link" data-scroll-target="#newsapi-reddit-extension-clustering-analysis">NewsAPI-Reddit Extension Clustering Analysis</a>
+  <ul class="collapse">
+  <li><a href="#newsapi-with-reddit-author-schema-subset" id="toc-newsapi-with-reddit-author-schema-subset" class="nav-link" data-scroll-target="#newsapi-with-reddit-author-schema-subset">NewsAPI with Reddit Author Schema Subset</a></li>
+  <li><a href="#newsapi-source-schema-with-reddit-thread-schema-subset" id="toc-newsapi-source-schema-with-reddit-thread-schema-subset" class="nav-link" data-scroll-target="#newsapi-source-schema-with-reddit-thread-schema-subset">NewsAPI Source Schema with Reddit Thread Schema Subset</a></li>
+  <li><a href="#newsapi-source-schema-with-reddit-subreddit-schema-subset" id="toc-newsapi-source-schema-with-reddit-subreddit-schema-subset" class="nav-link" data-scroll-target="#newsapi-source-schema-with-reddit-subreddit-schema-subset">NewsAPI Source Schema with Reddit Subreddit Schema Subset</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  <li><a href="#code-links" id="toc-code-links" class="nav-link" data-scroll-target="#code-links">Code Links</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Clustering</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>This section will focus on clustering the text data described in <a href="./data_newsapi.html">Data Acquisition - NewsAPI</a> and <a href="./data_newsapi.html">Data Acquisition - Reddit</a>. As a whole, clustering is an unsupervised machine learning technique, which means that it attempts to find patterns, trends, and groupings within unlabeled data. Specifically, clustering is useful for identifying and partitioning the data through similarity measures. As such, there isn’t a candid expectation for what will be found, aside from what data is similar and what data is dissimilar. However, given the topic of student loan forgiveness has a strong divide along political party lines, politcal bias will be a subsequent point of exploration.</p>
+</section>
+<section id="strategy" class="level1">
+<h1>Strategy</h1>
+<section id="clustering-methodologies" class="level2">
+<h2 class="anchored" data-anchor-id="clustering-methodologies">Clustering Methodologies</h2>
+<p>K-Means Clustering and Hierarchical Clustering will be used to analyze news articles and Reddit posts. These are both unsupervised machine learning methods, meaning they take unlabeled data. Specifically, unlabeled numerical data.</p>
+<ul>
+<li>K-Means Clustering: A clustering algorithm with the goal of partitioning a dataset into a specified number of clusters, where each point belongs to the cluster with the nearest mean. Distance and “closeness” are usually evaluated via Euclidean Distance, as will be done with this analysis. In this scenario, each point will be a vectorized version of the text within a news article or reddit post (or subsequent aggregations). Vectorizing text data produces high dimension datasets. Using techniques based on Eucldiean Distance for high dimensionality data usually doesn’t produce great results. With that in mind, the vectorized data will be reduced via Principal Component Analysis (PCA). PCA is a data reduction technique which projects the data into an Eigenspace using a covariance matrix. The Eigenspace is built from orthonormal vectors known as Eigenvectors (or principal components) which actually represent the direction of explained variance from the original data. The strength (or magnitude) of explained variance is illustrated by the vector’s associated Eigenvalue. PCA will be used to reduce the high dimensional text data into just three principal components.</li>
+<li>Hiearachical Clustering: A clustering algorithm which determines cluster assignments by building a hierachy and which can be illustrated with a tree-based visualization known as a dendrogram. This is a useful exploratory tool which shows where different groups of data are partitioned, highlighting similar and disimilar data at different levels. PCA will not be used in this process. Instead, a distance measure known as Cosine Similarity will be used on the vectorized text data as a whole. The Cosine Similarity measure is adept for high dimensional data.</li>
+</ul>
+</section>
+<section id="data-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="data-preparation">Data Preparation</h2>
+<p>There will be 4 different initial vectorized versions of the text data used:</p>
+<ul>
+<li>Maximum Features: A numerical vectorized version of the entire vocabulary.</li>
+<li>Tenth of Maximum Features: A numerical vectorized version with a tenth of the maximum features of the entire vocabulary.</li>
+<li>Iterative Latent Dirichlet Allocation (LDA):
+<ul>
+<li>Idea: Latent Dirichlet Allocation will be iteratively performed such that each topic will have unique words. This will begin with the words from a Tenth of Maximum features wordset, and then <span class="math inline">\(n\)</span> unique words across <span class="math inline">\(t\)</span> topics up to a total of <span class="math inline">\(m\)</span> desired words will be found. In essence, <span class="math inline">\(m = t * n\)</span>.</li>
+<li><strong>3-Topic Iterative LDA with 150 Words</strong> will be used.</li>
+<li><strong>5-Topic Iterative LDA with 150 Words</strong> will be used.</li>
+<li>Note that a section on a proper LDA Analysis is located <a href="./lda.html">here</a>.</li>
+</ul></li>
+</ul>
+<blockquote class="blockquote">
+<p>The strategy is to begin with K-Means, find the vectorized version which produces the best results for for K-Means, and use that vectorized version to initiate Hiearchical Clustering. Since K-Means will be utilizing PCA, the dataset produced from the PCA projection will be shown for all, and then just the best vectorized versions will be shown.</p>
+</blockquote>
+<section id="newsapi-data" class="level3">
+<h3 class="anchored" data-anchor-id="newsapi-data">NewsAPI Data</h3>
+<p>For the NewsAPI data (i.e., news articles), the data will be subset to the news sources which an overall political bias is known for, any labels will be removed, and then the vectorized versions will be created. The analysis will begin with the KMeans version, so the PCA projected data will be shown. The</p>
+<section id="newsapi-pca-maximum-snippet" class="level4">
+<h4 class="anchored" data-anchor-id="newsapi-pca-maximum-snippet">NewsAPI PCA Maximum Snippet</h4>
+<div id="9d484e39" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<table id="itables_a602014e_2f31_4b51_9d2c_a0c7781bb5aa" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>component_1</th>
+      <th>component_2</th>
+      <th>component_3</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_a602014e_2f31_4b51_9d2c_a0c7781bb5aa:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[-5.355652, -3.309398, -5.521144], [-4.516904, -2.086305, -4.735465], [3.394217, 6.476367, 5.065893], [-2.724507, -0.073642, -2.857117], [-4.516904, -2.086305, -4.735465]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="newsapi-pca-tenth-snippet" class="level4">
+<h4 class="anchored" data-anchor-id="newsapi-pca-tenth-snippet">NewsAPI PCA Tenth Snippet</h4>
+<div id="e5de709f" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<table id="itables_de10a5e1_7db2_4faa_a116_1e0d7c97bd79" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>component_1</th>
+      <th>component_2</th>
+      <th>component_3</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_de10a5e1_7db2_4faa_a116_1e0d7c97bd79:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[-7.661985, 2.594441, 0.008807], [-4.588361, 0.931581, -13.192722], [7.409315, -2.154071, 4.631299], [-0.489696, 0.722661, -2.108735], [-4.588361, 0.931581, -13.192722]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="newsapi-pca-3-topic-lda-snippet" class="level4">
+<h4 class="anchored" data-anchor-id="newsapi-pca-3-topic-lda-snippet">NewsAPI PCA 3-Topic LDA Snippet</h4>
+<div id="b39f937e" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<table id="itables_9fceba6d_2622_43b6_8a14_88e75514aca0" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>component_1</th>
+      <th>component_2</th>
+      <th>component_3</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_9fceba6d_2622_43b6_8a14_88e75514aca0:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[-2.073181, -2.454417, -1.616853], [-0.884958, -5.921557, 6.403143], [1.257888, 3.674664, 0.25363], [-0.361439, 1.203141, -0.30822], [-0.884958, -5.921557, 6.403143]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="newsapi-pca-5-topic-iterative-lda-snippet" class="level4">
+<h4 class="anchored" data-anchor-id="newsapi-pca-5-topic-iterative-lda-snippet">NewsAPI PCA 5-Topic Iterative LDA Snippet</h4>
+<div id="1aae5d2b" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<table id="itables_403a6e68_1cbd_450d_9e41_97e7b4523f64" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>component_1</th>
+      <th>component_2</th>
+      <th>component_3</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_403a6e68_1cbd_450d_9e41_97e7b4523f64:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[-1.94449, -2.586338, -1.471716], [-0.997911, -5.072876, 5.674324], [0.688219, 3.565506, -0.286046], [-0.421503, 1.366169, -0.421682], [-0.997911, -5.072876, 5.674324]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+</section>
+<section id="reddit-data" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-data">Reddit Data</h3>
+<p>For the Reddit data, different aggregation schemas as described in the linked sections in the <strong>Overview</strong> will be used:</p>
+<ul>
+<li>Reddit Base Schema: Author’s posts within a thread are aggregated.</li>
+<li>Reddit Author Schema: Author’s posts across all threads are aggregated.</li>
+<li>Reddit Thread Schema: Posts within a thread are aggregated.</li>
+<li>Reddit Subreddit Schema: Threads within a Subreddit are aggregated.</li>
+</ul>
+<blockquote class="blockquote">
+<p>For efficiency, just the snippets of the dataset which had the best K-Means clustering result will be illustrated. However, the snippets of all the versions can be found HERE.</p>
+</blockquote>
+<section id="reddit-pca-base-schema-5-topic-iterative-lda-snippet" class="level4">
+<h4 class="anchored" data-anchor-id="reddit-pca-base-schema-5-topic-iterative-lda-snippet">Reddit PCA Base Schema: 5-Topic Iterative LDA Snippet</h4>
+<div id="e6ffcd69" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<table id="itables_1c198358_6736_41b1_9d66_1a8e91697ad9" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>component_1</th>
+      <th>component_2</th>
+      <th>component_3</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_1c198358_6736_41b1_9d66_1a8e91697ad9:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[5.61768, 1.400004, 1.825472], [0.758973, -0.059111, -0.142093], [0.313498, -0.850645, -0.823283], [2.062097, 0.439997, 1.192887], [0.794721, -1.873757, -1.531196]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="reddit-pca-author-schema-5-topic-iterative-lda-snippet" class="level4">
+<h4 class="anchored" data-anchor-id="reddit-pca-author-schema-5-topic-iterative-lda-snippet">Reddit PCA Author Schema: 5-Topic Iterative LDA Snippet</h4>
+<div id="3a0bf676" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<table id="itables_5b9886fc_9a5c_4f65_9fd2_e8b750cb4339" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>component_1</th>
+      <th>component_2</th>
+      <th>component_3</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_5b9886fc_9a5c_4f65_9fd2_e8b750cb4339:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[-0.521872, -0.635744, -0.504974], [-0.576912, -1.549845, 0.872337], [-0.23399, 1.115914, -0.222508], [-1.101499, 1.898106, 0.763234], [-0.196565, -0.118419, -0.748805]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="reddit-pca-thread-schema-3-topic-iterative-lda-snippet" class="level4">
+<h4 class="anchored" data-anchor-id="reddit-pca-thread-schema-3-topic-iterative-lda-snippet">Reddit PCA Thread Schema: 3-Topic Iterative LDA Snippet</h4>
+<div id="97733ade" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<table id="itables_4808e5e3_0430_4b74_8cdb_ab5ecbcd8fd7" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>component_1</th>
+      <th>component_2</th>
+      <th>component_3</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_4808e5e3_0430_4b74_8cdb_ab5ecbcd8fd7:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[2.849962, -1.433218, -0.584681], [1.665044, -4.087856, -0.078691], [3.576502, 1.104642, 1.236523], [3.154855, 0.4857, -0.347859], [3.340995, -3.121943, 0.540376]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="reddit-pca-subreddit-schema-3-topic-iterative-lda-snippet" class="level4">
+<h4 class="anchored" data-anchor-id="reddit-pca-subreddit-schema-3-topic-iterative-lda-snippet">Reddit PCA Subreddit Schema: 3-Topic Iterative LDA Snippet</h4>
+<div id="1759cbc0" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display">
+<table id="itables_5a834695_0641_47ef_a86d_22bab351faee" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>component_1</th>
+      <th>component_2</th>
+      <th>component_3</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_5a834695_0641_47ef_a86d_22bab351faee:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[2.644339, 1.695082, -2.8854], [-1.459702, 10.264725, -4.781943], [2.361271, 0.231857, -0.703675], [0.346327, 1.446425, -0.331131], [4.47579, -3.412952, 3.025774]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="k-means-clustering-results" class="level1">
+<h1>K-Means Clustering Results</h1>
+<section id="principal-component-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="principal-component-analysis">Principal Component Analysis</h2>
+<p>Again, for K-Means Clusering, Principal Component Analysis (PCA) was used to reduce the text data to 3-Dimensions. The initial results show that when the maximum features were the entire vocabulary, there was a much lower amount of explained variance throughout the three principal components.</p>
+<section id="newsapi" class="level3">
+<h3 class="anchored" data-anchor-id="newsapi">NewsAPI</h3>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/newsapi_max.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/newsapi_tenth.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/newsapi_lda_3.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/newsapi_lda_5.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="reddit-base-schema" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-base-schema">Reddit Base Schema</h3>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_base_max.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_base_tenth.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_base_lda_3.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_base_lda_5.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="reddit-author-schema" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-author-schema">Reddit Author Schema</h3>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_author_max.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_author_tenth.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_author_lda_3.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_author_lda_5.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="reddit-thread-schema" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-thread-schema">Reddit Thread Schema</h3>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_thread_max.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_thread_tenth.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_thread_lda_3.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_thread_lda_5.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="reddit-subreddit-schema" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-subreddit-schema">Reddit Subreddit Schema</h3>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_subreddit_max.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_subreddit_tenth.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_subreddit_lda_3.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/pca_results/reddit_subreddit_lda_5.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="silhouette-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="silhouette-coefficients">Silhouette Coefficients</h2>
+<p>Silhouette Coefficients are a decent metric to evaluate how well K-Means clustering has performed. It measures how similar a point is to the cluster it was assigned compared to the other clusters. A coefficient value has a range from -1 to 1, where 1 indicates a great cluster assignment. It’s calculated using the average values between points. Scikit-Learn’s <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html">documentation</a> gives a brief summary of the calculation.</p>
+<ul>
+<li><span class="math inline">\(a\)</span>: average intra-cluster distance</li>
+<li><span class="math inline">\(b\)</span>: average nearest-cluster distance</li>
+<li><span class="math inline">\(s\)</span>: silhouette score</li>
+<li><span class="math inline">\(S\)</span>: average silhouette score over the entire dataset</li>
+<li><span class="math inline">\(n\)</span>: size of sample (number of points in the entire dataset)</li>
+</ul>
+<p><span class="math inline">\(s = \frac{b-a}{max(a, b)}\)</span></p>
+<p><span class="math inline">\(S = \frac{\sum_{i=1}^n{s}}{n}\)</span></p>
+<section id="newsapi-1" class="level3">
+<h3 class="anchored" data-anchor-id="newsapi-1">NewsAPI</h3>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/newsapi_max.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/newsapi_tenth.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/newsapi_lda_3.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/newsapi_lda_5.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/kmeans/silhouette_results/newsapi_average.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="reddit-base-schema-1" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-base-schema-1">Reddit Base Schema</h3>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_base_max.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_base_tenth.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_base_lda_3.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_base_lda_5.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_base_average.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="reddit-author-schema-1" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-author-schema-1">Reddit Author Schema</h3>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_author_max.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_author_tenth.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_author_lda_3.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_author_lda_5.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_author_average.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="reddit-thread-schema-1" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-thread-schema-1">Reddit Thread Schema</h3>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_thread_max.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_thread_tenth.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_thread_lda_3.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_thread_lda_5.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_thread_average.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="reddit-subreddit-schema-1" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-subreddit-schema-1">Reddit Subreddit Schema</h3>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_subreddit_max.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_subreddit_tenth.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_subreddit_lda_3.png" class="img-fluid"></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_subreddit_lda_5.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/kmeans/silhouette_results/reddit_subreddit_average.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="choosing-cluster-values" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-cluster-values">Choosing Cluster Values</h2>
+<p>Choosing the best combination of cluster value (k) and dataset combination took some further visualization. Although the <strong>Maximum Features</strong> (i.e., vectorized across all vocabulary, projected onto three component PCA, and then clustered with K-Means) produced some of the <strong>highest coefficient values</strong>, this was <strong>misleading</strong>. The combination resulted in a dense cluster near the origin of the principal components, with a few distant and isolated outliers. Of course the silhouette scores would be high in that case. In general, when there were a few distant and isolated outliers, a high silhouette score is misleading. Additionally, some of the lower k values (i.e., k=2 or k=3) didn’t separate the data in a meaningfuly manner after visual inspect.</p>
+<blockquote class="blockquote">
+<p>Due to this, a full visual inspection of the NewsAPI clustering results will be performed including how the best clustering and dataset combination was chosen. However, the Reddit clustering results will just illustrate the best clustering and dataset combination.</p>
+</blockquote>
+<section id="newsapi-2" class="level3">
+<h3 class="anchored" data-anchor-id="newsapi-2">NewsAPI</h3>
+<p>Potential Vectorizing and Cluster Combinations:</p>
+<ul>
+<li>Maximum Dataset: 3 clusters</li>
+<li>Tenth Dataset: 2 clusters or 6 clusters</li>
+<li>3 Topic Iterative LDA: 4 clusters</li>
+<li>5 Topic Iterative LDA: 2 or 4 clusters</li>
+</ul>
+<section id="maximum-dataset-with-3-clusters" class="level4">
+<h4 class="anchored" data-anchor-id="maximum-dataset-with-3-clusters">Maximum Dataset with 3 Clusters</h4>
+<hr>
+<iframe src="images/clustering/kmeans/newsapi_maximum_3_clusters.html" width="100%" height="600px"></iframe>
+<hr>
+</section>
+<section id="tenth-dataset-with-2-clusters" class="level4">
+<h4 class="anchored" data-anchor-id="tenth-dataset-with-2-clusters">Tenth Dataset with 2 Clusters</h4>
+<hr>
+<iframe src="images/clustering/kmeans/newsapi_tenth_2_clusters.html" width="100%" height="600px"></iframe>
+<hr>
+</section>
+<section id="tenth-dataset-with-6-clusters" class="level4">
+<h4 class="anchored" data-anchor-id="tenth-dataset-with-6-clusters">Tenth Dataset with 6 Clusters</h4>
+<hr>
+<iframe src="images/clustering/kmeans/newsapi_tenth_6_clusters.html" width="100%" height="600px"></iframe>
+<hr>
+</section>
+<section id="topic-iterative-lda-with-4-clusters" class="level4">
+<h4 class="anchored" data-anchor-id="topic-iterative-lda-with-4-clusters">3 Topic Iterative LDA with 4 clusters</h4>
+<hr>
+<iframe src="images/clustering/kmeans/newsapi_lda_3_4_clusters.html" width="100%" height="600px"></iframe>
+<hr>
+</section>
+<section id="topic-iterative-lda-with-2-clusters" class="level4">
+<h4 class="anchored" data-anchor-id="topic-iterative-lda-with-2-clusters">5 Topic Iterative LDA with 2 clusters</h4>
+<hr>
+<iframe src="images/clustering/kmeans/newsapi_lda_5_2_clusters.html" width="100%" height="600px"></iframe>
+<hr>
+</section>
+<section id="topic-iterative-lda-with-4-clusters-1" class="level4">
+<h4 class="anchored" data-anchor-id="topic-iterative-lda-with-4-clusters-1">5 Topic Iterative LDA with 4 clusters</h4>
+<hr>
+<iframe src="images/clustering/kmeans/newsapi_lda_5_4_clusters.html" width="100%" height="600px"></iframe>
+<hr>
+</section>
+<section id="choice" class="level4">
+<h4 class="anchored" data-anchor-id="choice">Choice</h4>
+<p>Given the above visualizations, the <strong>3 Topic Iterative LDA with 4 Clusters</strong> was chosen. Although there was an outlier which had its own cluster, this version partitioned the overall cluster around the origin well. Along with this, it had a relatively high silhouette score.</p>
+<blockquote class="blockquote">
+<p>A similar process was performed for the Reddit datasets, but for efficiency, just the choices will be presented. It seems that for all, the maximum features across the entire vocabular had the same result.</p>
+</blockquote>
+</section>
+</section>
+<section id="reddit-base-schema-2" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-base-schema-2">Reddit Base Schema</h3>
+<p><strong>5 Topic Iterative LDA with 3 Clusters</strong></p>
+<hr>
+<iframe src="images/clustering/kmeans/reddit_base_lda_5_3_clusters.html" width="100%" height="600px" style="text-align: center"></iframe>
+<hr>
+</section>
+<section id="reddit-author-schema-2" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-author-schema-2">Reddit Author Schema</h3>
+<p><strong>5 Topic Iterative LDA with 4 Clusters</strong></p>
+<hr>
+<iframe src="images/clustering/kmeans/reddit_author_lda_5_4_clusters.html" width="100%" height="600px"></iframe>
+<hr>
+</section>
+<section id="reddit-thread-schema-2" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-thread-schema-2">Reddit Thread Schema</h3>
+<p><strong>3 Topic Iterative LDA with 4 Clusters</strong></p>
+<hr>
+<iframe src="images/clustering/kmeans/reddit_thread_lda_3_4_clusters.html" width="100%" height="600px"></iframe>
+<hr>
+</section>
+<section id="reddit-subreddit-schema-2" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-subreddit-schema-2">Reddit Subreddit Schema</h3>
+<p><strong>3 Topic Iterative LDA with 2 Clusters</strong></p>
+<hr>
+<iframe src="images/clustering/kmeans/reddit_subreddit_lda_3_2_clusters.html" width="100%" height="600px"></iframe>
+<hr>
+</section>
+</section>
+<section id="final-k-means-discussion" class="level2">
+<h2 class="anchored" data-anchor-id="final-k-means-discussion">Final K-Means Discussion</h2>
+<p>Overall, the Iterative LDA word sets performed well due to the outliers with higher amounts of text data, even with performing PCA. The question is, what was actually driving these splits? To better understand this, word clouds were created for the best dataset - cluster choice combinations. In general, there were splits between politics, money, and students’ and graduates’ lifestyles.</p>
+<section id="newsapi-3" class="level3">
+<h3 class="anchored" data-anchor-id="newsapi-3">NewsAPI</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/kmeans/wordclouds/newsapi_clusters.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="reddit-base-schema-3" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-base-schema-3">Reddit Base Schema</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/kmeans/wordclouds/reddit_base_schema_clusters.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="reddit-author-schema-3" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-author-schema-3">Reddit Author Schema</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/kmeans/wordclouds/reddit_author_schema_clusters.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="reddit-thread-schema-3" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-thread-schema-3">Reddit Thread Schema</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/kmeans/wordclouds/reddit_thread_schema_clusters.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="reddit-subreddit-schema-3" class="level3">
+<h3 class="anchored" data-anchor-id="reddit-subreddit-schema-3">Reddit Subreddit Schema</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/kmeans/wordclouds/reddit_subreddit_schema_clusters.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="bringing-in-labels" class="level2">
+<h2 class="anchored" data-anchor-id="bringing-in-labels">Bringing in Labels</h2>
+<p>There was some “success” with K-Means in that it did group together different variations of word frequency combinations well. However, how did it perform on clustering political bias with the news sources?</p>
+<p>Unfortunately, this led to highly imbalanced clusters which didn’t tend to pick up on the politcal undertones. Or, the political undertones weren’t present.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/kmeans/newsapi_best_cluster_allocation.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="hierarchical-clustering-results" class="level1">
+<h1>Hierarchical Clustering Results</h1>
+<p>Following the stated strategy at the beginning of this section, this analysis will start with a vectorized version of the <strong>NewsAPI 4 Topic Iterative LDA</strong> wordset. This was the dataset that was used in the reporting of the best cluster for K-Means.</p>
+<section id="newsapi-data-1" class="level2">
+<h2 class="anchored" data-anchor-id="newsapi-data-1">NewsAPI Data</h2>
+<div id="a6377f0a" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<table id="itables_9e4f1a90_40ca_45a6_80d4_2731233fe29e" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>enrollment</th>
+      <th>going</th>
+      <th>life</th>
+      <th>doge</th>
+      <th>state</th>
+      <th>forbearance</th>
+      <th>process</th>
+      <th>social</th>
+      <th>biden</th>
+      <th>repayment</th>
+      <th>congress</th>
+      <th>earnings</th>
+      <th>bankruptcy</th>
+      <th>rubin</th>
+      <th>example</th>
+      <th>make</th>
+      <th>application</th>
+      <th>graduation</th>
+      <th>buyback</th>
+      <th>class</th>
+      <th>just</th>
+      <th>term</th>
+      <th>department</th>
+      <th>forginess</th>
+      <th>act</th>
+      <th>debt</th>
+      <th>equity</th>
+      <th>right</th>
+      <th>idr</th>
+      <th>median</th>
+      <th>acceptance</th>
+      <th>work</th>
+      <th>tord</th>
+      <th>security</th>
+      <th>income</th>
+      <th>loan</th>
+      <th>sa</th>
+      <th>ll</th>
+      <th>offer</th>
+      <th>office</th>
+      <th>unirsity</th>
+      <th>school</th>
+      <th>pause</th>
+      <th>expert</th>
+      <th>time</th>
+      <th>american</th>
+      <th>home</th>
+      <th>buy</th>
+      <th>apply</th>
+      <th>democrat</th>
+      <th>policy</th>
+      <th>cnge</th>
+      <th>think</th>
+      <th>budget</th>
+      <th>official</th>
+      <th>people</th>
+      <th>program</th>
+      <th>donald</th>
+      <th>memo</th>
+      <th>like</th>
+      <th>grant</th>
+      <th>credit</th>
+      <th>business</th>
+      <th>employment</th>
+      <th>total</th>
+      <th>pslf</th>
+      <th>score</th>
+      <th>president</th>
+      <th>pay</th>
+      <th>action</th>
+      <th>don</th>
+      <th>said</th>
+      <th>available</th>
+      <th>help</th>
+      <th>balance</th>
+      <th>public</th>
+      <th>administration</th>
+      <th>drin</th>
+      <th>ratio</th>
+      <th>option</th>
+      <th>cllenge</th>
+      <th>law</th>
+      <th>plan</th>
+      <th>new</th>
+      <th>white</th>
+      <th>insurance</th>
+      <th>agency</th>
+      <th>house</th>
+      <th>college</th>
+      <th>news</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_9e4f1a90_40ca_45a6_80d4_2731233fe29e:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 7, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 3, 1, 0, 0, 0, 0, 0, 0, 3, 1, 0, 1, 0, 0, 0, 0, 0, 1, 2, 1, 4, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1], [1, 0, 0, 0, 1, 5, 0, 0, 2, 14, 0, 0, 0, 0, 1, 3, 0, 1, 4, 0, 0, 0, 2, 16, 0, 5, 0, 0, 1, 0, 0, 1, 0, 0, 5, 31, 6, 3, 1, 0, 0, 2, 2, 1, 2, 0, 0, 3, 3, 0, 0, 0, 2, 2, 0, 0, 9, 0, 0, 2, 0, 0, 0, 0, 4, 7, 0, 0, 6, 2, 1, 1, 3, 1, 4, 3, 3, 3, 0, 3, 3, 0, 14, 1, 1, 0, 0, 1, 1, 0], [0, 1, 0, 0, 2, 0, 0, 5, 34, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 1, 1, 4, 6, 2, 4, 4, 0, 1, 0, 0, 0, 0, 1, 10, 0, 7, 0, 0, 0, 3, 0, 0, 0, 0, 3, 3, 1, 0, 1, 0, 8, 0, 0, 0, 0, 2, 1, 1, 0, 1, 0, 5, 3, 0, 1, 0, 1, 8, 1, 1, 1, 15, 0, 2, 0, 1, 16, 0, 0, 0, 0, 2, 2, 4, 5, 0, 0, 5, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 4, 0, 0, 0, 7, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 3, 1, 0, 0, 1, 4, 3, 0, 0, 0, 0, 6, 4, 0, 1, 0, 3, 2, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 6, 1, 0, 0, 3, 0, 0, 0, 2, 1, 1, 0, 0, 1, 0, 3, 1, 2, 0, 0, 2, 0, 0], [1, 0, 0, 0, 1, 5, 0, 0, 2, 14, 0, 0, 0, 0, 1, 3, 0, 1, 4, 0, 0, 0, 2, 16, 0, 5, 0, 0, 1, 0, 0, 1, 0, 0, 5, 31, 6, 3, 1, 0, 0, 2, 2, 1, 2, 0, 0, 3, 3, 0, 0, 0, 2, 2, 0, 0, 9, 0, 0, 2, 0, 0, 0, 0, 4, 7, 0, 0, 6, 2, 1, 1, 3, 1, 4, 3, 3, 3, 0, 3, 3, 0, 14, 1, 1, 0, 0, 1, 1, 0], [0, 0, 0, 0, 0, 3, 1, 0, 0, 2, 0, 0, 0, 6, 2, 4, 7, 0, 19, 0, 0, 1, 0, 5, 0, 5, 0, 0, 0, 0, 0, 0, 2, 0, 2, 11, 3, 2, 1, 0, 0, 0, 1, 0, 2, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 2, 17, 0, 0, 4, 0, 0, 5, 1, 2, 3, 3, 1, 2, 0, 1, 0, 0, 3, 2, 2, 0, 0, 2, 0, 0], [0, 3, 0, 0, 1, 0, 0, 0, 37, 3, 7, 0, 0, 0, 1, 5, 2, 0, 0, 0, 4, 2, 16, 17, 1, 6, 0, 3, 0, 0, 0, 5, 0, 0, 3, 19, 2, 1, 0, 4, 1, 16, 1, 8, 7, 4, 0, 1, 0, 1, 2, 1, 5, 0, 0, 3, 4, 1, 0, 2, 1, 0, 0, 0, 1, 0, 2, 9, 2, 1, 0, 4, 0, 4, 0, 2, 9, 1, 0, 0, 3, 1, 7, 3, 1, 0, 0, 1, 4, 1], [0, 0, 1, 0, 1, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 4, 0, 6, 0, 0, 0, 1, 0, 0, 0, 0, 0, 7, 1, 0, 0, 2, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 4, 0, 1, 0, 3, 0, 0, 0, 3, 2, 0, 0, 0, 0, 1, 2, 0, 2, 0, 0, 2, 1, 0], [0, 0, 0, 0, 8, 0, 0, 1, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 3, 2, 2, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 2, 4, 0, 0, 0, 1, 16, 2, 0, 0, 3, 10, 0, 0, 0, 0, 2, 2, 0, 0, 0, 1, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1, 0, 0, 3, 0, 1, 0, 3, 5, 0, 0, 0, 0, 2, 3, 1, 2, 0, 1, 2, 7, 0], [0, 0, 1, 0, 0, 0, 0, 0, 7, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6, 0, 3, 0, 0, 0, 0, 0, 0, 1, 0, 0, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 0, 0, 0, 0, 0, 1, 0, 1, 2, 0, 2, 0, 1, 0, 2, 0, 0, 1, 6, 6, 0, 0, 0, 1, 1, 2, 1, 1, 0, 0, 1, 0, 1], [0, 0, 6, 0, 9, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 0, 1, 4, 0, 0, 1, 1, 13, 0, 0, 0, 0, 0, 1, 0, 0, 0, 7, 1, 1, 1, 0, 1, 0, 0, 0, 4, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 11, 1, 0, 0, 4, 0, 5, 1, 2, 0, 0, 0, 0, 2, 0, 2, 1, 0, 2, 0, 0, 0, 0, 0, 1, 0, 2, 1, 0, 0, 1, 1, 1, 0, 2], [0, 3, 0, 0, 0, 0, 1, 0, 15, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 3, 24, 1, 6, 0, 0, 2, 0, 0, 0, 0, 0, 2, 29, 1, 0, 0, 3, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 0, 1, 6, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1, 0, 2, 0, 0, 0, 0, 2, 1, 22, 1, 0, 1, 3, 0, 19, 6, 2, 0, 0, 3, 0, 0], [2, 0, 1, 0, 0, 2, 4, 0, 4, 13, 0, 0, 0, 0, 0, 2, 13, 0, 0, 0, 1, 8, 15, 12, 0, 3, 0, 0, 17, 0, 0, 1, 3, 0, 12, 17, 9, 0, 2, 0, 0, 0, 0, 0, 6, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1, 0, 1, 0, 0, 0, 5, 0, 0, 1, 0, 0, 2, 3, 0, 1, 3, 4, 2, 0, 5, 1, 1, 26, 4, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 0, 1, 1, 0, 11, 4, 1, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 1, 6, 22, 1, 3, 0, 0, 4, 0, 0, 2, 3, 0, 2, 27, 4, 1, 0, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 3, 16, 2, 0, 1, 0, 0, 0, 0, 1, 9, 0, 2, 1, 1, 0, 0, 0, 0, 2, 2, 13, 1, 0, 3, 3, 0, 17, 0, 2, 0, 0, 4, 0, 0], [0, 0, 1, 0, 1, 4, 1, 1, 6, 11, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 2, 2, 6, 20, 0, 4, 0, 1, 20, 0, 0, 0, 4, 1, 5, 35, 8, 1, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 7, 2, 0, 1, 0, 4, 0, 0, 2, 7, 0, 4, 2, 1, 1, 0, 3, 1, 1, 2, 4, 1, 0, 4, 2, 0, 29, 1, 2, 0, 0, 2, 0, 1], [0, 0, 0, 0, 0, 2, 0, 3, 7, 1, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 1, 0, 12, 13, 0, 2, 0, 0, 1, 0, 0, 1, 1, 3, 2, 24, 1, 2, 0, 0, 0, 0, 5, 0, 3, 0, 0, 0, 3, 0, 0, 3, 0, 0, 0, 1, 18, 0, 0, 0, 2, 0, 0, 0, 2, 6, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 8, 1, 0, 1, 0, 0, 3, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 1, 2, 0, 0, 10, 8, 6, 0, 0, 0, 0, 1, 2, 0, 0, 0, 1, 0, 12, 25, 1, 2, 0, 1, 3, 0, 0, 0, 2, 0, 3, 30, 13, 0, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 0, 17, 0, 0, 2, 0, 0, 0, 0, 1, 9, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 9, 1, 0, 1, 7, 1, 22, 2, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 1, 12, 5, 0, 4, 6, 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 2, 4, 13, 16, 0, 0, 0, 1, 29, 0, 0, 1, 5, 0, 6, 21, 16, 0, 0, 0, 0, 0, 1, 0, 4, 0, 0, 0, 3, 0, 0, 2, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 1, 1, 0, 0, 2, 0, 0, 2, 2, 3, 2, 0, 3, 3, 1, 33, 0, 1, 0, 0, 1, 0, 1], [0, 0, 1, 0, 1, 1, 0, 0, 13, 2, 2, 0, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 9, 18, 1, 1, 0, 0, 7, 0, 0, 0, 3, 0, 2, 23, 4, 0, 1, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 3, 0, 0, 0, 1, 22, 1, 0, 0, 1, 0, 0, 1, 1, 31, 0, 4, 0, 0, 0, 3, 0, 1, 1, 6, 14, 2, 0, 3, 3, 1, 8, 4, 2, 0, 0, 4, 1, 2], [0, 0, 0, 0, 1, 5, 0, 0, 1, 10, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 4, 9, 26, 0, 0, 0, 0, 30, 0, 0, 0, 4, 0, 8, 26, 15, 1, 0, 0, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 2, 5, 0, 1, 3, 0, 0, 0, 1, 0, 1, 1, 0, 3, 0, 0, 2, 1, 30, 1, 0, 0, 0, 0, 0, 0], [2, 0, 0, 0, 1, 25, 0, 0, 4, 9, 1, 0, 0, 0, 2, 3, 5, 0, 8, 0, 1, 3, 19, 14, 0, 0, 0, 0, 21, 0, 0, 0, 3, 0, 7, 23, 19, 0, 0, 1, 0, 0, 0, 0, 8, 0, 0, 5, 2, 0, 1, 1, 0, 0, 2, 0, 7, 0, 0, 0, 0, 3, 0, 2, 1, 17, 0, 1, 1, 0, 0, 0, 0, 0, 2, 1, 3, 3, 0, 4, 3, 0, 27, 7, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 2, 11, 0, 0, 4, 7, 1, 0, 0, 0, 0, 4, 1, 0, 0, 0, 0, 0, 12, 17, 2, 1, 0, 0, 16, 0, 0, 0, 4, 0, 5, 24, 14, 1, 0, 1, 1, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 4, 2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 3, 0, 1, 0, 1, 0, 0, 1, 2, 4, 2, 0, 3, 2, 1, 35, 3, 1, 0, 0, 3, 0, 1], [2, 0, 0, 0, 1, 10, 3, 0, 2, 11, 1, 0, 0, 0, 0, 0, 7, 0, 0, 0, 1, 2, 7, 10, 0, 0, 0, 0, 6, 0, 0, 1, 1, 0, 8, 15, 9, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 3, 0, 1, 0, 0, 0, 6, 0, 1, 3, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 3, 0, 0, 24, 2, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 4, 2, 1, 5, 5, 1, 0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 1, 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5, 38, 0, 0, 0, 0, 1, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 12, 1, 0, 2, 0, 8, 0, 1, 2, 0, 1, 4, 1, 1, 1, 0, 0, 0, 4, 1, 5, 2, 0, 6, 0, 1, 2, 3, 0, 0, 0, 0, 0, 1], [0, 1, 0, 0, 0, 0, 0, 0, 3, 1, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 3, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 2, 8, 0, 0, 0, 0, 0, 4, 0, 0, 1, 5, 2, 0, 0, 0, 0, 28, 1, 0, 0, 0, 5, 2, 1, 1, 1, 5, 0, 0, 0, 0, 5, 0, 0, 2, 0, 0, 0, 4, 0, 1, 3, 0, 0, 0], [0, 0, 0, 0, 4, 0, 1, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 4, 1, 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 6, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 5, 0, 0, 2, 15, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0, 1, 0, 0, 1, 0, 1, 8, 1, 0, 0, 5, 1, 0, 0, 0, 2, 1, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 5, 0, 5, 0, 1, 0, 2, 0, 0, 5, 1, 0, 0, 1, 2, 0, 3, 1, 0, 0, 1, 0, 0], [0, 0, 1, 0, 1, 0, 0, 0, 9, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2, 3, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 12, 1, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 4, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 2, 0, 1, 0, 1, 0, 0, 0, 3, 2, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 6, 0, 1, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 4, 33, 0, 4, 3, 1, 0, 3, 0, 1, 7, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 3, 0, 12, 1, 0, 1, 0, 3, 0, 1, 0, 2, 0, 1, 1, 0, 0, 1, 0, 2, 6, 0, 1, 0, 2, 0, 0, 0, 0, 3, 1], [0, 1, 0, 0, 11, 0, 0, 1, 3, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 2, 0, 0, 0, 6, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 4, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 4, 0, 1, 0, 0, 2, 0, 0, 0, 1, 12, 0, 1, 0, 0, 2, 0, 1, 1], [3, 0, 0, 0, 2, 1, 0, 0, 5, 7, 0, 0, 0, 0, 0, 6, 2, 0, 0, 0, 1, 0, 4, 2, 0, 3, 0, 0, 0, 0, 0, 0, 2, 0, 7, 9, 8, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 7, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 4, 0, 3, 3, 0, 0, 0, 2, 2, 0, 0, 0, 2, 0, 12, 3, 0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 1, 0, 2, 2, 4, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 6, 1, 3, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 6, 0, 0, 0, 0, 3, 0, 1, 0, 7, 0, 0, 0, 0, 0, 0, 0, 3, 1, 0, 0, 0, 1, 0, 0, 2, 6, 0, 0, 0, 0, 8, 1, 2, 0, 0, 2, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 1, 1, 10, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11, 5, 0, 1, 1, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 5, 1, 0, 0, 0, 0, 0, 0, 1, 5, 0, 1, 0, 0, 1, 0, 0, 0, 1, 4, 8, 1, 0, 0, 1, 0, 4, 2, 0, 0, 0, 0, 0, 1], [1, 0, 0, 0, 1, 5, 0, 0, 2, 14, 0, 0, 0, 0, 1, 3, 0, 1, 4, 0, 0, 0, 2, 16, 0, 5, 0, 0, 1, 0, 0, 1, 0, 0, 5, 31, 6, 3, 1, 0, 0, 2, 2, 1, 2, 0, 0, 3, 3, 0, 0, 0, 2, 2, 0, 0, 9, 0, 0, 2, 0, 0, 0, 0, 4, 7, 0, 0, 6, 2, 1, 1, 3, 1, 4, 3, 3, 3, 0, 3, 3, 0, 14, 1, 1, 0, 0, 1, 1, 0], [0, 0, 1, 0, 0, 0, 0, 0, 8, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 2, 3, 2, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 9, 1, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 4, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 2, 0, 1, 0, 1, 0, 0, 0, 2, 2, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 1, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 5, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 7, 0, 0, 0, 6, 1, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 3], [0, 1, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 0, 1, 1, 9, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 5, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 0, 2, 0, 0, 6, 0, 0, 0, 1, 0, 2, 5, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 2, 0, 1, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1, 1, 9, 0, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 2, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 4, 3, 0, 0, 0, 0, 2, 2, 0, 0, 0, 1, 0, 2, 0, 3, 0, 3, 1, 0, 0, 0, 3, 8, 0, 4, 2, 1, 0, 1, 0, 2, 9, 0, 0, 0, 0, 1, 1, 7, 0, 0, 1, 0, 2, 0], [3, 0, 0, 0, 1, 2, 0, 0, 0, 14, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1, 2, 4, 15, 0, 5, 0, 1, 6, 0, 0, 0, 8, 0, 12, 16, 9, 2, 1, 2, 1, 1, 3, 0, 3, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 3, 0, 5, 5, 0, 0, 3, 0, 0, 2, 1, 1, 0, 2, 0, 2, 2, 0, 6, 0, 1, 0, 0, 16, 2, 0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 1, 0, 0, 0, 7, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 4, 2, 1, 1, 0, 3, 0, 0, 0, 0, 0, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0, 5, 0, 0, 0, 1, 0, 1, 0, 2, 0, 1, 2, 0, 1], [0, 0, 22, 0, 33, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 4, 1, 2, 0, 2, 0, 4, 2, 0, 0, 0, 1, 0, 1, 0, 1, 6, 0, 2, 1, 1, 4, 7, 0, 0, 3, 1, 2, 0, 0, 0, 0, 0, 1, 1, 0, 1, 17, 0, 1, 0, 2, 0, 0, 0, 0, 0, 2, 0, 12, 1, 5, 1, 0, 0, 0], [0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 3, 0, 1, 0, 3, 0, 0, 0, 0, 0, 1, 0, 0, 1, 20, 2, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 0, 0, 1, 3, 3, 1, 0, 2, 0, 0, 0, 1, 0, 7, 0, 0, 1, 0, 0, 0, 3, 0, 0, 12, 0, 0, 2, 0, 0, 1, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3], [0, 2, 0, 0, 5, 0, 1, 1, 8, 0, 1, 0, 0, 0, 0, 3, 1, 0, 0, 5, 2, 0, 8, 8, 0, 5, 0, 1, 0, 0, 0, 2, 1, 0, 2, 21, 1, 0, 2, 1, 11, 2, 1, 0, 5, 8, 0, 0, 0, 4, 8, 0, 2, 0, 0, 4, 5, 1, 0, 1, 1, 4, 0, 0, 0, 0, 0, 2, 5, 2, 3, 0, 0, 2, 0, 6, 5, 0, 0, 1, 0, 2, 12, 8, 0, 0, 0, 0, 19, 0], [3, 0, 0, 0, 1, 0, 1, 0, 5, 0, 2, 1, 0, 0, 2, 1, 0, 3, 0, 0, 0, 8, 0, 1, 1, 6, 2, 1, 0, 0, 0, 0, 0, 0, 5, 3, 0, 0, 0, 1, 4, 6, 0, 2, 1, 1, 0, 0, 0, 0, 2, 0, 3, 0, 1, 0, 13, 1, 0, 1, 1, 1, 0, 3, 0, 0, 0, 2, 2, 0, 1, 9, 0, 1, 0, 2, 13, 0, 1, 1, 1, 0, 0, 7, 1, 0, 0, 1, 29, 1], [0, 0, 0, 0, 0, 0, 0, 2, 5, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 8, 0, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 6, 0, 2, 0, 3, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 6, 0, 0, 0, 0, 0, 3, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 2, 1, 0, 0], [0, 0, 0, 0, 2, 0, 0, 0, 8, 0, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 5, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 5, 0, 0, 0, 3, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 1, 0, 3, 2, 3, 0, 0, 0, 1, 10, 0, 0, 0, 0, 3, 2, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 6, 0, 0, 0, 0, 0, 0, 0, 2, 0, 4, 0, 1, 0, 3, 0, 1, 1, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 5, 2, 0, 0, 0, 0, 5, 1, 1, 0, 0, 0, 0, 0, 0], [0, 2, 0, 2, 2, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 1, 1, 6, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 1, 0, 2], [0, 0, 0, 3, 0, 0, 0, 6, 2, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 8, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 2, 2, 1, 0, 0, 2, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 3, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0], [0, 1, 0, 12, 0, 0, 1, 1, 0, 0, 3, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 1, 0, 0, 0, 3, 0, 3, 1, 6, 0, 0, 0, 2, 1, 0, 0, 0, 0, 1, 0, 0, 0, 5, 0, 0, 0, 0, 0, 3, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 9, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 3, 3, 0, 2], [0, 4, 0, 7, 1, 0, 4, 0, 1, 5, 2, 0, 0, 0, 0, 6, 0, 0, 0, 0, 4, 0, 18, 5, 2, 0, 0, 3, 3, 0, 0, 2, 1, 3, 2, 24, 1, 0, 0, 3, 1, 0, 0, 0, 4, 2, 0, 0, 0, 0, 1, 2, 3, 0, 0, 0, 5, 1, 0, 2, 2, 3, 1, 0, 0, 4, 0, 5, 0, 0, 6, 0, 0, 1, 0, 2, 2, 1, 0, 0, 0, 3, 1, 4, 1, 0, 2, 1, 0, 0], [0, 1, 0, 11, 0, 0, 1, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 1, 1, 6, 0, 0, 0, 0, 1, 2, 0, 0, 0, 1, 0, 0, 0, 4, 0, 1, 0, 0, 0, 4, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 2, 0, 1, 3, 3, 1], [0, 0, 0, 0, 4, 0, 1, 1, 5, 0, 2, 0, 0, 0, 0, 1, 2, 0, 0, 1, 0, 0, 15, 2, 1, 3, 1, 6, 0, 0, 0, 1, 0, 0, 4, 6, 0, 0, 0, 5, 4, 16, 0, 0, 0, 1, 0, 0, 0, 0, 2, 1, 0, 1, 0, 1, 6, 1, 0, 0, 3, 0, 0, 0, 1, 0, 0, 3, 3, 1, 0, 7, 0, 1, 0, 3, 6, 0, 0, 0, 0, 3, 4, 1, 1, 0, 6, 1, 11, 0], [0, 0, 0, 4, 1, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 4, 0, 0, 0, 1, 2, 1, 0, 0, 0, 4, 1, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 2, 0, 0, 0, 1, 1, 0, 1, 0, 0, 3, 1, 1, 0], [0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 1, 0, 0, 0, 0, 4, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 3, 1, 0, 1, 1, 0], [0, 1, 0, 1, 4, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 22, 0, 0, 0, 1, 1, 0, 0, 0, 4, 0, 0, 2, 1, 0, 0, 1, 3, 0, 6, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 4, 1, 1, 4, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 3, 0, 0, 1, 5, 0, 0, 0, 2, 1, 0, 0, 0, 0, 1, 9, 2, 4, 0, 10, 6, 1, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 1, 1, 0, 0, 0, 12, 1, 0, 0, 0, 0, 1, 0, 0, 4, 8, 0, 0, 0, 0, 0, 0, 0, 0, 3, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 15, 2, 0, 0, 0, 0, 0, 1, 0, 0, 3, 1, 0, 5, 0, 0, 0, 2, 0, 0, 0, 0, 4, 1, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 3, 1, 0, 2, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 3, 0, 2, 7, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 3, 0, 4, 8, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 3, 1, 0, 0, 0, 2, 3, 0], [0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 5, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 2, 0, 2, 0, 0, 0, 0, 0, 5, 0, 0, 0, 3, 1, 0, 1, 2, 0, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 1, 0, 2, 6, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 2, 5, 0, 2], [0, 0, 0, 0, 2, 6, 1, 0, 4, 3, 3, 0, 1, 6, 0, 4, 0, 0, 1, 0, 0, 1, 8, 27, 1, 1, 0, 0, 6, 0, 0, 1, 3, 0, 2, 37, 7, 0, 2, 1, 0, 2, 1, 4, 4, 0, 0, 1, 3, 0, 1, 3, 0, 3, 0, 0, 14, 1, 0, 1, 0, 1, 0, 0, 1, 7, 0, 2, 1, 1, 2, 7, 0, 0, 2, 3, 15, 1, 0, 1, 1, 0, 11, 9, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 4, 0, 2, 0, 0, 0, 0, 0, 0, 1, 10, 0, 1, 0, 0, 0, 0, 0, 0, 7, 0, 1, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 6, 0, 47, 0, 0, 1, 0, 33, 0, 10, 0, 3, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0], [0, 0, 0, 0, 0, 0, 3, 0, 1, 1, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 2, 1, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 1, 0, 2, 5, 3, 0, 0, 0, 5, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 3, 1, 3, 0, 0, 1, 1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 1, 2, 0, 0, 1, 2, 2, 0, 0, 1, 0, 0, 6, 3, 0, 0, 0, 3, 7, 0], [0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 12, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 4, 0, 1, 0, 3, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0], [0, 0, 0, 2, 3, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 1, 2, 0, 0, 0, 0, 0, 0, 3, 1, 2, 0, 2, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 2, 0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 5, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 5, 1, 0, 0], [0, 0, 0, 0, 0, 0, 3, 0, 1, 0, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 2, 1, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 1, 0, 2, 4, 3, 0, 0, 0, 4, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 3, 1, 3, 0, 0, 1, 1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 1, 2, 0, 0, 1, 2, 2, 0, 0, 1, 0, 0, 5, 2, 0, 0, 0, 3, 6, 0], [0, 1, 0, 10, 0, 0, 1, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 1, 1, 6, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1, 0, 0, 0, 4, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 1, 3, 0, 1], [0, 1, 1, 0, 4, 0, 1, 2, 4, 0, 5, 0, 0, 0, 1, 5, 0, 0, 0, 0, 1, 0, 3, 0, 6, 0, 0, 2, 0, 0, 0, 1, 0, 2, 3, 1, 0, 0, 0, 0, 3, 9, 1, 0, 3, 2, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 5, 3, 1, 0, 6, 0, 1, 0, 0, 7, 0, 0, 0, 0, 8, 0, 0, 3, 0, 2, 4, 3, 0], [0, 0, 0, 13, 1, 0, 0, 3, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 11, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 1, 0, 1, 1, 0, 0, 0, 1, 4, 1, 0, 0, 1, 1, 0, 0, 1, 3, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 3, 0, 0, 0, 0, 3, 2, 0, 0], [0, 0, 0, 0, 2, 6, 1, 0, 4, 3, 3, 0, 1, 6, 0, 4, 0, 0, 1, 0, 0, 1, 8, 27, 1, 1, 0, 0, 6, 0, 0, 1, 3, 0, 2, 37, 7, 0, 2, 1, 0, 2, 1, 4, 4, 0, 0, 1, 3, 0, 1, 3, 0, 3, 0, 0, 14, 1, 0, 1, 0, 1, 0, 0, 1, 7, 0, 2, 1, 1, 2, 7, 0, 0, 2, 3, 15, 1, 0, 1, 1, 0, 11, 9, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 2, 6, 1, 0, 4, 3, 3, 0, 1, 6, 0, 4, 0, 0, 1, 0, 0, 1, 8, 27, 1, 1, 0, 0, 6, 0, 0, 1, 3, 0, 2, 37, 7, 0, 2, 1, 0, 2, 1, 4, 4, 0, 0, 1, 3, 0, 1, 3, 0, 3, 0, 0, 14, 1, 0, 1, 0, 1, 0, 0, 1, 7, 0, 2, 1, 1, 2, 7, 0, 0, 2, 3, 15, 1, 0, 1, 1, 0, 11, 9, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 5, 2, 0, 5, 8, 0, 0, 0, 4, 0, 0, 0, 0, 2, 0, 0, 0, 0, 6, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 5, 15, 21, 2, 0, 4, 0, 0, 1, 8, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 1, 0, 2, 0, 1, 0, 0, 0, 1, 0, 3, 0, 1, 2, 4, 1, 0, 0, 1, 9, 5, 0, 1, 0, 0, 18, 2, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 5, 2, 0, 5, 8, 0, 0, 0, 4, 0, 0, 0, 0, 2, 0, 0, 0, 0, 6, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 5, 15, 21, 2, 0, 4, 0, 0, 1, 8, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 1, 0, 2, 0, 1, 0, 0, 0, 1, 0, 3, 0, 1, 2, 4, 1, 0, 0, 1, 9, 5, 0, 1, 0, 0, 18, 2, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 1, 1, 2, 0, 2, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 1, 0, 0, 1, 5, 0, 0, 0, 0, 0, 4, 0, 0, 0, 8, 0, 1, 0, 5, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 2, 1, 5, 0, 0, 0, 0, 0, 7, 1, 0, 0, 0, 1, 3, 3, 3, 1, 9, 0, 0, 0, 1, 2, 0, 0, 1, 1, 1, 1, 1, 0, 1, 11, 0, 0, 0], [0, 0, 0, 2, 6, 0, 0, 2, 0, 0, 2, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 14, 0, 0, 1, 2, 0, 1, 0, 0, 0, 0, 1, 9, 0, 2, 0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0], [0, 1, 0, 0, 4, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 11, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 7, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0, 0, 0, 4, 0, 0, 1, 1, 1, 0, 0, 2, 1, 0, 0, 0, 0, 1, 3, 1, 1, 0, 3, 1, 0, 2], [0, 0, 0, 11, 0, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 6, 1, 6, 0, 0, 0, 2, 1, 0, 0, 0, 0, 3, 0, 0, 0, 5, 0, 1, 0, 0, 0, 4, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 5, 0, 0, 0, 1, 2, 0, 0, 0, 0, 2, 0, 1, 2, 0, 4, 4, 0, 2], [0, 0, 0, 0, 4, 0, 0, 0, 1, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 3, 1, 0, 3, 0, 0, 1, 4, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 0, 1, 0, 0, 0, 0, 1, 0], [0, 1, 0, 11, 0, 0, 1, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 18, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 1, 1, 6, 0, 0, 0, 0, 1, 2, 0, 0, 1, 1, 0, 0, 0, 4, 0, 1, 0, 0, 0, 4, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 6, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 2, 0, 1, 3, 0, 1], [0, 1, 0, 2, 5, 0, 0, 0, 1, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 1, 0, 6, 0, 0, 0, 1, 0, 0, 1, 6, 0, 0, 0, 3, 0, 5, 0, 0, 4, 2, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 1, 0, 0, 4, 0, 0, 1, 1, 0, 0, 8, 0, 1, 1, 0, 0, 0, 2, 6, 9, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 3, 3], [0, 0, 0, 3, 3, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 1, 2, 0, 4, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 11, 0, 4, 1, 3, 0, 0, 0, 0, 4, 0, 0, 0, 1, 1, 3, 5, 0, 0, 0, 0, 0, 4], [0, 6, 0, 5, 5, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 4, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 1, 0, 2, 0, 0, 3, 1, 1, 0, 0, 1, 0, 0, 0, 0, 4, 0, 2, 0, 7, 0, 0, 0, 0, 7, 0, 0, 0, 1, 2, 0, 2, 0, 0, 2, 1, 0, 5], [0, 2, 0, 0, 1, 1, 2, 0, 4, 5, 2, 0, 0, 0, 0, 3, 2, 0, 0, 0, 2, 2, 11, 6, 1, 5, 0, 2, 0, 0, 0, 3, 0, 0, 1, 24, 1, 0, 1, 5, 0, 0, 1, 1, 0, 2, 1, 0, 1, 0, 4, 3, 0, 0, 1, 4, 4, 0, 0, 2, 2, 0, 0, 0, 0, 2, 0, 3, 0, 0, 0, 9, 1, 0, 0, 3, 2, 1, 0, 2, 1, 0, 6, 0, 0, 0, 2, 0, 0, 1], [0, 0, 0, 0, 0, 0, 3, 0, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 1, 0, 2, 5, 3, 0, 0, 0, 5, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 4, 1, 3, 0, 0, 2, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 1, 3, 0, 1, 2, 0, 1, 1, 2, 2, 0, 0, 1, 0, 0, 6, 2, 0, 0, 0, 3, 10, 0], [0, 2, 0, 5, 6, 0, 0, 1, 1, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 1, 4, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 2, 2, 0, 0, 0, 2, 3, 0, 0, 0, 1, 0, 1, 1, 0, 1, 2, 2, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 2, 3, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 3, 5, 0, 4, 5, 0, 0], [0, 0, 0, 0, 0, 0, 3, 0, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 1, 0, 2, 5, 3, 0, 0, 0, 5, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 4, 1, 3, 0, 0, 2, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 1, 3, 0, 1, 2, 0, 1, 1, 2, 2, 0, 0, 1, 0, 0, 6, 2, 0, 0, 0, 3, 10, 0], [0, 0, 0, 0, 0, 0, 3, 0, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 1, 0, 2, 5, 3, 0, 0, 0, 5, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 4, 1, 3, 0, 0, 2, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 1, 3, 0, 1, 2, 0, 1, 1, 2, 2, 0, 0, 1, 0, 0, 6, 2, 0, 0, 0, 3, 10, 0], [0, 0, 0, 0, 0, 0, 3, 0, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 1, 0, 2, 5, 3, 0, 0, 0, 5, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 4, 1, 3, 0, 0, 2, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 1, 3, 0, 1, 2, 0, 1, 1, 2, 2, 0, 0, 1, 0, 0, 6, 2, 0, 0, 0, 3, 10, 0]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true, "filtered_row_count": 249, "fnInfoCallback": function (oSettings, iStart, iEnd, iMax, iTotal, sPre) { return sPre + ' (<a href="https://mwouts.github.io/itables/downsampling.html">downsampled</a> from 339x150 to 90x90 as maxBytes=64KB)'; }};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="newsapi-clustering-results" class="level2">
+<h2 class="anchored" data-anchor-id="newsapi-clustering-results">NewsAPI Clustering Results</h2>
+<p>Using the columns (words) from that dataset, the cleaned and lemmatized news articles were further reduced to only those features. These reduced articles were then saved as text files in a corpus folder for the hierarchical clustering process in R. The corpus can be found HERE.</p>
+<p>After performing hiearchical clustering, the results from 2-6 levels in the hiearchical structure were saved for further analysis.</p>
+<div id="ec3cd187" class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<table id="itables_bff45236_ec51_49af_8a72_0c6f508b95bc" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>File</th>
+      <th>cluster_2</th>
+      <th>cluster_3</th>
+      <th>cluster_4</th>
+      <th>cluster_5</th>
+      <th>cluster_6</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_bff45236_ec51_49af_8a72_0c6f508b95bc:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["ABC News_0.txt", 1, 1, 1, 1, 1], ["ABC News_1.txt", 1, 1, 1, 1, 1], ["ABC News_10.txt", 2, 2, 2, 2, 2], ["ABC News_11.txt", 2, 2, 2, 2, 2], ["ABC News_12.txt", 2, 2, 3, 3, 3], ["ABC News_13.txt", 2, 2, 3, 3, 3], ["ABC News_14.txt", 2, 2, 2, 2, 2], ["ABC News_15.txt", 2, 2, 2, 2, 2], ["ABC News_16.txt", 1, 1, 1, 1, 1], ["ABC News_2.txt", 2, 2, 3, 3, 3], ["ABC News_3.txt", 2, 2, 2, 2, 4], ["ABC News_4.txt", 2, 3, 4, 4, 5], ["ABC News_5.txt", 2, 2, 2, 2, 2], ["ABC News_6.txt", 2, 2, 2, 2, 2], ["ABC News_7.txt", 2, 2, 3, 3, 3], ["ABC News_8.txt", 2, 2, 3, 3, 3], ["ABC News_9.txt", 2, 3, 4, 5, 6], ["Al Jazeera English_0.txt", 1, 1, 1, 1, 1], ["Al Jazeera English_1.txt", 2, 2, 3, 3, 3], ["Al Jazeera English_2.txt", 2, 2, 3, 3, 3], ["Al Jazeera English_3.txt", 2, 2, 2, 2, 2], ["Al Jazeera English_4.txt", 2, 2, 2, 2, 2], ["Americanthinker.com_0.txt", 2, 2, 2, 2, 4], ["Americanthinker.com_1.txt", 2, 3, 4, 4, 5], ["Americanthinker.com_2.txt", 2, 2, 2, 2, 2], ["Americanthinker.com_3.txt", 2, 2, 2, 2, 4], ["Americanthinker.com_4.txt", 2, 2, 3, 3, 3], ["Americanthinker.com_5.txt", 2, 2, 2, 2, 4], ["ARLnow_0.txt", 2, 3, 4, 4, 5], ["Boston Herald_0.txt", 1, 1, 1, 1, 1], ["Boston Herald_1.txt", 2, 2, 2, 2, 4], ["Boston Herald_10.txt", 2, 2, 3, 3, 3], ["Boston Herald_11.txt", 2, 2, 3, 3, 3], ["Boston Herald_12.txt", 2, 2, 3, 3, 3], ["Boston Herald_13.txt", 2, 3, 4, 5, 6], ["Boston Herald_14.txt", 2, 2, 3, 3, 3], ["Boston Herald_2.txt", 2, 3, 4, 4, 5], ["Boston Herald_3.txt", 2, 2, 2, 2, 4], ["Boston Herald_4.txt", 1, 1, 1, 1, 1], ["Boston Herald_5.txt", 2, 2, 3, 3, 3], ["Boston Herald_6.txt", 2, 2, 2, 2, 4], ["Boston Herald_7.txt", 2, 3, 4, 5, 6], ["Boston Herald_8.txt", 2, 2, 2, 2, 2], ["Boston Herald_9.txt", 1, 1, 1, 1, 1], ["Breitbart News_0.txt", 1, 1, 1, 1, 1], ["Breitbart News_1.txt", 2, 2, 2, 2, 4], ["Breitbart News_2.txt", 2, 2, 2, 2, 4], ["Catholicnewsagency.com_0.txt", 2, 2, 3, 3, 3], ["Catholicnewsagency.com_1.txt", 2, 2, 2, 2, 2], ["CBS News_0.txt", 1, 1, 1, 1, 1], ["CBS News_1.txt", 2, 3, 4, 5, 6], ["CBS News_10.txt", 2, 3, 4, 5, 6], ["CBS News_11.txt", 2, 3, 4, 5, 6], ["CBS News_12.txt", 2, 2, 2, 2, 2], ["CBS News_13.txt", 2, 3, 4, 5, 6], ["CBS News_14.txt", 2, 3, 4, 5, 6], ["CBS News_15.txt", 2, 3, 4, 5, 6], ["CBS News_16.txt", 2, 2, 2, 2, 2], ["CBS News_2.txt", 2, 3, 4, 4, 5], ["CBS News_3.txt", 2, 3, 4, 5, 6], ["CBS News_4.txt", 2, 3, 4, 5, 6], ["CBS News_5.txt", 2, 3, 4, 5, 6], ["CBS News_6.txt", 2, 3, 4, 5, 6], ["CBS News_7.txt", 2, 3, 4, 5, 6], ["CBS News_8.txt", 2, 2, 2, 2, 2], ["CBS News_9.txt", 2, 2, 2, 2, 2], ["CNBC_0.txt", 2, 3, 4, 5, 6], ["CNBC_1.txt", 1, 1, 1, 1, 1], ["CNBC_10.txt", 1, 1, 1, 1, 1], ["CNBC_11.txt", 1, 1, 1, 1, 1], ["CNBC_12.txt", 2, 3, 4, 5, 6], ["CNBC_13.txt", 2, 3, 4, 4, 5], ["CNBC_14.txt", 2, 3, 4, 4, 5], ["CNBC_15.txt", 2, 3, 4, 5, 6], ["CNBC_16.txt", 2, 2, 3, 3, 3], ["CNBC_17.txt", 2, 3, 4, 4, 5], ["CNBC_18.txt", 2, 3, 4, 4, 5], ["CNBC_19.txt", 1, 1, 1, 1, 1], ["CNBC_2.txt", 1, 1, 1, 1, 1], ["CNBC_20.txt", 2, 3, 4, 4, 5], ["CNBC_21.txt", 1, 1, 1, 1, 1], ["CNBC_22.txt", 1, 1, 1, 1, 1], ["CNBC_23.txt", 2, 3, 4, 5, 6], ["CNBC_24.txt", 2, 3, 4, 4, 5], ["CNBC_25.txt", 2, 2, 2, 2, 2], ["CNBC_26.txt", 2, 3, 4, 4, 5], ["CNBC_27.txt", 2, 3, 4, 4, 5], ["CNBC_28.txt", 2, 2, 3, 3, 3], ["CNBC_29.txt", 2, 3, 4, 5, 6], ["CNBC_3.txt", 1, 1, 1, 1, 1], ["CNBC_30.txt", 2, 2, 3, 3, 3], ["CNBC_31.txt", 2, 3, 4, 4, 5], ["CNBC_4.txt", 1, 1, 1, 1, 1], ["CNBC_5.txt", 1, 1, 1, 1, 1], ["CNBC_6.txt", 1, 1, 1, 1, 1], ["CNBC_7.txt", 1, 1, 1, 1, 1], ["CNBC_8.txt", 1, 1, 1, 1, 1], ["CNBC_9.txt", 1, 1, 1, 1, 1], ["CNET_0.txt", 1, 1, 1, 1, 1], ["CNET_1.txt", 1, 1, 1, 1, 1], ["CNET_10.txt", 1, 1, 1, 1, 1], ["CNET_11.txt", 1, 1, 1, 1, 1], ["CNET_12.txt", 1, 1, 1, 1, 1], ["CNET_13.txt", 1, 1, 1, 1, 1], ["CNET_14.txt", 1, 1, 1, 1, 1], ["CNET_15.txt", 1, 1, 1, 1, 1], ["CNET_16.txt", 1, 1, 1, 1, 1], ["CNET_17.txt", 2, 3, 4, 5, 6], ["CNET_18.txt", 2, 3, 4, 5, 6], ["CNET_19.txt", 2, 3, 4, 5, 6], ["CNET_2.txt", 1, 1, 1, 1, 1], ["CNET_20.txt", 2, 3, 4, 4, 5], ["CNET_21.txt", 2, 3, 4, 4, 5], ["CNET_22.txt", 2, 3, 4, 4, 5], ["CNET_23.txt", 1, 1, 1, 1, 1], ["CNET_24.txt", 2, 2, 3, 3, 3], ["CNET_25.txt", 2, 3, 4, 5, 6], ["CNET_26.txt", 2, 2, 3, 3, 3], ["CNET_27.txt", 2, 3, 4, 5, 6], ["CNET_28.txt", 2, 2, 3, 3, 3], ["CNET_29.txt", 1, 1, 1, 1, 1], ["CNET_3.txt", 1, 1, 1, 1, 1], ["CNET_30.txt", 1, 1, 1, 1, 1], ["CNET_31.txt", 1, 1, 1, 1, 1], ["CNET_32.txt", 1, 1, 1, 1, 1], ["CNET_33.txt", 1, 1, 1, 1, 1], ["CNET_34.txt", 1, 1, 1, 1, 1], ["CNET_35.txt", 1, 1, 1, 1, 1], ["CNET_36.txt", 2, 3, 4, 5, 6], ["CNET_37.txt", 1, 1, 1, 1, 1], ["CNET_38.txt", 1, 1, 1, 1, 1], ["CNET_39.txt", 1, 1, 1, 1, 1], ["CNET_4.txt", 1, 1, 1, 1, 1], ["CNET_40.txt", 1, 1, 1, 1, 1], ["CNET_5.txt", 1, 1, 1, 1, 1], ["CNET_6.txt", 1, 1, 1, 1, 1], ["CNET_7.txt", 1, 1, 1, 1, 1], ["CNET_8.txt", 1, 1, 1, 1, 1], ["CNET_9.txt", 1, 1, 1, 1, 1], ["CNN_0.txt", 2, 3, 4, 4, 5], ["CNN_1.txt", 2, 3, 4, 5, 6], ["CNN_2.txt", 2, 2, 2, 2, 2], ["Common Dreams_0.txt", 2, 2, 2, 2, 2], ["Common Dreams_1.txt", 2, 2, 2, 2, 2], ["Common Dreams_2.txt", 2, 3, 4, 4, 5], ["Common Dreams_3.txt", 2, 2, 2, 2, 2], ["Common Dreams_4.txt", 2, 3, 4, 4, 5], ["Common Dreams_5.txt", 2, 2, 2, 2, 2], ["Daily Signal_0.txt", 2, 2, 2, 2, 2], ["Daily Signal_1.txt", 2, 2, 3, 3, 3], ["Daily Signal_2.txt", 2, 2, 3, 3, 3], ["Daily Signal_3.txt", 2, 2, 2, 2, 4], ["Forbes_0.txt", 1, 1, 1, 1, 1], ["Forbes_1.txt", 1, 1, 1, 1, 1], ["Forbes_10.txt", 1, 1, 1, 1, 1], ["Forbes_11.txt", 1, 1, 1, 1, 1], ["Forbes_12.txt", 1, 1, 1, 1, 1], ["Forbes_13.txt", 2, 3, 4, 5, 6], ["Forbes_14.txt", 1, 1, 1, 1, 1], ["Forbes_15.txt", 1, 1, 1, 1, 1], ["Forbes_16.txt", 2, 2, 2, 2, 2], ["Forbes_17.txt", 1, 1, 1, 1, 1], ["Forbes_18.txt", 1, 1, 1, 1, 1], ["Forbes_19.txt", 1, 1, 1, 1, 1], ["Forbes_2.txt", 1, 1, 1, 1, 1], ["Forbes_20.txt", 2, 2, 3, 3, 3], ["Forbes_21.txt", 1, 1, 1, 1, 1], ["Forbes_22.txt", 2, 3, 4, 4, 5], ["Forbes_23.txt", 2, 2, 3, 3, 3], ["Forbes_24.txt", 2, 2, 3, 3, 3], ["Forbes_25.txt", 2, 3, 4, 5, 6], ["Forbes_26.txt", 2, 2, 3, 3, 3], ["Forbes_27.txt", 2, 2, 3, 3, 3], ["Forbes_28.txt", 2, 3, 4, 4, 5], ["Forbes_29.txt", 2, 3, 4, 4, 5], ["Forbes_3.txt", 1, 1, 1, 1, 1], ["Forbes_30.txt", 2, 3, 4, 5, 6], ["Forbes_31.txt", 2, 2, 3, 3, 3], ["Forbes_32.txt", 2, 2, 2, 2, 2], ["Forbes_33.txt", 1, 1, 1, 1, 1], ["Forbes_34.txt", 1, 1, 1, 1, 1], ["Forbes_35.txt", 1, 1, 1, 1, 1], ["Forbes_36.txt", 1, 1, 1, 1, 1], ["Forbes_37.txt", 1, 1, 1, 1, 1], ["Forbes_38.txt", 1, 1, 1, 1, 1], ["Forbes_39.txt", 2, 2, 3, 3, 3], ["Forbes_4.txt", 1, 1, 1, 1, 1], ["Forbes_40.txt", 2, 3, 4, 5, 6], ["Forbes_41.txt", 2, 3, 4, 5, 6], ["Forbes_42.txt", 1, 1, 1, 1, 1], ["Forbes_43.txt", 1, 1, 1, 1, 1], ["Forbes_5.txt", 1, 1, 1, 1, 1], ["Forbes_6.txt", 1, 1, 1, 1, 1], ["Forbes_7.txt", 1, 1, 1, 1, 1], ["Forbes_8.txt", 1, 1, 1, 1, 1], ["Forbes_9.txt", 1, 1, 1, 1, 1], ["Fox News_0.txt", 1, 1, 1, 1, 1], ["Fox News_1.txt", 1, 1, 1, 1, 1], ["Fox News_10.txt", 2, 3, 4, 4, 5], ["Fox News_11.txt", 2, 3, 4, 4, 5], ["Fox News_12.txt", 2, 3, 4, 4, 5], ["Fox News_13.txt", 2, 2, 2, 2, 2], ["Fox News_14.txt", 2, 2, 2, 2, 2], ["Fox News_15.txt", 2, 2, 3, 3, 3], ["Fox News_16.txt", 2, 2, 2, 2, 4], ["Fox News_17.txt", 2, 2, 2, 2, 4], ["Fox News_2.txt", 1, 1, 1, 1, 1], ["Fox News_3.txt", 1, 1, 1, 1, 1], ["Fox News_4.txt", 2, 2, 2, 2, 4], ["Fox News_5.txt", 2, 2, 3, 3, 3], ["Fox News_6.txt", 2, 2, 2, 2, 4], ["Fox News_7.txt", 2, 2, 2, 2, 4], ["Fox News_8.txt", 2, 2, 2, 2, 4], ["Fox News_9.txt", 2, 2, 3, 3, 3], ["fox6now.com_0.txt", 2, 2, 2, 2, 2], ["HuffPost_0.txt", 2, 3, 4, 4, 5], ["HuffPost_1.txt", 2, 3, 4, 4, 5], ["HuffPost_2.txt", 2, 3, 4, 4, 5], ["HuffPost_3.txt", 2, 2, 2, 2, 2], ["HuffPost_4.txt", 2, 2, 2, 2, 2], ["HuffPost_5.txt", 2, 2, 2, 2, 2], ["LADbible_0.txt", 1, 1, 1, 1, 1], ["Mediaite_0.txt", 2, 2, 2, 2, 4], ["New York Magazine_0.txt", 2, 2, 2, 2, 2], ["New York Post_0.txt", 1, 1, 1, 1, 1], ["New York Post_1.txt", 2, 2, 2, 2, 2], ["New York Post_10.txt", 2, 2, 3, 3, 3], ["New York Post_2.txt", 1, 1, 1, 1, 1], ["New York Post_3.txt", 1, 1, 1, 1, 1], ["New York Post_4.txt", 1, 1, 1, 1, 1], ["New York Post_5.txt", 2, 2, 2, 2, 4], ["New York Post_6.txt", 2, 3, 4, 4, 5], ["New York Post_7.txt", 2, 3, 4, 5, 6], ["New York Post_8.txt", 2, 2, 3, 3, 3], ["New York Post_9.txt", 2, 2, 3, 3, 3], ["Newsbreak.com_0.txt", 2, 2, 2, 2, 2], ["Newsbreak.com_1.txt", 2, 2, 2, 2, 4], ["Newsbreak.com_2.txt", 2, 2, 2, 2, 2], ["Newsbreak.com_3.txt", 2, 2, 2, 2, 2], ["Newsbreak.com_4.txt", 2, 2, 2, 2, 2], ["Newsbreak.com_5.txt", 2, 2, 2, 2, 2], ["Newsbreak.com_6.txt", 2, 2, 3, 3, 3], ["Newsbreak.com_7.txt", 2, 2, 3, 3, 3], ["Newsbreak.com_8.txt", 2, 2, 3, 3, 3], ["Newsbreak.com_9.txt", 2, 2, 3, 3, 3], ["NPR_0.txt", 2, 2, 3, 3, 3], ["NPR_1.txt", 2, 3, 4, 4, 5], ["NPR_2.txt", 2, 2, 3, 3, 3], ["NPR_3.txt", 2, 3, 4, 4, 5], ["NPR_4.txt", 2, 3, 4, 4, 5], ["NPR_5.txt", 2, 3, 4, 4, 5], ["NPR_6.txt", 2, 2, 2, 2, 2], ["NPR_7.txt", 2, 2, 2, 2, 2], ["NPR_8.txt", 2, 2, 3, 3, 3], ["Parkersburg News_0.txt", 2, 2, 3, 3, 3], ["ProPublica_0.txt", 2, 2, 3, 3, 3], ["ProPublica_1.txt", 2, 3, 4, 4, 5], ["Raw Story_0.txt", 2, 2, 2, 2, 2], ["Raw Story_1.txt", 2, 2, 2, 2, 2], ["Raw Story_2.txt", 2, 2, 2, 2, 2], ["Raw Story_3.txt", 2, 2, 2, 2, 2], ["Raw Story_4.txt", 2, 2, 2, 2, 2], ["Reason_0.txt", 2, 2, 2, 2, 4], ["Reason_1.txt", 2, 2, 2, 2, 2], ["Reason_2.txt", 2, 2, 2, 2, 4], ["Reason_3.txt", 2, 2, 2, 2, 4], ["Reason_4.txt", 2, 2, 2, 2, 2], ["Reason_5.txt", 2, 2, 2, 2, 4], ["Reason_6.txt", 2, 2, 2, 2, 4], ["Richmond.com_0.txt", 2, 3, 4, 5, 6], ["Richmond.com_1.txt", 2, 3, 4, 4, 5], ["Richmond.com_2.txt", 2, 2, 2, 2, 2], ["Richmond.com_3.txt", 2, 2, 2, 2, 2], ["Richmond.com_4.txt", 2, 2, 3, 3, 3], ["Roanoke Times_0.txt", 1, 1, 1, 1, 1], ["Roanoke Times_1.txt", 2, 3, 4, 5, 6], ["Roanoke Times_2.txt", 2, 2, 2, 2, 2], ["Roanoke Times_3.txt", 2, 2, 2, 2, 2], ["Roanoke Times_4.txt", 2, 2, 3, 3, 3], ["Roanoke Times_5.txt", 2, 2, 2, 2, 2], ["Slate Magazine_0.txt", 2, 3, 4, 4, 5], ["Slate Magazine_1.txt", 2, 3, 4, 4, 5], ["Slate Magazine_2.txt", 2, 2, 2, 2, 2], ["Slate Magazine_3.txt", 2, 3, 4, 4, 5], ["Slate Magazine_4.txt", 2, 3, 4, 4, 5], ["Slate Magazine_5.txt", 2, 2, 2, 2, 2], ["Slate Magazine_6.txt", 2, 2, 2, 2, 2], ["The Advocate_0.txt", 2, 2, 2, 2, 2], ["The Advocate_1.txt", 2, 2, 2, 2, 2], ["The Daily Caller_0.txt", 2, 2, 2, 2, 4], ["The Daily Caller_1.txt", 2, 2, 2, 2, 4], ["The Daily Caller_2.txt", 2, 2, 2, 2, 4], ["The Daily Caller_3.txt", 2, 2, 2, 2, 4], ["The Daily Caller_4.txt", 2, 3, 4, 4, 5], ["The Daily Caller_5.txt", 2, 2, 2, 2, 4], ["The Daily Caller_6.txt", 2, 2, 2, 2, 2], ["The Daily Caller_7.txt", 2, 2, 2, 2, 4], ["The Daily Caller_8.txt", 2, 2, 2, 2, 2], ["The Daily Caller_9.txt", 2, 2, 3, 3, 3], ["The Denver Post_0.txt", 2, 3, 4, 4, 5], ["The Denver Post_1.txt", 2, 2, 3, 3, 3], ["The New Republic_0.txt", 1, 1, 1, 1, 1], ["The New Republic_1.txt", 2, 3, 4, 5, 6], ["The New Republic_2.txt", 2, 2, 2, 2, 2], ["The New Republic_3.txt", 2, 2, 2, 2, 2], ["The Root_0.txt", 1, 1, 1, 1, 1], ["The Root_1.txt", 2, 2, 3, 3, 3], ["The Root_2.txt", 2, 2, 2, 2, 2], ["The Root_3.txt", 2, 2, 2, 2, 2], ["Thenation.com_0.txt", 2, 2, 3, 3, 3], ["Thenation.com_1.txt", 2, 2, 2, 2, 2], ["Time_0.txt", 2, 2, 2, 2, 4], ["Time_1.txt", 2, 2, 2, 2, 2], ["Time_2.txt", 2, 2, 3, 3, 3], ["Time_3.txt", 2, 2, 2, 2, 2], ["Time_4.txt", 2, 2, 3, 3, 3], ["Time_5.txt", 2, 2, 2, 2, 2], ["USA Today_0.txt", 1, 1, 1, 1, 1], ["USA Today_1.txt", 2, 2, 3, 3, 3], ["Vox_0.txt", 2, 2, 2, 2, 2], ["Washington Free Beacon_0.txt", 1, 1, 1, 1, 1], ["Washington Monthly_0.txt", 2, 2, 3, 3, 3], ["Washington Monthly_1.txt", 2, 2, 3, 3, 3], ["WCVB Boston_0.txt", 2, 2, 2, 2, 2], ["Westernjournal.com_0.txt", 1, 1, 1, 1, 1], ["Yahoo Entertainment_0.txt", 2, 2, 2, 2, 2], ["Yahoo Entertainment_1.txt", 2, 3, 4, 4, 5], ["Yahoo Entertainment_10.txt", 1, 1, 1, 1, 1], ["Yahoo Entertainment_11.txt", 2, 3, 4, 4, 5], ["Yahoo Entertainment_12.txt", 2, 3, 4, 5, 6], ["Yahoo Entertainment_13.txt", 1, 1, 1, 1, 1], ["Yahoo Entertainment_2.txt", 2, 2, 3, 3, 3], ["Yahoo Entertainment_3.txt", 2, 3, 4, 5, 6], ["Yahoo Entertainment_4.txt", 2, 2, 2, 2, 2], ["Yahoo Entertainment_5.txt", 2, 3, 4, 5, 6], ["Yahoo Entertainment_6.txt", 2, 3, 4, 5, 6], ["Yahoo Entertainment_7.txt", 2, 3, 4, 5, 6], ["Yahoo Entertainment_8.txt", 2, 3, 4, 5, 6], ["Yahoo Entertainment_9.txt", 2, 3, 4, 4, 5]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="newsapi-clustering-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="newsapi-clustering-analysis">NewsAPI Clustering Analysis</h2>
+<p>Given that there were a few hundred files within the corpus, it can be difficult to make sense of the initial dendrogram or results. However, if the labels are brought back in, this might help make better sense of how and why the splits are made. Political Bias was brought back in, resulting in an actual divergence among clusters according to where the majority of the labels were at. In this case, a majority of articles from sources with known political bias.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/hierarchical/majority_newsapi_divergence.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>At the hiearchical level of six, there is a potential indicator that the methodology did pick up on political undertones. In fact, each of the political biases can have a unique pairing of clusters at this level. Compared to K-Means clustering, there is a much better balance overall.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/hierarchical/newsapi_cluster_proportions.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/hierarchical/newsapi_cluster_proportions_paired.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>By declaring these cluster pairs as seen above, the dendrogram can roughly be partitioned as such aditionally.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/hierarchical/newsapi_bias_pairings_dendrogram.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="reddit-extension" class="level2">
+<h2 class="anchored" data-anchor-id="reddit-extension">Reddit Extension</h2>
+<p>In an attempt to extend political bias to the Reddit text data, the NewsAPI dataset was further subset where political bias and cluster aligned, and then the different Reddit schemas were appended on for repeated clustering. To be specific, the Reddit data was reduced to the same optimal wordset and then saved into a same corpus folder as the further subset NewsAPI.</p>
+<section id="content-distributions" class="level3">
+<h3 class="anchored" data-anchor-id="content-distributions">Content Distributions</h3>
+<p>To help balance the clustering process, a few changes were made due to the distributions of the document lengths between news articles and reddit posts.</p>
+<p><strong>Original Distribution</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/hierarchical/informative_content_comparison.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>The following measures were taken for balancing:</p>
+<ul>
+<li>Reddit Base Schema downsized to NewsAPI Number of Articles</li>
+<li>Reddit Author Schema downsized to NewsAPI Number of Articles</li>
+<li>NewsAPI Articles aggregated by Source to better match Number of Reddit Threads and Reddit Subreddits.</li>
+</ul>
+<p>Following the above measures, the corpuses were created:</p>
+<ul>
+<li>NewsAPI with Reddit Base Schema Subset</li>
+<li>NewsAPI with Reddit Author Schema Subset</li>
+<li>NewsAPI Source Schema with Reddit Thread Schema Subset</li>
+<li>NewsAPI Source Schema with Reddit Subreddit Schema Subset</li>
+</ul>
+<p><strong>Updated Distribution</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/hierarchical/informative_content_comparison_balanced.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="newsapi-reddit-extension-clustering-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="newsapi-reddit-extension-clustering-analysis">NewsAPI-Reddit Extension Clustering Analysis</h2>
+<p>Even after downsampling and aggregating, the distributions of content length of the cleaned, lemmatized, and <strong>informative</strong> versions were still far apart. Therefore, TF-IDF vectorization was performed. TF-IDF is a normalization technique which helps to mitigate the effect of document size variations. Essentially, it allocates a heavier weight towards words of higher importance rather than using counts like CountVectorizer.</p>
+<p>After performing Hierarchical Clustering on the combined schemas, the expectation of obtaining political bias was not what was revealed. <strong>Instead, there was a bifurcation between the news articles and Reddit posts!</strong> This is apparent as early as two to three hierarchical levels.</p>
+<blockquote class="blockquote">
+<p>Npte: The Reddit Base Schema wasn’t actually ran for this.</p>
+</blockquote>
+<section id="newsapi-with-reddit-author-schema-subset" class="level3">
+<h3 class="anchored" data-anchor-id="newsapi-with-reddit-author-schema-subset">NewsAPI with Reddit Author Schema Subset</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/hierarchical/newsapi_author_cluster_proportions.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="newsapi-source-schema-with-reddit-thread-schema-subset" class="level3">
+<h3 class="anchored" data-anchor-id="newsapi-source-schema-with-reddit-thread-schema-subset">NewsAPI Source Schema with Reddit Thread Schema Subset</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/hierarchical/newsapi_thread_cluster_proportions.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="newsapi-source-schema-with-reddit-subreddit-schema-subset" class="level3">
+<h3 class="anchored" data-anchor-id="newsapi-source-schema-with-reddit-subreddit-schema-subset">NewsAPI Source Schema with Reddit Subreddit Schema Subset</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/hierarchical/newsapi_subreddit_cluster_proportions.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>Due to the legibility of dendrograms, the NewsAPI Source Schema with Reddit Subreddit Schema Subset was plotted with labels altered to show their origins.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clustering/hierarchical/newsapi_subreddit_dendrogram.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+</section>
+</section>
+<section id="conclusions" class="level1">
+<h1>Conclusions</h1>
+<p>Two clustering techniques were performed on both news articles and reddit posts. The clustering techniques are known as K-Means Clustering and Hierarchical Clustering. These were performed as an exploratory analysis to reveal structures within the content. K-Means clustering revealed topic-like associations within the data. Regardless of source or aggregation schema, the content was mostly split among topics like politics, money, and quality of life students and graduates who are affected by student loans and tuition costs. Hierachical Clustering, on the other hand, seemed to provide more concrete details. This method provided better balanced clusters and was even able to indicate political biases. Additionally, there was evidence that this technique could distinguish between news articles and Reddit posts. Even with the text data cleaned, lemmatized, and reduced, there are certain drivers which separate the two types of writing.</p>
+<hr>
+</section>
+<section id="code-links" class="level1">
+<h1>Code Links</h1>
+<ul>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/vectorizing_functions.py">Vectorizing Script</a>: functions for the vectorization process</li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/newsapi_vectorizing_application.py">NewsAPI Vectorizing Script</a>: application of <strong>Vectorizing Script</strong></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Student Loan Forgiveness</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

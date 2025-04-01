@@ -1,0 +1,340 @@
+"File","cluster_2","cluster_3","cluster_4","cluster_5","cluster_6"
+"ABC News_0.txt",1,1,1,1,1
+"ABC News_1.txt",1,1,1,1,1
+"ABC News_10.txt",2,2,2,2,2
+"ABC News_11.txt",2,2,2,2,2
+"ABC News_12.txt",2,2,3,3,3
+"ABC News_13.txt",2,2,3,3,3
+"ABC News_14.txt",2,2,2,2,2
+"ABC News_15.txt",2,2,2,2,2
+"ABC News_16.txt",1,1,1,1,1
+"ABC News_2.txt",2,2,3,3,3
+"ABC News_3.txt",2,2,2,2,4
+"ABC News_4.txt",2,3,4,4,5
+"ABC News_5.txt",2,2,2,2,2
+"ABC News_6.txt",2,2,2,2,2
+"ABC News_7.txt",2,2,3,3,3
+"ABC News_8.txt",2,2,3,3,3
+"ABC News_9.txt",2,3,4,5,6
+"Al Jazeera English_0.txt",1,1,1,1,1
+"Al Jazeera English_1.txt",2,2,3,3,3
+"Al Jazeera English_2.txt",2,2,3,3,3
+"Al Jazeera English_3.txt",2,2,2,2,2
+"Al Jazeera English_4.txt",2,2,2,2,2
+"Americanthinker.com_0.txt",2,2,2,2,4
+"Americanthinker.com_1.txt",2,3,4,4,5
+"Americanthinker.com_2.txt",2,2,2,2,2
+"Americanthinker.com_3.txt",2,2,2,2,4
+"Americanthinker.com_4.txt",2,2,3,3,3
+"Americanthinker.com_5.txt",2,2,2,2,4
+"ARLnow_0.txt",2,3,4,4,5
+"Boston Herald_0.txt",1,1,1,1,1
+"Boston Herald_1.txt",2,2,2,2,4
+"Boston Herald_10.txt",2,2,3,3,3
+"Boston Herald_11.txt",2,2,3,3,3
+"Boston Herald_12.txt",2,2,3,3,3
+"Boston Herald_13.txt",2,3,4,5,6
+"Boston Herald_14.txt",2,2,3,3,3
+"Boston Herald_2.txt",2,3,4,4,5
+"Boston Herald_3.txt",2,2,2,2,4
+"Boston Herald_4.txt",1,1,1,1,1
+"Boston Herald_5.txt",2,2,3,3,3
+"Boston Herald_6.txt",2,2,2,2,4
+"Boston Herald_7.txt",2,3,4,5,6
+"Boston Herald_8.txt",2,2,2,2,2
+"Boston Herald_9.txt",1,1,1,1,1
+"Breitbart News_0.txt",1,1,1,1,1
+"Breitbart News_1.txt",2,2,2,2,4
+"Breitbart News_2.txt",2,2,2,2,4
+"Catholicnewsagency.com_0.txt",2,2,3,3,3
+"Catholicnewsagency.com_1.txt",2,2,2,2,2
+"CBS News_0.txt",1,1,1,1,1
+"CBS News_1.txt",2,3,4,5,6
+"CBS News_10.txt",2,3,4,5,6
+"CBS News_11.txt",2,3,4,5,6
+"CBS News_12.txt",2,2,2,2,2
+"CBS News_13.txt",2,3,4,5,6
+"CBS News_14.txt",2,3,4,5,6
+"CBS News_15.txt",2,3,4,5,6
+"CBS News_16.txt",2,2,2,2,2
+"CBS News_2.txt",2,3,4,4,5
+"CBS News_3.txt",2,3,4,5,6
+"CBS News_4.txt",2,3,4,5,6
+"CBS News_5.txt",2,3,4,5,6
+"CBS News_6.txt",2,3,4,5,6
+"CBS News_7.txt",2,3,4,5,6
+"CBS News_8.txt",2,2,2,2,2
+"CBS News_9.txt",2,2,2,2,2
+"CNBC_0.txt",2,3,4,5,6
+"CNBC_1.txt",1,1,1,1,1
+"CNBC_10.txt",1,1,1,1,1
+"CNBC_11.txt",1,1,1,1,1
+"CNBC_12.txt",2,3,4,5,6
+"CNBC_13.txt",2,3,4,4,5
+"CNBC_14.txt",2,3,4,4,5
+"CNBC_15.txt",2,3,4,5,6
+"CNBC_16.txt",2,2,3,3,3
+"CNBC_17.txt",2,3,4,4,5
+"CNBC_18.txt",2,3,4,4,5
+"CNBC_19.txt",1,1,1,1,1
+"CNBC_2.txt",1,1,1,1,1
+"CNBC_20.txt",2,3,4,4,5
+"CNBC_21.txt",1,1,1,1,1
+"CNBC_22.txt",1,1,1,1,1
+"CNBC_23.txt",2,3,4,5,6
+"CNBC_24.txt",2,3,4,4,5
+"CNBC_25.txt",2,2,2,2,2
+"CNBC_26.txt",2,3,4,4,5
+"CNBC_27.txt",2,3,4,4,5
+"CNBC_28.txt",2,2,3,3,3
+"CNBC_29.txt",2,3,4,5,6
+"CNBC_3.txt",1,1,1,1,1
+"CNBC_30.txt",2,2,3,3,3
+"CNBC_31.txt",2,3,4,4,5
+"CNBC_4.txt",1,1,1,1,1
+"CNBC_5.txt",1,1,1,1,1
+"CNBC_6.txt",1,1,1,1,1
+"CNBC_7.txt",1,1,1,1,1
+"CNBC_8.txt",1,1,1,1,1
+"CNBC_9.txt",1,1,1,1,1
+"CNET_0.txt",1,1,1,1,1
+"CNET_1.txt",1,1,1,1,1
+"CNET_10.txt",1,1,1,1,1
+"CNET_11.txt",1,1,1,1,1
+"CNET_12.txt",1,1,1,1,1
+"CNET_13.txt",1,1,1,1,1
+"CNET_14.txt",1,1,1,1,1
+"CNET_15.txt",1,1,1,1,1
+"CNET_16.txt",1,1,1,1,1
+"CNET_17.txt",2,3,4,5,6
+"CNET_18.txt",2,3,4,5,6
+"CNET_19.txt",2,3,4,5,6
+"CNET_2.txt",1,1,1,1,1
+"CNET_20.txt",2,3,4,4,5
+"CNET_21.txt",2,3,4,4,5
+"CNET_22.txt",2,3,4,4,5
+"CNET_23.txt",1,1,1,1,1
+"CNET_24.txt",2,2,3,3,3
+"CNET_25.txt",2,3,4,5,6
+"CNET_26.txt",2,2,3,3,3
+"CNET_27.txt",2,3,4,5,6
+"CNET_28.txt",2,2,3,3,3
+"CNET_29.txt",1,1,1,1,1
+"CNET_3.txt",1,1,1,1,1
+"CNET_30.txt",1,1,1,1,1
+"CNET_31.txt",1,1,1,1,1
+"CNET_32.txt",1,1,1,1,1
+"CNET_33.txt",1,1,1,1,1
+"CNET_34.txt",1,1,1,1,1
+"CNET_35.txt",1,1,1,1,1
+"CNET_36.txt",2,3,4,5,6
+"CNET_37.txt",1,1,1,1,1
+"CNET_38.txt",1,1,1,1,1
+"CNET_39.txt",1,1,1,1,1
+"CNET_4.txt",1,1,1,1,1
+"CNET_40.txt",1,1,1,1,1
+"CNET_5.txt",1,1,1,1,1
+"CNET_6.txt",1,1,1,1,1
+"CNET_7.txt",1,1,1,1,1
+"CNET_8.txt",1,1,1,1,1
+"CNET_9.txt",1,1,1,1,1
+"CNN_0.txt",2,3,4,4,5
+"CNN_1.txt",2,3,4,5,6
+"CNN_2.txt",2,2,2,2,2
+"Common Dreams_0.txt",2,2,2,2,2
+"Common Dreams_1.txt",2,2,2,2,2
+"Common Dreams_2.txt",2,3,4,4,5
+"Common Dreams_3.txt",2,2,2,2,2
+"Common Dreams_4.txt",2,3,4,4,5
+"Common Dreams_5.txt",2,2,2,2,2
+"Daily Signal_0.txt",2,2,2,2,2
+"Daily Signal_1.txt",2,2,3,3,3
+"Daily Signal_2.txt",2,2,3,3,3
+"Daily Signal_3.txt",2,2,2,2,4
+"Forbes_0.txt",1,1,1,1,1
+"Forbes_1.txt",1,1,1,1,1
+"Forbes_10.txt",1,1,1,1,1
+"Forbes_11.txt",1,1,1,1,1
+"Forbes_12.txt",1,1,1,1,1
+"Forbes_13.txt",2,3,4,5,6
+"Forbes_14.txt",1,1,1,1,1
+"Forbes_15.txt",1,1,1,1,1
+"Forbes_16.txt",2,2,2,2,2
+"Forbes_17.txt",1,1,1,1,1
+"Forbes_18.txt",1,1,1,1,1
+"Forbes_19.txt",1,1,1,1,1
+"Forbes_2.txt",1,1,1,1,1
+"Forbes_20.txt",2,2,3,3,3
+"Forbes_21.txt",1,1,1,1,1
+"Forbes_22.txt",2,3,4,4,5
+"Forbes_23.txt",2,2,3,3,3
+"Forbes_24.txt",2,2,3,3,3
+"Forbes_25.txt",2,3,4,5,6
+"Forbes_26.txt",2,2,3,3,3
+"Forbes_27.txt",2,2,3,3,3
+"Forbes_28.txt",2,3,4,4,5
+"Forbes_29.txt",2,3,4,4,5
+"Forbes_3.txt",1,1,1,1,1
+"Forbes_30.txt",2,3,4,5,6
+"Forbes_31.txt",2,2,3,3,3
+"Forbes_32.txt",2,2,2,2,2
+"Forbes_33.txt",1,1,1,1,1
+"Forbes_34.txt",1,1,1,1,1
+"Forbes_35.txt",1,1,1,1,1
+"Forbes_36.txt",1,1,1,1,1
+"Forbes_37.txt",1,1,1,1,1
+"Forbes_38.txt",1,1,1,1,1
+"Forbes_39.txt",2,2,3,3,3
+"Forbes_4.txt",1,1,1,1,1
+"Forbes_40.txt",2,3,4,5,6
+"Forbes_41.txt",2,3,4,5,6
+"Forbes_42.txt",1,1,1,1,1
+"Forbes_43.txt",1,1,1,1,1
+"Forbes_5.txt",1,1,1,1,1
+"Forbes_6.txt",1,1,1,1,1
+"Forbes_7.txt",1,1,1,1,1
+"Forbes_8.txt",1,1,1,1,1
+"Forbes_9.txt",1,1,1,1,1
+"Fox News_0.txt",1,1,1,1,1
+"Fox News_1.txt",1,1,1,1,1
+"Fox News_10.txt",2,3,4,4,5
+"Fox News_11.txt",2,3,4,4,5
+"Fox News_12.txt",2,3,4,4,5
+"Fox News_13.txt",2,2,2,2,2
+"Fox News_14.txt",2,2,2,2,2
+"Fox News_15.txt",2,2,3,3,3
+"Fox News_16.txt",2,2,2,2,4
+"Fox News_17.txt",2,2,2,2,4
+"Fox News_2.txt",1,1,1,1,1
+"Fox News_3.txt",1,1,1,1,1
+"Fox News_4.txt",2,2,2,2,4
+"Fox News_5.txt",2,2,3,3,3
+"Fox News_6.txt",2,2,2,2,4
+"Fox News_7.txt",2,2,2,2,4
+"Fox News_8.txt",2,2,2,2,4
+"Fox News_9.txt",2,2,3,3,3
+"fox6now.com_0.txt",2,2,2,2,2
+"HuffPost_0.txt",2,3,4,4,5
+"HuffPost_1.txt",2,3,4,4,5
+"HuffPost_2.txt",2,3,4,4,5
+"HuffPost_3.txt",2,2,2,2,2
+"HuffPost_4.txt",2,2,2,2,2
+"HuffPost_5.txt",2,2,2,2,2
+"LADbible_0.txt",1,1,1,1,1
+"Mediaite_0.txt",2,2,2,2,4
+"New York Magazine_0.txt",2,2,2,2,2
+"New York Post_0.txt",1,1,1,1,1
+"New York Post_1.txt",2,2,2,2,2
+"New York Post_10.txt",2,2,3,3,3
+"New York Post_2.txt",1,1,1,1,1
+"New York Post_3.txt",1,1,1,1,1
+"New York Post_4.txt",1,1,1,1,1
+"New York Post_5.txt",2,2,2,2,4
+"New York Post_6.txt",2,3,4,4,5
+"New York Post_7.txt",2,3,4,5,6
+"New York Post_8.txt",2,2,3,3,3
+"New York Post_9.txt",2,2,3,3,3
+"Newsbreak.com_0.txt",2,2,2,2,2
+"Newsbreak.com_1.txt",2,2,2,2,4
+"Newsbreak.com_2.txt",2,2,2,2,2
+"Newsbreak.com_3.txt",2,2,2,2,2
+"Newsbreak.com_4.txt",2,2,2,2,2
+"Newsbreak.com_5.txt",2,2,2,2,2
+"Newsbreak.com_6.txt",2,2,3,3,3
+"Newsbreak.com_7.txt",2,2,3,3,3
+"Newsbreak.com_8.txt",2,2,3,3,3
+"Newsbreak.com_9.txt",2,2,3,3,3
+"NPR_0.txt",2,2,3,3,3
+"NPR_1.txt",2,3,4,4,5
+"NPR_2.txt",2,2,3,3,3
+"NPR_3.txt",2,3,4,4,5
+"NPR_4.txt",2,3,4,4,5
+"NPR_5.txt",2,3,4,4,5
+"NPR_6.txt",2,2,2,2,2
+"NPR_7.txt",2,2,2,2,2
+"NPR_8.txt",2,2,3,3,3
+"Parkersburg News_0.txt",2,2,3,3,3
+"ProPublica_0.txt",2,2,3,3,3
+"ProPublica_1.txt",2,3,4,4,5
+"Raw Story_0.txt",2,2,2,2,2
+"Raw Story_1.txt",2,2,2,2,2
+"Raw Story_2.txt",2,2,2,2,2
+"Raw Story_3.txt",2,2,2,2,2
+"Raw Story_4.txt",2,2,2,2,2
+"Reason_0.txt",2,2,2,2,4
+"Reason_1.txt",2,2,2,2,2
+"Reason_2.txt",2,2,2,2,4
+"Reason_3.txt",2,2,2,2,4
+"Reason_4.txt",2,2,2,2,2
+"Reason_5.txt",2,2,2,2,4
+"Reason_6.txt",2,2,2,2,4
+"Richmond.com_0.txt",2,3,4,5,6
+"Richmond.com_1.txt",2,3,4,4,5
+"Richmond.com_2.txt",2,2,2,2,2
+"Richmond.com_3.txt",2,2,2,2,2
+"Richmond.com_4.txt",2,2,3,3,3
+"Roanoke Times_0.txt",1,1,1,1,1
+"Roanoke Times_1.txt",2,3,4,5,6
+"Roanoke Times_2.txt",2,2,2,2,2
+"Roanoke Times_3.txt",2,2,2,2,2
+"Roanoke Times_4.txt",2,2,3,3,3
+"Roanoke Times_5.txt",2,2,2,2,2
+"Slate Magazine_0.txt",2,3,4,4,5
+"Slate Magazine_1.txt",2,3,4,4,5
+"Slate Magazine_2.txt",2,2,2,2,2
+"Slate Magazine_3.txt",2,3,4,4,5
+"Slate Magazine_4.txt",2,3,4,4,5
+"Slate Magazine_5.txt",2,2,2,2,2
+"Slate Magazine_6.txt",2,2,2,2,2
+"The Advocate_0.txt",2,2,2,2,2
+"The Advocate_1.txt",2,2,2,2,2
+"The Daily Caller_0.txt",2,2,2,2,4
+"The Daily Caller_1.txt",2,2,2,2,4
+"The Daily Caller_2.txt",2,2,2,2,4
+"The Daily Caller_3.txt",2,2,2,2,4
+"The Daily Caller_4.txt",2,3,4,4,5
+"The Daily Caller_5.txt",2,2,2,2,4
+"The Daily Caller_6.txt",2,2,2,2,2
+"The Daily Caller_7.txt",2,2,2,2,4
+"The Daily Caller_8.txt",2,2,2,2,2
+"The Daily Caller_9.txt",2,2,3,3,3
+"The Denver Post_0.txt",2,3,4,4,5
+"The Denver Post_1.txt",2,2,3,3,3
+"The New Republic_0.txt",1,1,1,1,1
+"The New Republic_1.txt",2,3,4,5,6
+"The New Republic_2.txt",2,2,2,2,2
+"The New Republic_3.txt",2,2,2,2,2
+"The Root_0.txt",1,1,1,1,1
+"The Root_1.txt",2,2,3,3,3
+"The Root_2.txt",2,2,2,2,2
+"The Root_3.txt",2,2,2,2,2
+"Thenation.com_0.txt",2,2,3,3,3
+"Thenation.com_1.txt",2,2,2,2,2
+"Time_0.txt",2,2,2,2,4
+"Time_1.txt",2,2,2,2,2
+"Time_2.txt",2,2,3,3,3
+"Time_3.txt",2,2,2,2,2
+"Time_4.txt",2,2,3,3,3
+"Time_5.txt",2,2,2,2,2
+"USA Today_0.txt",1,1,1,1,1
+"USA Today_1.txt",2,2,3,3,3
+"Vox_0.txt",2,2,2,2,2
+"Washington Free Beacon_0.txt",1,1,1,1,1
+"Washington Monthly_0.txt",2,2,3,3,3
+"Washington Monthly_1.txt",2,2,3,3,3
+"WCVB Boston_0.txt",2,2,2,2,2
+"Westernjournal.com_0.txt",1,1,1,1,1
+"Yahoo Entertainment_0.txt",2,2,2,2,2
+"Yahoo Entertainment_1.txt",2,3,4,4,5
+"Yahoo Entertainment_10.txt",1,1,1,1,1
+"Yahoo Entertainment_11.txt",2,3,4,4,5
+"Yahoo Entertainment_12.txt",2,3,4,5,6
+"Yahoo Entertainment_13.txt",1,1,1,1,1
+"Yahoo Entertainment_2.txt",2,2,3,3,3
+"Yahoo Entertainment_3.txt",2,3,4,5,6
+"Yahoo Entertainment_4.txt",2,2,2,2,2
+"Yahoo Entertainment_5.txt",2,3,4,5,6
+"Yahoo Entertainment_6.txt",2,3,4,5,6
+"Yahoo Entertainment_7.txt",2,3,4,5,6
+"Yahoo Entertainment_8.txt",2,3,4,5,6
+"Yahoo Entertainment_9.txt",2,3,4,4,5

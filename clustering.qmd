@@ -1,0 +1,751 @@
+---
+title: "Clustering"
+execute:
+  echo: false
+---
+
+```{python}
+# import libraries
+import pandas as pd
+from itables import show
+
+# import pca data - newsapi
+pca_newsapi_max = pd.read_csv('images/clustering/kmeans/pca_results/newsapi_max.csv')
+pca_newsapi_tenth = pd.read_csv('images/clustering/kmeans/pca_results/newsapi_tenth.csv')
+pca_newsapi_lda_3 = pd.read_csv('images/clustering/kmeans/pca_results/newsapi_lda_3.csv')
+pca_newsapi_lda_5 = pd.read_csv('images/clustering/kmeans/pca_results/newsapi_lda_5.csv')
+
+# import pca data - reddit
+pca_reddit_base = pd.read_csv('images/clustering/kmeans/pca_results/reddit_base_lda_5.csv')
+pca_reddit_author = pd.read_csv('images/clustering/kmeans/pca_results/reddit_author_lda_5.csv')
+pca_reddit_thread = pd.read_csv('images/clustering/kmeans/pca_results/reddit_thread_lda_3.csv')
+pca_reddit_subreddit = pd.read_csv('images/clustering/kmeans/pca_results/reddit_subreddit_lda_3.csv')
+
+# import hiearchical data
+optimal_newsapi = pd.read_csv('data/clustering/newsapi_optimal_vectorized.csv')
+newsapi_results = pd.read_csv('data/clustering/hierarchical_newsapi.csv')
+
+```
+
+# Overview
+
+This section will focus on clustering the text data described in [Data Acquisition - NewsAPI](data_newsapi.qmd) and [Data Acquisition - Reddit](data_newsapi.qmd). As a whole, clustering is an unsupervised machine learning technique, which means that it attempts to find patterns, trends, and groupings within unlabeled data. Specifically, clustering is useful for identifying and partitioning the data through similarity measures. As such, there isn't a candid expectation for what will be found, aside from what data is similar and what data is dissimilar. However, given the topic of student loan forgiveness has a strong divide along political party lines, politcal bias will be a subsequent point of exploration.
+
+
+# Strategy
+
+## Clustering Methodologies
+
+K-Means Clustering and Hierarchical Clustering will be used to analyze news articles and Reddit posts. These are both unsupervised machine learning methods, meaning they take unlabeled data. Specifically, unlabeled numerical data.
+
+- K-Means Clustering: A clustering algorithm with the goal of partitioning a dataset into a specified number of clusters, where each point belongs to the cluster with the nearest mean. Distance and "closeness" are usually evaluated via Euclidean Distance, as will be done with this analysis. In this scenario, each point will be a vectorized version of the text within a news article or reddit post (or subsequent aggregations). Vectorizing text data produces high dimension datasets. Using techniques based on Eucldiean Distance for high dimensionality data usually doesn't produce great results. With that in mind, the vectorized data will be reduced via Principal Component Analysis (PCA). PCA is a data reduction technique which projects the data into an Eigenspace using a covariance matrix. The Eigenspace is built from orthonormal vectors known as Eigenvectors (or principal components) which actually represent the direction of explained variance from the original data. The strength (or magnitude) of explained variance is illustrated by the vector's associated Eigenvalue. PCA will be used to reduce the high dimensional text data into just three principal components.
+- Hiearachical Clustering: A clustering algorithm which determines cluster assignments by building a hierachy and which can be illustrated with a tree-based visualization known as a dendrogram. This is a useful exploratory tool which shows where different groups of data are partitioned, highlighting similar and disimilar data at different levels. PCA will not be used in this process. Instead, a distance measure known as Cosine Similarity will be used on the vectorized text data as a whole. The Cosine Similarity measure is adept for high dimensional data.
+
+## Data Preparation
+
+There will be 4 different initial vectorized versions of the text data used:
+
+- Maximum Features: A numerical vectorized version of the entire vocabulary.
+- Tenth of Maximum Features: A numerical vectorized version with a tenth of the maximum features of the entire vocabulary.
+- Iterative Latent Dirichlet Allocation (LDA):
+  - Idea: Latent Dirichlet Allocation will be iteratively performed such that each topic will have unique words. This will begin with the words from a Tenth of Maximum features wordset, and then $n$ unique words across $t$ topics up to a total of $m$ desired words will be found. In essence, $m = t * n$.
+  - **3-Topic Iterative LDA with 150 Words** will be used.
+  - **5-Topic Iterative LDA with 150 Words** will be used.
+  - Note that a section on a proper LDA Analysis is located [here](lda.qmd).
+
+> The strategy is to begin with K-Means, find the vectorized version which produces the best results for for K-Means, and use that vectorized version to initiate Hiearchical Clustering. Since K-Means will be utilizing PCA, the dataset produced from the PCA projection will be shown for all, and then just the best vectorized versions will be shown.
+
+### NewsAPI Data
+
+For the NewsAPI data (i.e., news articles), the data will be subset to the news sources which an overall political bias is known for, any labels will be removed, and then the vectorized versions will be created. The analysis will begin with the KMeans version, so the PCA projected data will be shown. The 
+
+#### NewsAPI PCA Maximum Snippet
+
+```{python}
+show(pca_newsapi_max.head(5), style="width:100%;margin:auto")
+```
+
+#### NewsAPI PCA Tenth Snippet
+
+```{python}
+show(pca_newsapi_tenth.head(5), style="width:100%;margin:auto")
+```
+
+#### NewsAPI PCA 3-Topic LDA Snippet
+
+```{python}
+show(pca_newsapi_lda_3.head(5), style="width:100%;margin:auto")
+```
+
+#### NewsAPI PCA 5-Topic Iterative LDA Snippet
+
+```{python}
+show(pca_newsapi_lda_5.head(5), style="width:100%;margin:auto")
+```
+
+### Reddit Data
+
+For the Reddit data, different aggregation schemas as described in the linked sections in the **Overview** will be used:
+  
+- Reddit Base Schema: Author's posts within a thread are aggregated.
+- Reddit Author Schema: Author's posts across all threads are aggregated.
+- Reddit Thread Schema: Posts within a thread are aggregated.
+- Reddit Subreddit Schema: Threads within a Subreddit are aggregated.
+
+> For efficiency, just the snippets of the dataset which had the best K-Means clustering result will be illustrated. However, the snippets of all the versions can be found HERE.
+
+#### Reddit PCA Base Schema: 5-Topic Iterative LDA Snippet
+
+```{python}
+show(pca_reddit_base.head(5), style="width:100%;margin:auto")
+```
+
+#### Reddit PCA Author Schema: 5-Topic Iterative LDA Snippet
+
+```{python}
+show(pca_reddit_author.head(5), style="width:100%;margin:auto")
+```
+
+#### Reddit PCA Thread Schema: 3-Topic Iterative LDA Snippet
+
+```{python}
+show(pca_reddit_thread.head(5), style="width:100%;margin:auto")
+```
+
+#### Reddit PCA Subreddit Schema: 3-Topic Iterative LDA Snippet
+
+```{python}
+show(pca_reddit_subreddit.head(5), style="width:100%;margin:auto")
+```
+
+
+# K-Means Clustering Results
+
+## Principal Component Analysis
+
+Again, for K-Means Clusering, Principal Component Analysis (PCA) was used to reduce the text data to 3-Dimensions. The initial results show that when the maximum features were the entire vocabulary, there was a much lower amount of explained variance throughout the three principal components.
+
+### NewsAPI
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/newsapi_max.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/newsapi_tenth.png)
+
+:::
+:::
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/newsapi_lda_3.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/newsapi_lda_5.png)
+
+:::
+:::
+
+### Reddit Base Schema
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_base_max.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_base_tenth.png)
+
+:::
+:::
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_base_lda_3.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_base_lda_5.png)
+
+:::
+:::
+
+### Reddit Author Schema
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_author_max.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_author_tenth.png)
+
+:::
+:::
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_author_lda_3.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_author_lda_5.png)
+
+:::
+:::
+
+### Reddit Thread Schema
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_thread_max.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_thread_tenth.png)
+
+:::
+:::
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_thread_lda_3.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_thread_lda_5.png)
+
+:::
+:::
+
+### Reddit Subreddit Schema
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_subreddit_max.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_subreddit_tenth.png)
+
+:::
+:::
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_subreddit_lda_3.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/pca_results/reddit_subreddit_lda_5.png)
+
+:::
+:::
+
+## Silhouette Coefficients
+
+Silhouette Coefficients are a decent metric to evaluate how well K-Means clustering has performed. It measures how similar a point is to the cluster it was assigned compared to the other clusters. A coefficient value has a range from -1 to 1, where 1 indicates a great cluster assignment. It's calculated using the average values between points. Scikit-Learn's [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html) gives a brief summary of the calculation.
+
+- $a$: average intra-cluster distance
+- $b$: average nearest-cluster distance
+- $s$: silhouette score
+- $S$: average silhouette score over the entire dataset
+- $n$: size of sample (number of points in the entire dataset)
+
+$s = \frac{b-a}{max(a, b)}$
+
+$S = \frac{\sum_{i=1}^n{s}}{n}$
+
+### NewsAPI
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/newsapi_max.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/newsapi_tenth.png)
+
+:::
+:::
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/newsapi_lda_3.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/newsapi_lda_5.png)
+
+:::
+:::
+
+![](images/clustering/kmeans/silhouette_results/newsapi_average.png){width=50% fig-align="center"}
+
+### Reddit Base Schema
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_base_max.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_base_tenth.png)
+
+:::
+:::
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_base_lda_3.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_base_lda_5.png)
+
+:::
+:::
+
+![](images/clustering/kmeans/silhouette_results/reddit_base_average.png){width=50% fig-align="center"}
+
+### Reddit Author Schema
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_author_max.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_author_tenth.png)
+
+:::
+:::
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_author_lda_3.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_author_lda_5.png)
+
+:::
+:::
+
+![](images/clustering/kmeans/silhouette_results/reddit_author_average.png){width=50% fig-align="center"}
+
+### Reddit Thread Schema
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_thread_max.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_thread_tenth.png)
+
+:::
+:::
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_thread_lda_3.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_thread_lda_5.png)
+
+:::
+:::
+
+![](images/clustering/kmeans/silhouette_results/reddit_thread_average.png){width=50% fig-align="center"}
+
+### Reddit Subreddit Schema
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_subreddit_max.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_subreddit_tenth.png)
+
+:::
+:::
+
+::: columns
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_subreddit_lda_3.png)
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+
+![](images/clustering/kmeans/silhouette_results/reddit_subreddit_lda_5.png)
+
+:::
+:::
+
+![](images/clustering/kmeans/silhouette_results/reddit_subreddit_average.png){width=50% fig-align="center"}
+
+## Choosing Cluster Values
+
+Choosing the best combination of cluster value (k) and dataset combination took some further visualization. Although the **Maximum Features** (i.e., vectorized across all vocabulary, projected onto three component PCA, and then clustered with K-Means) produced some of the **highest coefficient values**, this was **misleading**. The combination resulted in a dense cluster near the origin of the principal components, with a few distant and isolated outliers. Of course the silhouette scores would be high in that case. In general, when there were a few distant and isolated outliers, a high silhouette score is misleading. Additionally, some of the lower k values (i.e., k=2 or k=3) didn't separate the data in a meaningfuly manner after visual inspect.
+
+> Due to this, a full visual inspection of the NewsAPI clustering results will be performed including how the best clustering and dataset combination was chosen. However, the Reddit clustering results will just illustrate the best clustering and dataset combination.
+
+### NewsAPI
+
+Potential Vectorizing and Cluster Combinations:
+
+- Maximum Dataset: 3 clusters
+- Tenth Dataset: 2 clusters or 6 clusters
+- 3 Topic Iterative LDA: 4 clusters
+- 5 Topic Iterative LDA: 2 or 4 clusters
+
+#### Maximum Dataset with 3 Clusters
+
+---
+```{=html}
+<iframe src="images/clustering/kmeans/newsapi_maximum_3_clusters.html" width="100%" height="600px"></iframe>
+```
+---
+
+#### Tenth Dataset with 2 Clusters
+
+---
+```{=html}
+<iframe src="images/clustering/kmeans/newsapi_tenth_2_clusters.html" width="100%" height="600px"></iframe>
+```
+---
+
+#### Tenth Dataset with 6 Clusters
+
+---
+```{=html}
+<iframe src="images/clustering/kmeans/newsapi_tenth_6_clusters.html" width="100%" height="600px"></iframe>
+```
+---
+
+#### 3 Topic Iterative LDA with 4 clusters
+
+---
+```{=html}
+<iframe src="images/clustering/kmeans/newsapi_lda_3_4_clusters.html" width="100%" height="600px"></iframe>
+```
+---
+
+#### 5 Topic Iterative LDA with 2 clusters
+
+---
+```{=html}
+<iframe src="images/clustering/kmeans/newsapi_lda_5_2_clusters.html" width="100%" height="600px"></iframe>
+```
+---
+
+#### 5 Topic Iterative LDA with 4 clusters
+
+---
+```{=html}
+<iframe src="images/clustering/kmeans/newsapi_lda_5_4_clusters.html" width="100%" height="600px"></iframe>
+```
+---
+
+#### Choice
+
+Given the above visualizations, the **3 Topic Iterative LDA with 4 Clusters** was chosen. Although there was an outlier which had its own cluster, this version partitioned the overall cluster around the origin well. Along with this, it had a relatively high silhouette score.
+
+> A similar process was performed for the Reddit datasets, but for efficiency, just the choices will be presented. It seems that for all, the maximum features across the entire vocabular had the same result.
+
+### Reddit Base Schema
+
+**5 Topic Iterative LDA with 3 Clusters**
+
+---
+```{=html}
+<iframe src="images/clustering/kmeans/reddit_base_lda_5_3_clusters.html" width="100%" height="600px" style="text-align: center"></iframe>
+```
+---
+
+### Reddit Author Schema
+
+**5 Topic Iterative LDA with 4 Clusters**
+
+---
+```{=html}
+<iframe src="images/clustering/kmeans/reddit_author_lda_5_4_clusters.html" width="100%" height="600px"></iframe>
+```
+---
+
+### Reddit Thread Schema
+
+**3 Topic Iterative LDA with 4 Clusters**
+
+---
+```{=html}
+<iframe src="images/clustering/kmeans/reddit_thread_lda_3_4_clusters.html" width="100%" height="600px"></iframe>
+```
+---
+
+### Reddit Subreddit Schema
+
+**3 Topic Iterative LDA with 2 Clusters**
+
+---
+```{=html}
+<iframe src="images/clustering/kmeans/reddit_subreddit_lda_3_2_clusters.html" width="100%" height="600px"></iframe>
+```
+---
+
+## Final K-Means Discussion
+
+Overall, the Iterative LDA word sets performed well due to the outliers with higher amounts of text data, even with performing PCA. The question is, what was actually driving these splits? To better understand this, word clouds were created for the best dataset - cluster choice combinations. In general, there were splits between politics, money, and students' and graduates' lifestyles.
+
+### NewsAPI
+
+![](images/clustering/kmeans/wordclouds/newsapi_clusters.png){width=50% fig-align="center"}
+
+### Reddit Base Schema
+
+![](images/clustering/kmeans/wordclouds/reddit_base_schema_clusters.png){width=50% fig-align="center"}
+
+### Reddit Author Schema
+
+![](images/clustering/kmeans/wordclouds/reddit_author_schema_clusters.png){width=50% fig-align="center"}
+
+### Reddit Thread Schema
+
+![](images/clustering/kmeans/wordclouds/reddit_thread_schema_clusters.png){width=50% fig-align="center"}
+
+### Reddit Subreddit Schema
+
+![](images/clustering/kmeans/wordclouds/reddit_subreddit_schema_clusters.png){width=50% fig-align="center"}
+
+## Bringing in Labels
+
+There was some "success" with K-Means in that it did group together different variations of word frequency combinations well. However, how did it perform on clustering political bias with the news sources?
+
+Unfortunately, this led to highly imbalanced clusters which didn't tend to pick up on the politcal undertones. Or, the political undertones weren't present.
+
+![](images/clustering/kmeans/newsapi_best_cluster_allocation.png){width=50% fig-align="center"}
+
+# Hierarchical Clustering Results
+
+Following the stated strategy at the beginning of this section, this analysis will start with a vectorized version of the **NewsAPI 4 Topic Iterative LDA** wordset. This was the dataset that was used in the reporting of the best cluster for K-Means.
+
+## NewsAPI Data
+
+```{python}
+show(optimal_newsapi, style="width:100%;margin:auto")
+```
+
+## NewsAPI Clustering Results
+
+Using the columns (words) from that dataset, the cleaned and lemmatized news articles were further reduced to only those features. These reduced articles were then saved as text files in a corpus folder for the hierarchical clustering process in R. The corpus can be found HERE.
+
+After performing hiearchical clustering, the results from 2-6 levels in the hiearchical structure were saved for further analysis.
+
+```{python}
+show(newsapi_results, style="width:100%;margin:auto")
+```
+
+## NewsAPI Clustering Analysis
+
+Given that there were a few hundred files within the corpus, it can be difficult to make sense of the initial dendrogram or results. However, if the labels are brought back in, this might help make better sense of how and why the splits are made. Political Bias was brought back in, resulting in an actual divergence among clusters according to where the majority of the labels were at. In this case, a majority of articles from sources with known political bias.
+
+![](images/clustering/hierarchical/majority_newsapi_divergence.png){width=50% fig-align="center"}
+
+At the hiearchical level of six, there is a potential indicator that the methodology did pick up on political undertones. In fact, each of the political biases can have a unique pairing of clusters at this level. Compared to K-Means clustering, there is a much better balance overall.
+
+![](images/clustering/hierarchical/newsapi_cluster_proportions.png){width=50% fig-align="center"}
+
+![](images/clustering/hierarchical/newsapi_cluster_proportions_paired.png){width=50% fig-align="center"}
+
+By declaring these cluster pairs as seen above, the dendrogram can roughly be partitioned as such aditionally.
+
+![](images/clustering/hierarchical/newsapi_bias_pairings_dendrogram.png){width=50% fig-align="center"}
+
+## Reddit Extension
+
+In an attempt to extend political bias to the Reddit text data, the NewsAPI dataset was further subset where political bias and cluster aligned, and then the different Reddit schemas were appended on for repeated clustering. To be specific, the Reddit data was reduced to the same optimal wordset and then saved into a same corpus folder as the further subset NewsAPI.
+
+### Content Distributions
+
+To help balance the clustering process, a few changes were made due to the distributions of the document lengths between news articles and reddit posts.
+
+**Original Distribution**
+
+![](images/clustering/hierarchical/informative_content_comparison.png){width=50% fig-align="center"}
+
+The following measures were taken for balancing:
+
+- Reddit Base Schema downsized to NewsAPI Number of Articles
+- Reddit Author Schema downsized to NewsAPI Number of Articles
+- NewsAPI Articles aggregated by Source to better match Number of Reddit Threads and Reddit Subreddits.
+
+Following the above measures, the corpuses were created:
+
+- NewsAPI with Reddit Base Schema Subset
+- NewsAPI with Reddit Author Schema Subset
+- NewsAPI Source Schema with Reddit Thread Schema Subset
+- NewsAPI Source Schema with Reddit Subreddit Schema Subset
+
+**Updated Distribution**
+
+![](images/clustering/hierarchical/informative_content_comparison_balanced.png){width=50% fig-align="center"}
+
+## NewsAPI-Reddit Extension Clustering Analysis
+
+Even after downsampling and aggregating, the distributions of content length of the cleaned, lemmatized, and  **informative** versions were still far apart. Therefore, TF-IDF vectorization was performed. TF-IDF is a normalization technique which helps to mitigate the effect of document size variations. Essentially, it allocates a heavier weight towards words of higher importance rather than using counts like CountVectorizer.
+
+After performing Hierarchical Clustering on the combined schemas, the expectation of obtaining political bias was not what was revealed. **Instead, there was a bifurcation between the news articles and Reddit posts!** This is apparent as early as two to three hierarchical levels.
+
+> Npte: The Reddit Base Schema wasn't actually ran for this.
+
+### NewsAPI with Reddit Author Schema Subset
+
+![](images/clustering/hierarchical/newsapi_author_cluster_proportions.png){width=50% fig-align="center"}
+
+### NewsAPI Source Schema with Reddit Thread Schema Subset
+
+![](images/clustering/hierarchical/newsapi_thread_cluster_proportions.png){width=50% fig-align="center"}
+
+### NewsAPI Source Schema with Reddit Subreddit Schema Subset
+
+![](images/clustering/hierarchical/newsapi_subreddit_cluster_proportions.png){width=50% fig-align="center"}
+
+Due to the legibility of dendrograms, the NewsAPI Source Schema with Reddit Subreddit Schema Subset was plotted with labels altered to show their origins.
+
+![](images/clustering/hierarchical/newsapi_subreddit_dendrogram.png){width=50% fig-align="center"}
+
+# Conclusions
+
+Two clustering techniques were performed on both news articles and reddit posts. The clustering techniques are known as K-Means Clustering and Hierarchical Clustering. These were performed as an exploratory analysis to reveal structures within the content. K-Means clustering revealed topic-like associations within the data. Regardless of source or aggregation schema, the content was mostly split among topics like politics, money, and quality of life students and graduates who are affected by student loans and tuition costs. Hierachical Clustering, on the other hand, seemed to provide more concrete details. This method provided better balanced clusters and was even able to indicate political biases. Additionally, there was evidence that this technique could distinguish between news articles and Reddit posts. Even with the text data cleaned, lemmatized, and reduced, there are certain drivers which separate the two types of writing.
+
+---
+
+# Code Links
+
+- [Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/vectorizing_functions.py): functions for the vectorization process
+- [NewsAPI Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/newsapi_vectorizing_application.py): application of **Vectorizing Script**
