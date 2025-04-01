@@ -9,6 +9,10 @@ execute:
 import pandas as pd
 from itables import show
 
+# import data before
+newsapi_cleaned = newsapi_clean = pd.read_csv('data/newsapi_data/newsapi_clean_snippet.csv')
+reddit_cleaned = pd.read_csv('data/reddit_data/reddit_clean_snippet.csv')
+
 # import pca data - newsapi
 pca_newsapi_max = pd.read_csv('images/clustering/kmeans/pca_results/newsapi_max.csv')
 pca_newsapi_tenth = pd.read_csv('images/clustering/kmeans/pca_results/newsapi_tenth.csv')
@@ -41,6 +45,23 @@ K-Means Clustering and Hierarchical Clustering will be used to analyze news arti
 - K-Means Clustering: A clustering algorithm with the goal of partitioning a dataset into a specified number of clusters, where each point belongs to the cluster with the nearest mean. Distance and "closeness" are usually evaluated via Euclidean Distance, as will be done with this analysis. In this scenario, each point will be a vectorized version of the text within a news article or reddit post (or subsequent aggregations). Vectorizing text data produces high dimension datasets. Using techniques based on Eucldiean Distance for high dimensionality data usually doesn't produce great results. With that in mind, the vectorized data will be reduced via Principal Component Analysis (PCA). PCA is a data reduction technique which projects the data into an Eigenspace using a covariance matrix. The Eigenspace is built from orthonormal vectors known as Eigenvectors (or principal components) which actually represent the direction of explained variance from the original data. The strength (or magnitude) of explained variance is illustrated by the vector's associated Eigenvalue. PCA will be used to reduce the high dimensional text data into just three principal components.
 - Hiearachical Clustering: A clustering algorithm which determines cluster assignments by building a hierachy and which can be illustrated with a tree-based visualization known as a dendrogram. This is a useful exploratory tool which shows where different groups of data are partitioned, highlighting similar and disimilar data at different levels. PCA will not be used in this process. Instead, a distance measure known as Cosine Similarity will be used on the vectorized text data as a whole. The Cosine Similarity measure is adept for high dimensional data.
 
+### Distance Metrics
+
+**Euclidean Distance**
+
+Given points $p$ and $q$ in any real dimensional space, Euclidean Distance is calculated by:
+
+$$d(p, q) = \sqrt{(p - q)^2}$$
+
+
+**Cosine Similarity**
+
+Given vectors $x$ and $y$ in any real dimensional space, Cosine Similarity is calculated by:
+
+$$S_C (x, y) = \frac{x \cdot y}{||x|| \cdot ||y||}$$
+
+
+
 ## Data Preparation
 
 There will be 4 different initial vectorized versions of the text data used:
@@ -58,6 +79,12 @@ There will be 4 different initial vectorized versions of the text data used:
 ### NewsAPI Data
 
 For the NewsAPI data (i.e., news articles), the data will be subset to the news sources which an overall political bias is known for, any labels will be removed, and then the vectorized versions will be created. The analysis will begin with the KMeans version, so the PCA projected data will be shown.
+
+**Data Before Transformations**
+
+```{python}
+show(newsapi_cleaned, style="width:100%;margin:auto")
+```
 
 #### NewsAPI PCA Maximum Snippet
 
@@ -93,6 +120,12 @@ For the Reddit data, different aggregation schemas as described in the linked se
 - Reddit Subreddit Schema: Threads within a Subreddit are aggregated.
 
 > For efficiency, just the snippets of the dataset which had the best K-Means clustering result will be illustrated. However, the snippets of all the versions can be found [here](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/images/clustering/kmeans/pca_results).
+
+**Data Before Transformations**
+
+```{python}
+show(reddit_cleaned, style="width:100%;margin:auto")
+```
 
 #### Reddit PCA Base Schema: 5-Topic Iterative LDA Snippet
 

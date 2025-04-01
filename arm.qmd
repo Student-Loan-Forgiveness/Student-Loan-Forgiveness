@@ -9,6 +9,10 @@ execute:
 import pandas as pd
 from itables import show
 
+# import data before
+newsapi_cleaned = newsapi_clean = pd.read_csv('data/newsapi_data/newsapi_clean_snippet.csv')
+reddit_cleaned = pd.read_csv('data/reddit_data/reddit_clean_snippet.csv')
+
 # import top rules
 support_newsapi = pd.read_csv('images/arm/newsapi_top_support.csv')
 confidence_newsapi = pd.read_csv('images/arm/newsapi_top_confidence.csv')
@@ -36,6 +40,28 @@ The main quantifying measures of cooccurence are:
   - Lift = 1: indicates independence between the rules, absolutely no correlation. *If something is everywhere, it is nowhere*. If an item is in every single set as antecedent, lift will always be 1.
   - Lift > 1: indicates a positive correlation, or improvement of the initial rule. This shows a valid association. A high lift value inidcates that the association rule is more significant, the itemsets are highly dependent on each other.
   
+## Formulas
+
+**Support for a Single Itemset**
+
+$$Support(I) = \frac{\text{number of sets containing I}}{\text{total number of sets}}$$
+
+**Support for an Association Rule**
+
+$$Support(A \rightarrow C) = \frac{\text{number of sets containing A and C}}{\text{total number of sets}}$$
+
+**Confidence for an Association Rule**
+
+$$Confidence(A \rightarrow C) = \frac{\text{number of sets containing A and C}}{\text{proportion of sets containing A}}$$
+
+$$Confidence(A \rightarrow C) = P(C|A) = \frac{P(CA)}{P(A)}$$
+
+*Note: the intersection is not the traditional probability definition of intersection, but that it contains every element in itemsets A and C.*
+
+**Lift for an Association Rule**
+
+$$Lift(A \rightarrow C) = \frac{Confidence(C \rightarrow A)}{Support(C)} = \frac{Support(C \rightarrow A)}{Support(C)Support(A)}$$
+
 > ARM is another unsupervised machine learning method. The goal is to explore the data further and gain information by examining associations. The goal is to use the NewsAPI news articles and one of the Reddit schemas in an attempt to better understand what is being discussed.
 
 # Data Preparation
@@ -43,6 +69,18 @@ The main quantifying measures of cooccurence are:
 Following the analysis performed in [Clustering](clustering.qmd) section, NewsAPI data from the 3-Topic Iterative LDA wordset and Reddit data from the Reddit Author Aggregation Schema 3-Topic Iterative LDA wordset will be used.
 
 Transaction data is a format of data which differs from the classic record data. Each row is a comma separated list of unique items (words in this case) from a single transaction (text document in this case). When this is represented in a comma separated value (csv) file, there can be a different number of columns throughout the rows. Snippets of the prepared data are shown below, but the full transaction type datasets can be found [here](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/data/transaction_data).
+
+**NewsAPI Data Before Transformations**
+
+```{python}
+show(newsapi_cleaned, style="width:100%;margin:auto")
+```
+
+**Reddit Data Before Transformations**
+
+```{python}
+show(reddit_cleaned, style="width:100%;margin:auto")
+```
 
 ## NewsAPI Transaction Data Snippet
 

@@ -9,6 +9,10 @@ execute:
 import pandas as pd
 from itables import show
 
+# import data before
+newsapi_cleaned = newsapi_clean = pd.read_csv('data/newsapi_data/newsapi_clean_snippet.csv')
+reddit_cleaned = pd.read_csv('data/reddit_data/reddit_clean_snippet.csv')
+
 # import top rules
 lda_newsapi = pd.read_csv('data/lda_data/cv_tenth_newsapi.csv')
 lda_reddit = pd.read_csv('data/lda_data/cv_tenth_reddit.csv')
@@ -30,6 +34,18 @@ This section specifically focuses on gaining information by topic modeling throu
 Below are the snippets for the data that will be ran through LDA (also located [here](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/data/lda_data)).
 
 The data is created through count vectorizing over a tenth of the total vocabulary for each.
+
+**NewsAPI Data Before Transformations**
+
+```{python}
+show(newsapi_cleaned, style="width:100%;margin:auto")
+```
+
+**Reddit Data Before Transformations**
+
+```{python}
+show(reddit_cleaned, style="width:100%;margin:auto")
+```
 
 ## NewsAPI
 
