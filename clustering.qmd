@@ -57,7 +57,7 @@ There will be 4 different initial vectorized versions of the text data used:
 
 ### NewsAPI Data
 
-For the NewsAPI data (i.e., news articles), the data will be subset to the news sources which an overall political bias is known for, any labels will be removed, and then the vectorized versions will be created. The analysis will begin with the KMeans version, so the PCA projected data will be shown. The 
+For the NewsAPI data (i.e., news articles), the data will be subset to the news sources which an overall political bias is known for, any labels will be removed, and then the vectorized versions will be created. The analysis will begin with the KMeans version, so the PCA projected data will be shown.
 
 #### NewsAPI PCA Maximum Snippet
 
@@ -92,7 +92,7 @@ For the Reddit data, different aggregation schemas as described in the linked se
 - Reddit Thread Schema: Posts within a thread are aggregated.
 - Reddit Subreddit Schema: Threads within a Subreddit are aggregated.
 
-> For efficiency, just the snippets of the dataset which had the best K-Means clustering result will be illustrated. However, the snippets of all the versions can be found HERE.
+> For efficiency, just the snippets of the dataset which had the best K-Means clustering result will be illustrated. However, the snippets of all the versions can be found [here](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/images/clustering/kmeans/pca_results).
 
 #### Reddit PCA Base Schema: 5-Topic Iterative LDA Snippet
 
@@ -662,7 +662,7 @@ show(optimal_newsapi, style="width:100%;margin:auto")
 
 ## NewsAPI Clustering Results
 
-Using the columns (words) from that dataset, the cleaned and lemmatized news articles were further reduced to only those features. These reduced articles were then saved as text files in a corpus folder for the hierarchical clustering process in R. The corpus can be found HERE.
+Using the columns (words) from that dataset, the cleaned and lemmatized news articles were further reduced to only those features. These reduced articles were then saved as text files in a corpus folder for the hierarchical clustering process in R. The corpus can be found [here](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/data/corpuses/corpus_newsapi).
 
 After performing hiearchical clustering, the results from 2-6 levels in the hiearchical structure were saved for further analysis.
 
@@ -706,10 +706,9 @@ The following measures were taken for balancing:
 
 Following the above measures, the corpuses were created:
 
-- NewsAPI with Reddit Base Schema Subset
-- NewsAPI with Reddit Author Schema Subset
-- NewsAPI Source Schema with Reddit Thread Schema Subset
-- NewsAPI Source Schema with Reddit Subreddit Schema Subset
+- [NewsAPI with Reddit Author Schema Subset](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/data/corpuses/corpus_newsapi_reddit_author)
+- [NewsAPI Source Schema with Reddit Thread Schema Subset](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/data/corpuses/corpus_newsapi_reddit_thread)
+- [NewsAPI Source Schema with Reddit Subreddit Schema Subset](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/data/corpuses/corpus_newsapi_reddit_subreddit)
 
 **Updated Distribution**
 
@@ -747,5 +746,9 @@ Two clustering techniques were performed on both news articles and reddit posts.
 
 # Code Links
 
-- [Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/vectorizing_functions.py): functions for the vectorization process
-- [NewsAPI Vectorizing Script](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/data_vectorizing/newsapi_vectorizing_application.py): application of **Vectorizing Script**
+- [Clustering Python Functions](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/clustering/clustering_python_functions.py)
+- [Exploratory Functions](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/clustering/exploratory_functions.py)
+- [Vectorizing Functions](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/clustering/vectorizing_functions.py)
+- [Clustering Application](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/clustering/clustering_application.py)
+- [Hierarchical Clustering in R](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/clustering/clustering_r.ipynb)
+- [Hierarchical Clustering Analysis](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/clustering/hiearchical_clustering_analysis.py)

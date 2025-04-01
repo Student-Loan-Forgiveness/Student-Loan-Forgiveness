@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -67,7 +67,39 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -158,12 +190,33 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">Data Preparation</a>
+  <ul class="collapse">
+  <li><a href="#newsapi-transaction-data-snippet" id="toc-newsapi-transaction-data-snippet" class="nav-link" data-scroll-target="#newsapi-transaction-data-snippet">NewsAPI Transaction Data Snippet</a></li>
+  <li><a href="#reddit-author-schema-transaction-data-snippet" id="toc-reddit-author-schema-transaction-data-snippet" class="nav-link" data-scroll-target="#reddit-author-schema-transaction-data-snippet">Reddit Author Schema Transaction Data Snippet</a></li>
+  </ul></li>
+  <li><a href="#creating-rules" id="toc-creating-rules" class="nav-link" data-scroll-target="#creating-rules">Creating Rules</a>
+  <ul class="collapse">
+  <li><a href="#newsapi" id="toc-newsapi" class="nav-link" data-scroll-target="#newsapi">NewsAPI</a></li>
+  <li><a href="#reddit" id="toc-reddit" class="nav-link" data-scroll-target="#reddit">Reddit</a></li>
+  </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#newsapi-top-support" id="toc-newsapi-top-support" class="nav-link" data-scroll-target="#newsapi-top-support">NewsAPI Top Support</a></li>
+  <li><a href="#newsapi-top-confidence" id="toc-newsapi-top-confidence" class="nav-link" data-scroll-target="#newsapi-top-confidence">NewsAPI Top Confidence</a></li>
+  <li><a href="#newsapi-top-lift" id="toc-newsapi-top-lift" class="nav-link" data-scroll-target="#newsapi-top-lift">NewsAPI Top Lift</a></li>
+  <li><a href="#reddit-top-support" id="toc-reddit-top-support" class="nav-link" data-scroll-target="#reddit-top-support">Reddit Top Support</a></li>
+  <li><a href="#reddit-top-confidence" id="toc-reddit-top-confidence" class="nav-link" data-scroll-target="#reddit-top-confidence">Reddit Top Confidence</a></li>
+  <li><a href="#reddit-top-lift" id="toc-reddit-top-lift" class="nav-link" data-scroll-target="#reddit-top-lift">Reddit Top Lift</a></li>
+  </ul></li>
+  <li><a href="#networks" id="toc-networks" class="nav-link" data-scroll-target="#networks">Networks</a>
   <ul class="collapse">
   <li><a href="#news-article-network" id="toc-news-article-network" class="nav-link" data-scroll-target="#news-article-network">News Article Network</a></li>
   <li><a href="#reddit-author-schema-network" id="toc-reddit-author-schema-network" class="nav-link" data-scroll-target="#reddit-author-schema-network">Reddit Author Schema Network</a></li>
   </ul></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  <li><a href="#code-links" id="toc-code-links" class="nav-link" data-scroll-target="#code-links">Code Links</a></li>
   </ul>
 </nav>
     </div>
@@ -189,25 +242,707 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>Association Rule Mining (ARM) is a technique used to find and quantify relationships within sets, specifically the occurrence of events together. Relationships are represented by rules, which are direction based implications of subsets. In other words, probabilistically quantifying if and how much a set or subset implies another set or subset.</p>
+<p><span class="math inline">\(Rule: consequent \rightarrow antecent\)</span></p>
+<p>The main quantifying measures of cooccurence are:</p>
+<ul>
+<li>Support: the proportion of an item or set of items occuring together out of the entire dataset.
+<ul>
+<li>Range: [0, 1]</li>
+</ul></li>
+<li>Confidence: quantifies the likelihood an itemset’s consequent occurs given its antecent (conditional probability of a consequent occurring giving its antecent).
+<ul>
+<li>Range: [0, 1]</li>
+</ul></li>
+<li>Lift: assesses the performance of an association rule by quantifying an improvement (or degradation) from the initial prediction, where the initial prediction is the support of the antecent.
+<ul>
+<li>Lift &lt; 1: indicates a negative correlation, or the rules are simply uncorrelated.</li>
+<li>Lift = 1: indicates independence between the rules, absolutely no correlation. <em>If something is everywhere, it is nowhere</em>. If an item is in every single set as antecedent, lift will always be 1.</li>
+<li>Lift &gt; 1: indicates a positive correlation, or improvement of the initial rule. This shows a valid association. A high lift value inidcates that the association rule is more significant, the itemsets are highly dependent on each other.</li>
+</ul></li>
+</ul>
+<blockquote class="blockquote">
+<p>ARM is another unsupervised machine learning method. The goal is to explore the data further and gain information by examining associations. The goal is to use the NewsAPI news articles and one of the Reddit schemas in an attempt to better understand what is being discussed.</p>
+</blockquote>
+</section>
+<section id="data-preparation" class="level1">
+<h1>Data Preparation</h1>
+<p>Following the analysis performed in <a href="./clustering.html">Clustering</a> section, NewsAPI data from the 3-Topic Iterative LDA wordset and Reddit data from the Reddit Author Aggregation Schema 3-Topic Iterative LDA wordset will be used.</p>
+<p>Transaction data is a format of data which differs from the classic record data. Each row is a comma separated list of unique items (words in this case) from a single transaction (text document in this case). When this is represented in a comma separated value (csv) file, there can be a different number of columns throughout the rows. Snippets of the prepared data are shown below, but the full transaction type datasets can be found <a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/data/transaction_data">here</a>.</p>
+<section id="newsapi-transaction-data-snippet" class="level2">
+<h2 class="anchored" data-anchor-id="newsapi-transaction-data-snippet">NewsAPI Transaction Data Snippet</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/arm/newsapi_screenshot.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="reddit-author-schema-transaction-data-snippet" class="level2">
+<h2 class="anchored" data-anchor-id="reddit-author-schema-transaction-data-snippet">Reddit Author Schema Transaction Data Snippet</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/arm/reddit_screenshot.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="creating-rules" class="level1">
+<h1>Creating Rules</h1>
+<p>When rules are initially created, a balance of <strong>minimum confidence</strong> and <strong>minimum support</strong> need to be specified. This has to be done with computational efficiency and desired number of rules in mind.</p>
+<section id="newsapi" class="level2">
+<h2 class="anchored" data-anchor-id="newsapi">NewsAPI</h2>
+<p>Rules were created with:</p>
+<ul>
+<li>Minimum Support: 0.3</li>
+<li>Minimum Confidence: 0.6</li>
+<li>Rules Created: 33,349</li>
+</ul>
+</section>
+<section id="reddit" class="level2">
+<h2 class="anchored" data-anchor-id="reddit">Reddit</h2>
+<p>Rules were created with:</p>
+<ul>
+<li>Minimum Support: 0.05</li>
+<li>Minimum Confidence: 0.2</li>
+<li>Rules Created: 232</li>
+</ul>
+</section>
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
+<section id="newsapi-top-support" class="level2">
+<h2 class="anchored" data-anchor-id="newsapi-top-support">NewsAPI Top Support</h2>
+<div id="9438c7a9" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<table id="itables_cb62d2ed_1273_4ea7_9305_2eab4bf280db" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>rules</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>coverage</th>
+      <th>lift</th>
+      <th>count</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_cb62d2ed_1273_4ea7_9305_2eab4bf280db:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["{loan} => {student}", 0.958702, 0.987842, 0.970501, 1.020971, 325], ["{student} => {loan}", 0.958702, 0.990854, 0.967552, 1.020971, 325], ["{year} => {student}", 0.752212, 0.973282, 0.772861, 1.005923, 255], ["{student} => {year}", 0.752212, 0.777439, 0.967552, 1.005923, 255], ["{year} => {loan}", 0.749263, 0.969466, 0.772861, 0.998933, 254], ["{loan} => {year}", 0.749263, 0.772036, 0.970501, 0.998933, 254], ["{loan,year} => {student}", 0.743363, 0.992126, 0.749263, 1.025399, 252], ["{student,year} => {loan}", 0.743363, 0.988235, 0.752212, 1.018273, 252], ["{loan,student} => {year}", 0.743363, 0.775385, 0.958702, 1.003265, 252], ["{federal} => {loan}", 0.728614, 0.984064, 0.740413, 1.013974, 247], ["{loan} => {federal}", 0.728614, 0.75076, 0.970501, 1.013974, 247], ["{federal} => {student}", 0.725664, 0.98008, 0.740413, 1.012948, 246], ["{student} => {federal}", 0.725664, 0.75, 0.967552, 1.012948, 246], ["{said} => {loan}", 0.719764, 0.987854, 0.728614, 1.01788, 244], ["{loan} => {said}", 0.719764, 0.741641, 0.970501, 1.01788, 244]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="newsapi-top-confidence" class="level2">
+<h2 class="anchored" data-anchor-id="newsapi-top-confidence">NewsAPI Top Confidence</h2>
+<div id="2a4dc5f7" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<table id="itables_ebdea7be_9cbb_4254_bb28_93d001e1b7e8" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>rules</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>coverage</th>
+      <th>lift</th>
+      <th>count</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_ebdea7be_9cbb_4254_bb28_93d001e1b7e8:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["{tax} => {loan}", 0.309735, 1, 0.309735, 1.030395, 105], ["{grant} => {loan}", 0.330383, 1, 0.330383, 1.030395, 112], ["{act} => {loan}", 0.339233, 1, 0.339233, 1.030395, 115], ["{likely} => {student}", 0.342183, 1, 0.342183, 1.033537, 116], ["{republican} => {student}", 0.386431, 1, 0.386431, 1.033537, 131], ["{forginess} => {loan}", 0.436578, 1, 0.436578, 1.030395, 148], ["{forginess} => {student}", 0.436578, 1, 0.436578, 1.033537, 148], ["{borrower} => {loan}", 0.424779, 1, 0.424779, 1.030395, 144], ["{borrower} => {student}", 0.424779, 1, 0.424779, 1.033537, 144], ["{donald} => {trump}", 0.427729, 1, 0.427729, 1.606635, 145], ["{biden} => {loan}", 0.519174, 1, 0.519174, 1.030395, 176], ["{education} => {student}", 0.60177, 1, 0.60177, 1.033537, 204], ["{free,loan} => {student}", 0.309735, 1, 0.309735, 1.033537, 105], ["{repayment,student} => {loan}", 0.306785, 1, 0.306785, 1.030395, 104], ["{student,tax} => {loan}", 0.306785, 1, 0.306785, 1.030395, 104]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="newsapi-top-lift" class="level2">
+<h2 class="anchored" data-anchor-id="newsapi-top-lift">NewsAPI Top Lift</h2>
+<div id="9f8493aa" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<table id="itables_0873f1e6_1132_4ecf_a8bf_655013f93475" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>rules</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>coverage</th>
+      <th>lift</th>
+      <th>count</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_0873f1e6_1132_4ecf_a8bf_655013f93475:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["{administration,house,student} => {white}", 0.345133, 0.806897, 0.427729, 1.967899, 117], ["{administration,house,loan} => {white}", 0.342183, 0.805556, 0.424779, 1.964628, 116], ["{administration,house,loan,student} => {white}", 0.342183, 0.805556, 0.424779, 1.964628, 116], ["{house,president,student,trump} => {white}", 0.300885, 0.80315, 0.374631, 1.958761, 102], ["{administration,house} => {white}", 0.345133, 0.80137, 0.430678, 1.95442, 117], ["{house,president,trump} => {white}", 0.300885, 0.796875, 0.377581, 1.943458, 102], ["{house,loan,trump} => {white}", 0.309735, 0.795455, 0.389381, 1.939993, 105], ["{house,loan,student,trump} => {white}", 0.309735, 0.795455, 0.389381, 1.939993, 105], ["{house,student,trump} => {white}", 0.312684, 0.791045, 0.39528, 1.929239, 106], ["{house,trump} => {white}", 0.312684, 0.785185, 0.39823, 1.914948, 106], ["{federal,office,president,trump} => {donald}", 0.303835, 0.79845, 0.380531, 1.86672, 103], ["{house,loan,president} => {white}", 0.315634, 0.764286, 0.412979, 1.863977, 107], ["{house,loan,president,student} => {white}", 0.315634, 0.764286, 0.412979, 1.863977, 107], ["{house,president,student} => {white}", 0.318584, 0.760563, 0.418879, 1.854899, 108], ["{office,president,trump} => {donald}", 0.327434, 0.792857, 0.412979, 1.853645, 111]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="reddit-top-support" class="level2">
+<h2 class="anchored" data-anchor-id="reddit-top-support">Reddit Top Support</h2>
+<div id="0c915ea4" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<table id="itables_e8999e15_2164_4b91_9ace_5f12661f3c20" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>rules</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>coverage</th>
+      <th>lift</th>
+      <th>count</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_e8999e15_2164_4b91_9ace_5f12661f3c20:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["{student} => {loan}", 0.249384, 0.89452, 0.278791, 1.897853, 1518], ["{loan} => {student}", 0.249384, 0.529104, 0.471332, 1.897853, 1518], ["{year} => {loan}", 0.15377, 0.645517, 0.238213, 1.369559, 936], ["{loan} => {year}", 0.15377, 0.326246, 0.471332, 1.369559, 936], ["{pay} => {loan}", 0.147692, 0.655726, 0.225234, 1.391217, 899], ["{loan} => {pay}", 0.147692, 0.31335, 0.471332, 1.391217, 899], ["{people} => {loan}", 0.141285, 0.562459, 0.251191, 1.193339, 860], ["{loan} => {people}", 0.141285, 0.299756, 0.471332, 1.193339, 860], ["{just} => {loan}", 0.135699, 0.572022, 0.237227, 1.213628, 826], ["{loan} => {just}", 0.135699, 0.287905, 0.471332, 1.213628, 826], ["{like} => {loan}", 0.111221, 0.583621, 0.19057, 1.238236, 677], ["{loan} => {like}", 0.111221, 0.235971, 0.471332, 1.238236, 677], ["{debt} => {loan}", 0.109906, 0.586842, 0.187284, 1.245071, 669], ["{loan} => {debt}", 0.109906, 0.233182, 0.471332, 1.245071, 669], ["{forginess} => {loan}", 0.106292, 0.810777, 0.131099, 1.720181, 647]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="reddit-top-confidence" class="level2">
+<h2 class="anchored" data-anchor-id="reddit-top-confidence">Reddit Top Confidence</h2>
+<div id="466a04f9" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<table id="itables_bf7c138b_afa4_44c9_9109_f92b4d34d216" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>rules</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>coverage</th>
+      <th>lift</th>
+      <th>count</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_bf7c138b_afa4_44c9_9109_f92b4d34d216:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["{payment,student} => {loan}", 0.050928, 0.977918, 0.052078, 2.074795, 310], ["{forginess,student} => {loan}", 0.067685, 0.971698, 0.069657, 2.061599, 412], ["{pay,student} => {loan}", 0.083949, 0.942804, 0.089042, 2.000296, 511], ["{paid,student} => {loan}", 0.05405, 0.94, 0.0575, 1.994346, 329], ["{make,student} => {loan}", 0.061771, 0.935323, 0.066042, 1.984424, 376], ["{student,year} => {loan}", 0.087071, 0.928196, 0.093806, 1.969303, 530], ["{just,student} => {loan}", 0.078692, 0.922929, 0.085264, 1.958127, 479], ["{people,student} => {loan}", 0.083785, 0.922242, 0.090849, 1.956671, 510], ["{money,student} => {loan}", 0.053064, 0.912429, 0.058157, 1.935851, 323], ["{like,student} => {loan}", 0.068507, 0.91048, 0.075242, 1.931716, 417], ["{don,student} => {loan}", 0.061935, 0.908434, 0.068178, 1.927374, 377], ["{student} => {loan}", 0.249384, 0.89452, 0.278791, 1.897853, 1518], ["{college,student} => {loan}", 0.053228, 0.868633, 0.061278, 1.84293, 324], ["{debt,student} => {loan}", 0.074257, 0.849624, 0.087399, 1.802601, 452], ["{forgin} => {loan}", 0.068671, 0.824458, 0.083292, 1.749206, 418]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="reddit-top-lift" class="level2">
+<h2 class="anchored" data-anchor-id="reddit-top-lift">Reddit Top Lift</h2>
+<div id="543afe79" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<table id="itables_23564e88_2008_4193_bd12_9f58adbaa626" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>rules</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>coverage</th>
+      <th>lift</th>
+      <th>count</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_23564e88_2008_4193_bd12_9f58adbaa626:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["{loan,year} => {payment}", 0.053885, 0.350427, 0.15377, 2.643186, 328], ["{loan,payment} => {year}", 0.053885, 0.58156, 0.092656, 2.44135, 328], ["{debt,loan} => {student}", 0.074257, 0.675635, 0.109906, 2.423448, 452], ["{college,loan} => {student}", 0.053228, 0.665298, 0.080007, 2.386369, 324], ["{forginess,loan} => {student}", 0.067685, 0.636785, 0.106292, 2.284096, 412], ["{loan,make} => {student}", 0.061771, 0.63621, 0.097092, 2.282032, 376], ["{payment} => {year}", 0.070971, 0.535316, 0.132578, 2.24722, 432], ["{year} => {payment}", 0.070971, 0.297931, 0.238213, 2.24722, 432], ["{like,loan} => {student}", 0.068507, 0.615953, 0.111221, 2.209372, 417], ["{don,loan} => {student}", 0.061935, 0.612013, 0.101199, 2.19524, 377], ["{debt,loan} => {pay}", 0.053064, 0.48281, 0.109906, 2.143593, 323], ["{loan,people} => {student}", 0.083785, 0.593023, 0.141285, 2.127126, 510], ["{just,loan} => {student}", 0.078692, 0.579903, 0.135699, 2.080065, 479], ["{payment,student} => {loan}", 0.050928, 0.977918, 0.052078, 2.074795, 310], ["{loan,student} => {forginess}", 0.067685, 0.27141, 0.249384, 2.070265, 412]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+</section>
+<section id="networks" class="level1">
+<h1>Networks</h1>
 <section id="news-article-network" class="level2">
 <h2 class="anchored" data-anchor-id="news-article-network">News Article Network</h2>
+<p>Due to a large amount of rules even with relatively high minimum thresholds, a network was visualized in a manner which illustrated different angles. Taking rules with Lift &gt; 1 (valid assocations), the 5 top rules by Lift from each quartile form the network.</p>
 <hr>
 <iframe src="images/arm/newsapi_network.html" width="100%" height="600px"></iframe>
 <hr>
 </section>
 <section id="reddit-author-schema-network" class="level2">
 <h2 class="anchored" data-anchor-id="reddit-author-schema-network">Reddit Author Schema Network</h2>
+<p>Given less total rules created with the Reddit assocations, the top 20 rules by Lift were used to create the network.</p>
 <hr>
 <iframe src="images/arm/reddit_network.html" width="100%" height="600px"></iframe>
 <hr>
-
-
 </section>
+</section>
+<section id="conclusions" class="level1">
+<h1>Conclusions</h1>
+<p>Although words like “loan” and “student” were both prevalent in each network, the news articles compared to the Reddit posts formed overall different networks. Even with the news articles’ network formed via different quartiles of the top Lift, there were high assocaitions around government talk. There were high associations with the last two presidents (“biden” and “trump”). The word “white” as a consequent of antecents with rules containing “house” and “administration”. Additionally, the word “program” mentioned quite a bit with the antecendents of both “biden” and “trump”, likely indicating the discourse of the student debt relief <em>programs</em>. Whereas the news articles were more associated with government entities, the Reddit associated were more associated with the word “student” itself. Almost everything in the highest valid assocations focused around the entity of the <em>student</em> itself. Antecents of “student” included financial indicators like “loan”, “pay”, and “payment”, as well as time components like “year”.</p>
+<p>In summary, there is evidence which indicates that the news articles speak mostly about government entities while the Reddit posts speak mostly about the student entity itself.</p>
+<hr>
+</section>
+<section id="code-links" class="level1">
+<h1>Code Links</h1>
+<ul>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/arm/arm_r.ipynb">Association Rule Mining in R</a></li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->
