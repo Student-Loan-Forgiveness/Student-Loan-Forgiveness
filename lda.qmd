@@ -4,3 +4,105 @@ execute:
   echo: false
 ---
 
+```{python}
+# import libraries
+import pandas as pd
+from itables import show
+
+# import top rules
+lda_newsapi = pd.read_csv('data/lda_data/cv_tenth_newsapi.csv')
+lda_reddit = pd.read_csv('data/lda_data/cv_tenth_reddit.csv')
+
+```
+
+# Overview
+
+This section specifically focuses on gaining information by topic modeling through **Latent Dirichlet Allocation (LDA)**. The data used in this section will be the news articles gathered through NewsAPI and Reddit content aggregated into the Author Aggregation Schema.
+
+## Topic Modeling and LDA
+
+**Topic Modeling** is a general term for methods to discover groupings or themes within data. A **topic** is a mixture of words, and a **document** is a mixture of topics. Topic Modeling aims to uncover these layered similarities between a collection of documents via analyzing the *shapes* of documents. Just as true quantitative record data can form shapes by examining the matrix formed by vectors over its dimensions, matrices of vectorized documents can form shapes as well.
+
+**Latent Dirichlet Allocation (LDA)**, specifically, is a popular unsupervised machine learning method of topic modeling. LDA uses a form of the Multinomial Beta Distribution known as the Dirichlet Distribution to perform topic modeling. It should be noted that LDA has a non-uniqueness property, or that words can be featured across multiple topics. Essentially, LDA uses the Dirichlet distribution to find words that occur together to find a topic. However, **it does not name or label the topic**. When topics are found, a specified number of words can be reported and the topic can be deduced from this.
+
+# Data Preparation
+
+Below are the snippets for the data that will be ran through LDA (also located [here](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/data/lda_data)).
+
+The data is created through count vectorizing over a tenth of the total vocabulary for each.
+
+## NewsAPI
+
+```{python}
+show(lda_newsapi, style="width:100%;margin:auto")
+```
+
+## Reddit Author Schema
+
+```{python}
+show(lda_reddit, style="width:100%;margin:auto")
+```
+
+# Results
+
+## NewsAPI Results
+
+![](images/lda/lda_words_newsapi.png){width=50% fig-align="center"}
+
+![](images/lda/lda_plot_newsapi.png){width=50% fig-align="center"}
+
+## NewsAPI Discussion
+
+15 words over 3 topics were discovered within the NewsAPI documents. The first image shows the words per topic, and the second image shows the frequencies of the words by weighting compared to the vocabulary in the vectorized dataset.
+
+Manual Topic Labeling:
+
+- First Topic: Financially Related
+  - Words like "loan", "borrower", "plan", "payment", "forginess" (*forgiveness*), "debt", "credit", and "repayment" are not only selected by LDA, but have high frequencies particular to this topic.
+- Second Topic: Government Related
+  - Words like "trump", "federal", "president", "gornment" (*government*), "state", "american", and "agency" have high frequencies particular to this topic.
+- Third Topic: School Related
+  - Words like "rate", "college", "unirsity" (*university*), "college", "faculty", "earnings", "enrollment", "employment", "graduation", "median", and "ratio" have high frequencies particular to this topic.
+
+Since each document is a collection of topics itself, it is logical that words are repeated and some of the frequencies aren't a perfect indicator of the topic. However, by analyzing the high frequency words, those seem to be decent choices.
+
+## Reddit Author Schema Results
+
+![](images/lda/lda_words_reddit.png){width=50% fig-align="center"}
+
+![](images/lda/lda_plot_reddit.png){width=50% fig-align="center"}
+
+## Reddit Author Schema Discussion
+
+15 words over 3 topics were discovered within the NewsAPI documents. The first image shows the words per topic, and the second image shows the frequencies of the words by weighting compared to the vocabulary in the vectorized dataset.
+
+Manual Topic Labeling:
+
+- First Topic: Monthly Payments and Credit Scores Related
+  - Words like "payment", "credit", "month", "payment", "balance", "score", and "account" have high frequencies particular to this topic.
+- Second Topic: Political Divide on Forgiveness Related
+  - Words like "forginess" or "forgin" (*forgiveness*), "biden", "republican", "trump", and "vote" have high frequencies particular to this topic.
+- Third Topic: Debt from Degree or School Related
+  - Words like "debt", "college", "money", "school" and "degree" have high frequencies particular to this topic.
+  
+Again, certain high frequency words across all documents are expected to be repeated, such as "loan". However, there are some clear topic choices knowing the overall climate surrounding this.
+
+# Conclusions
+
+Following the [Clustering](clustering.qmd) [Association Rule Mining](arm.qmd) section, its more evident that what and how news articles versus people posting on Reddit differ. The news articles feature the traditional media topics of *Finance*, *Government*, and *Education*. Reddit, being more free form, and potentially a place for individuals to vent or write their feelings out without repercussion, indicates slightly more convoluted but discussion like topics. Even so, by analyzing the frequencies of the words within the Reddit posts, general themes can be extracted. Although the topics are labeled sligthly differently between news articles and Reddit posts, they have similar base themes.
+
+In summary, there appears to be the following three main themes across news articles and the online discourse seen on Reddit:
+
+- Finance
+- Government
+- Education
+
+This is completely reasonable, given the overall topic of **Student Loan Forgivess** references the government helping to financially cover the education of students.
+
+---
+
+# Code Links
+
+- [Exploratory Functions](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/lda/exploratory_functions.py)
+- [Vectorizing Functions](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/lda/vectorizing_functions.py)
+- [LDA Exploratory Analysis](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/lda/lda_exploratory_analysis.py)

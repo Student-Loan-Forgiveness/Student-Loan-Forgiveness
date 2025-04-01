@@ -77,37 +77,37 @@ Rules were created with:
 ## NewsAPI Top Support
 
 ```{python}
-show(support_newsapi, style="width:100%;margin:auto")
+show(support_newsapi, style="width:100%;margin:auto", paging=False)
 ```
 
 ## NewsAPI Top Confidence
 
 ```{python}
-show(confidence_newsapi, style="width:100%;margin:auto")
+show(confidence_newsapi, style="width:100%;margin:auto", paging=False)
 ```
 
 ## NewsAPI Top Lift
 
 ```{python}
-show(lift_newsapi, style="width:100%;margin:auto")
+show(lift_newsapi, style="width:100%;margin:auto", paging=False)
 ```
 
 ## Reddit Top Support
 
 ```{python}
-show(support_reddit, style="width:100%;margin:auto")
+show(support_reddit, style="width:100%;margin:auto", paging=False)
 ```
 
 ## Reddit Top Confidence
 
 ```{python}
-show(confidence_reddit, style="width:100%;margin:auto")
+show(confidence_reddit, style="width:100%;margin:auto", paging=False)
 ```
 
 ## Reddit Top Lift
 
 ```{python}
-show(lift_reddit, style="width:100%;margin:auto")
+show(lift_reddit, style="width:100%;margin:auto", paging=False)
 ```
 
 
