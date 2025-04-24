@@ -1,0 +1,320 @@
+---
+title: "Modeling - Preparation"
+execute:
+  echo: false
+---
+
+```{python}
+# import libraries
+import pandas as pd
+from itables import show
+
+# import cv data
+newsapi_cv_sample = pd.read_csv('data/modeling/newsapi_cv_sample.csv')
+reddit_cv_sample = pd.read_csv('data/modeling/reddit_author_cv_sample.csv')
+
+# import train/test data
+X_test_five = pd.read_csv('data/modeling/train_test_split/X_test_five.csv', index_col='Unnamed: 0')
+X_train_five = pd.read_csv('data/modeling/train_test_split/X_train_five.csv', index_col='Unnamed: 0')
+X_test_three = pd.read_csv('data/modeling/train_test_split/X_test_three.csv', index_col='Unnamed: 0')
+X_train_three = pd.read_csv('data/modeling/train_test_split/X_train_three.csv', index_col='Unnamed: 0')
+X_train_strict_three = pd.read_csv('data/modeling/train_test_split/X_train_strict_three.csv', index_col='Unnamed: 0')
+X_test_strict_three = pd.read_csv('data/modeling/train_test_split/X_test_strict_three.csv', index_col='Unnamed: 0')
+X_train_two = pd.read_csv('data/modeling/train_test_split/X_train_two.csv', index_col='Unnamed: 0')
+X_test_two = pd.read_csv('data/modeling/train_test_split/X_test_two.csv', index_col='Unnamed: 0')
+X_train_strict_two = pd.read_csv('data/modeling/train_test_split/X_train_strict_two.csv', index_col='Unnamed: 0')
+X_test_strict_two = pd.read_csv('data/modeling/train_test_split/X_test_strict_two.csv', index_col='Unnamed: 0')
+
+# import train/test labels
+y_test_five = pd.read_csv('data/modeling/train_test_split/y_test_five.csv', index_col='Unnamed: 0')
+y_train_five = pd.read_csv('data/modeling/train_test_split/y_train_five.csv', index_col='Unnamed: 0')
+y_test_three = pd.read_csv('data/modeling/train_test_split/y_test_three.csv', index_col='Unnamed: 0')
+y_train_three = pd.read_csv('data/modeling/train_test_split/y_train_three.csv', index_col='Unnamed: 0')
+y_train_strict_three = pd.read_csv('data/modeling/train_test_split/y_train_strict_three.csv', index_col='Unnamed: 0')
+y_test_strict_three = pd.read_csv('data/modeling/train_test_split/y_test_strict_three.csv', index_col='Unnamed: 0')
+y_train_two = pd.read_csv('data/modeling/train_test_split/y_train_two.csv', index_col='Unnamed: 0')
+y_test_two = pd.read_csv('data/modeling/train_test_split/y_test_two.csv', index_col='Unnamed: 0')
+y_train_strict_two = pd.read_csv('data/modeling/train_test_split/y_train_strict_two.csv', index_col='Unnamed: 0')
+y_test_strict_two = pd.read_csv('data/modeling/train_test_split/y_test_strict_two.csv', index_col='Unnamed: 0')
+
+# lengths spread
+length_spreads = pd.read_csv('data/modeling/length_spreads.csv')
+
+```
+
+# Introduction
+
+This section will focus on supervised machine learning. Specifically, classification with the following families will be used:
+
+- [Naive Bayes](modeling_nb.qmd)
+- [Decision Trees](modeling_dt.qmd)
+- [Support Vector Machines](modeling_svm.qmd)
+
+Supervised Machine Learning models require labeled data, or known tags on the data to train the model. Additionally, when teaching the models, the data is split into disjoint training and testing sets. In essence, the models learn from the training set and then are tested on unseen data. This helps to prevent overfitting and simulates applying the model on real-world data.
+
+This is what the exploratory and unsupervised methods in the previous sections have been leading to. The idea is to begin with the NewsAPI data labeled with political bias by news organization. After creating acceptable models, they will be applied to the Reddit data in an attempt to project political bias on Reddit authors. Given the ultimate goal of finding positive and negative sentiment on the topic of student loan forgiveness, and the fact that the sentiment is roughly split along politcal bias, aiming to classify by political bias will be a decent indicator of sentiment.
+
+
+# Data Preparation
+
+To prepare for the modeling, the NewsAPI data where articles from organizations which have known political bias will be used. To increase the efficiency of the models, general articles (non-topic specific) will be combined with the topic specific articles. The Reddit data which will have political bias projected onto it will be content aggregated by Author. Additionally, only authors with an acceptable amount of content will be used (roughly equivalent to the first quartile of article length).
+
+## NewsAPI
+
+As a reminder, the political labels are:
+
+- Left
+- Lean Left
+- Center
+- Lean Right
+- Right
+
+
+There will be several aggregations of the labels used:
+
+- 5 Labels (strictly all five)
+- 3 Labels
+  - Lean Left combined into Left
+  - Center
+  - Lean Right combined into Right
+- 3 Labels Strict
+  - Strictly Left
+  - Strictly Center
+  - Strictly Right
+- 2 Labels
+  - Lean Left combined into Left
+  - Lean Right combined into Right
+- 2 Labels Strict
+  - Strictly Left
+  - Strictly Right
+  
+Each of these aggregations will be transformed into labeled 1000 word vectorized versions.
+
+## Reddit
+
+The Reddit data will remain unlabeled, as this will be where the models are applied to project political bias onto authors. However, the Reddit data will be transformed into word vectorized versions with no limit on the maximum word count.
+
+
+# Vectorizing
+
+## NewsAPI Data
+
+After the text data is cleaned, stopwords removed, and lemmatized, CountVectorization is performed and the labels were reappended to this. A sample of this data looks like:
+
+```{python}
+show(newsapi_cv_sample, style="width:100%;margin:auto")
+```
+
+>From this vectorized version of the data, rows will be aggregated or dropped dependong on the 5, 3, or 2 strategy outlined above.
+
+## Reddit Data
+
+After the text data is cleaned, stopwords removed, and lemmatized, CountVectorization is and labels **were not** appended. A sample of this data looks like:
+
+```{python}
+show(reddit_cv_sample, style="width:100%;margin:auto")
+```
+
+# Training Testing Split
+
+An important feature of the training and testing sets are that they are disjoint. Notice the indices in the first few rows of the sets below are different between the training and testing sets but are the same within the training and testing data compared to the labels. This ensures a real-world simulation but helps the models learn by matching the records with their respective labels.
+
+## Five Labels
+
+### Training Data and Labels Example
+
+**Data**
+
+```{python}
+show(X_train_five, style="width:100%;margin:auto")
+```
+
+**Label**
+
+```{python}
+show(y_train_five, style="width:25%;margin:auto")
+```
+
+### Testing Data and Labels Example
+
+**Data**
+
+```{python}
+show(X_test_five, style="width:100%;margin:auto")
+```
+
+**Label**
+
+```{python}
+show(y_test_five, style="width:25%;margin:auto")
+```
+
+## Three Labels
+
+### Training Data and Labels Example
+
+**Data**
+
+```{python}
+show(X_train_three, style="width:100%;margin:auto")
+```
+
+**Label**
+
+```{python}
+show(y_train_three, style="width:25%;margin:auto")
+```
+
+### Testing Data and Labels Example
+
+**Data**
+
+```{python}
+show(X_test_three, style="width:100%;margin:auto")
+```
+
+**Label**
+
+```{python}
+show(y_test_three, style="width:25%;margin:auto")
+```
+
+## Strict Three Labels
+
+### Training Data and Labels Example
+
+**Data**
+
+```{python}
+show(X_train_strict_three, style="width:100%;margin:auto")
+```
+
+**Label**
+
+```{python}
+show(y_train_strict_three, style="width:25%;margin:auto")
+```
+
+### Testing Data and Labels Example
+
+**Data**
+
+```{python}
+show(X_test_strict_three, style="width:100%;margin:auto")
+```
+
+**Label**
+
+```{python}
+show(y_test_strict_three, style="width:25%;margin:auto")
+```
+
+## Two Labels
+
+### Training Data and Labels Example
+
+**Data**
+
+```{python}
+show(X_train_two, style="width:100%;margin:auto")
+```
+
+**Label**
+
+```{python}
+show(y_train_two, style="width:25%;margin:auto")
+```
+
+### Testing Data and Labels Example
+
+**Data**
+
+```{python}
+show(X_test_two, style="width:100%;margin:auto")
+```
+
+**Label**
+
+```{python}
+show(y_test_two, style="width:25%;margin:auto")
+```
+
+## Strict Two Labels
+
+### Training Data and Labels Example
+
+**Data**
+
+```{python}
+show(X_train_strict_two, style="width:100%;margin:auto")
+```
+
+**Label**
+
+```{python}
+show(y_train_strict_two, style="width:25%;margin:auto")
+```
+
+### Testing Data and Labels Example
+
+**Data**
+
+```{python}
+show(X_test_strict_two, style="width:100%;margin:auto")
+```
+
+**Label**
+
+```{python}
+show(y_test_strict_two, style="width:25%;margin:auto")
+```
+
+
+# Reddit Authors Data
+
+To choose the aggregated Reddit author data to project political bias (and thus sentiment) onto, the lengths of the cleaned data were analyzed. To get the authors with enough data to be properly labeled, the first quartile of news articles lengths was used for the subset.
+
+```{python}
+show(length_spreads, style="width:25%;margin:auto")
+```
+
+# Balance of Labels
+
+The introduction on this page discusses models "learning". When models are taught on a dataset with unbalanced labels, the model may incorrectly predict a label which has a higher prevalence in the training data. It's proper to examine the balance of the labels in the datasets. If the model performs poorly, this could be an area to either downscale by random removal or upscale by bootstrapping until the labels come into better balance. Fortunately, this data isn't too skewed, but it isn't perfect. The proportions are illustrated below, along with their total counts. Notice how the **strict** labels differ from the **aggregated** non-strict labels.
+
+## Five Labels
+
+![](images/modeling/newsapi_proportions_five.png){width=50% fig-align="center"}
+
+## Three Labels
+
+![](images/modeling/newsapi_proportions_three.png){width=50% fig-align="center"}
+
+## Strict Three Labels
+
+![](images/modeling/newsapi_proportions_strict_three.png){width=50% fig-align="center"}
+
+## Two Labels
+
+![](images/modeling/newsapi_proportions_two.png){width=50% fig-align="center"}
+
+## Strict Two Labels
+
+![](images/modeling/newsapi_proportions_strict_two.png){width=50% fig-align="center"}
+
+
+# Applications
+
+>This data will be used throughout the remainder of the modeling sections.
+
+- [Naive Bayes](modeling_nb.qmd)
+- [Decision Trees](modeling_dt.qmd)
+- [Support Vector Machines](modeling_svm.qmd)
+
+
+---
+
+# Code Links
+
+- [Modeling Functions](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/modeling_functions.py)
+- [Modeling Preparation](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/modeling_preparation.py)

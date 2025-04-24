@@ -1,5 +1,5 @@
 ---
-title: "Modeling - Preparations"
+title: "Modeling - Naive Bayes"
 execute:
   echo: false
 ---

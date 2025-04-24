@@ -10,7 +10,7 @@ import pandas as pd
 from itables import show
 
 # import data before
-newsapi_cleaned = newsapi_clean = pd.read_csv('data/newsapi_data/newsapi_clean_snippet.csv')
+newsapi_cleaned = pd.read_csv('data/newsapi_data/newsapi_clean_snippet.csv')
 reddit_cleaned = pd.read_csv('data/reddit_data/reddit_clean_snippet.csv')
 
 # import top rules

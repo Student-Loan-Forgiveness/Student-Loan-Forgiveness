@@ -39,7 +39,7 @@ website:
             href: modeling_nb.qmd
           - text: "Decision Trees"
             href: modeling_dt.qmd
-          - text: "Support Vector Machines Classification"
+          - text: "Support Vector Machines"
             href: modeling_svm.qmd
           - text: 'Modeling Conclusions'
             href: modeling_conclusion.qmd

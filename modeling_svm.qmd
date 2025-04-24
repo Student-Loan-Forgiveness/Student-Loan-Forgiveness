@@ -1,5 +1,5 @@
 ---
-title: "Modeling - Support Vector Machines Classification"
+title: "Modeling - Support Vector Machines"
 execute:
   echo: false
 ---
