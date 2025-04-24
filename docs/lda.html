@@ -138,6 +138,33 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link active" href="./lda.html" aria-current="page"> 
 <span class="menu-text">Latent Dirichlet Allocation</span></a>
   </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modeling" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Modeling</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modeling">    
+        <li>
+    <a class="dropdown-item" href="./modeling_prep.html">
+ <span class="dropdown-text">Modeling Preparations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modeling_nb.html">
+ <span class="dropdown-text">Naive Bayes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modeling_dt.html">
+ <span class="dropdown-text">Decision Trees</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modeling_svm.html">
+ <span class="dropdown-text">Support Vector Machines Classification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modeling_conclusion.html">
+ <span class="dropdown-text">Modeling Conclusions</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
@@ -218,9 +245,9 @@ ul.task-list li input[type="checkbox"] {
 <p>Below are the snippets for the data that will be ran through LDA (also located <a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/data/lda_data">here</a>).</p>
 <p>The data is created through count vectorizing over a tenth of the total vocabulary for each.</p>
 <p><strong>NewsAPI Data Before Transformations</strong></p>
-<div id="04ed1dd0" class="cell" data-execution_count="2">
+<div id="51a1d474" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_9aaf55ed_097b_4a0a_b167_5bc1df788a8e" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_62c446ea_9f16_41df_98f3_8333d9efc45a" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -303,7 +330,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_9aaf55ed_097b_4a0a_b167_5bc1df788a8e:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_62c446ea_9f16_41df_98f3_8333d9efc45a:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -321,9 +348,9 @@ Loading ITables v2.2.5 from the internet...
 </div>
 </div>
 <p><strong>Reddit Data Before Transformations</strong></p>
-<div id="0dcbd332" class="cell" data-execution_count="3">
+<div id="c576765b" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_f1cda05a_0058_4136_947e_777d5c5cc218" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_01ac32f2_a56a_477a_94b4_fb1423beb14b" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -406,7 +433,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_f1cda05a_0058_4136_947e_777d5c5cc218:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_01ac32f2_a56a_477a_94b4_fb1423beb14b:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -425,9 +452,9 @@ Loading ITables v2.2.5 from the internet...
 </div>
 <section id="newsapi" class="level2">
 <h2 class="anchored" data-anchor-id="newsapi">NewsAPI</h2>
-<div id="7bea62d5" class="cell" data-execution_count="4">
+<div id="b6f7d48e" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<table id="itables_4edf61bb_fe77_4c43_89ea_c24bb6f978f0" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_bc8325a3_5092_40eb_b884_5b9ef141985b" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -699,7 +726,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_4edf61bb_fe77_4c43_89ea_c24bb6f978f0:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_bc8325a3_5092_40eb_b884_5b9ef141985b:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -719,9 +746,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="reddit-author-schema" class="level2">
 <h2 class="anchored" data-anchor-id="reddit-author-schema">Reddit Author Schema</h2>
-<div id="1bf8c14c" class="cell" data-execution_count="5">
+<div id="b72701f2" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
-<table id="itables_0a512850_1198_4bf3_89e0_f728d17a6b1a" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_11e3df8f_ca4d_419a_bb35_e1dfe9009b70" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -993,7 +1020,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_0a512850_1198_4bf3_89e0_f728d17a6b1a:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_11e3df8f_ca4d_419a_bb35_e1dfe9009b70:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 

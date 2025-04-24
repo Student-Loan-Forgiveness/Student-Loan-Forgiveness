@@ -1,0 +1,6 @@
+Criterion,Max_Depth,Max_Features,Model,Accuracy
+entropy,5,,Five,0.46279911699779247
+gini,5,,Three,0.5320618101545254
+entropy,10,,Strict Three,0.6670833333333334
+gini,5,log2,Two,0.6311926605504586
+entropy,5,,Strict Two,0.7872816212438855

@@ -1,0 +1,6 @@
+C,Degree,Kernel,Model,Accuracy
+3.0,2,rbf,Five,0.5104370860927152
+3.0,2,rbf,Three,0.5132980132450331
+3.0,2,rbf,Strict Three,0.7214912280701754
+0.5,2,linear,Two,0.5963302752293578
+2.5,2,rbf,Strict Two,0.8060796645702306

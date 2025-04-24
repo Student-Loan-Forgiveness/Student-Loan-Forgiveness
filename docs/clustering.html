@@ -167,6 +167,33 @@ window.Quarto = {
     <a class="nav-link" href="./lda.html"> 
 <span class="menu-text">Latent Dirichlet Allocation</span></a>
   </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modeling" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Modeling</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modeling">    
+        <li>
+    <a class="dropdown-item" href="./modeling_prep.html">
+ <span class="dropdown-text">Modeling Preparations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modeling_nb.html">
+ <span class="dropdown-text">Naive Bayes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modeling_dt.html">
+ <span class="dropdown-text">Decision Trees</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modeling_svm.html">
+ <span class="dropdown-text">Support Vector Machines Classification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modeling_conclusion.html">
+ <span class="dropdown-text">Modeling Conclusions</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
@@ -326,9 +353,9 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="newsapi-data">NewsAPI Data</h3>
 <p>For the NewsAPI data (i.e., news articles), the data will be subset to the news sources which an overall political bias is known for, any labels will be removed, and then the vectorized versions will be created. The analysis will begin with the KMeans version, so the PCA projected data will be shown.</p>
 <p><strong>Data Before Transformations</strong></p>
-<div id="454d5fc3" class="cell" data-execution_count="2">
+<div id="1f1ae0f1" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_34496f02_4bef_4efb_8c74_ce99aa7c9697" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_cfc3c69d_555c_40a2_929c_a9c35f0a4f44" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -411,7 +438,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_34496f02_4bef_4efb_8c74_ce99aa7c9697:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_cfc3c69d_555c_40a2_929c_a9c35f0a4f44:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -430,9 +457,9 @@ Loading ITables v2.2.5 from the internet...
 </div>
 <section id="newsapi-pca-maximum-snippet" class="level4">
 <h4 class="anchored" data-anchor-id="newsapi-pca-maximum-snippet">NewsAPI PCA Maximum Snippet</h4>
-<div id="44e9935b" class="cell" data-execution_count="3">
+<div id="e1450d06" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_283abb5c_48d2_484d_9f80_5af34755b1af" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_34f86cbc_b46a_4ae8_abd1_a68407f32f21" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -507,7 +534,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_283abb5c_48d2_484d_9f80_5af34755b1af:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_34f86cbc_b46a_4ae8_abd1_a68407f32f21:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -527,9 +554,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="newsapi-pca-tenth-snippet" class="level4">
 <h4 class="anchored" data-anchor-id="newsapi-pca-tenth-snippet">NewsAPI PCA Tenth Snippet</h4>
-<div id="d20c1692" class="cell" data-execution_count="4">
+<div id="5801b114" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<table id="itables_43a92d4c_ad21_4d0d_a86f_7d43a5ef71f2" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_3f29dcd9_7940_404f_921e_caac3c4890a5" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -604,7 +631,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_43a92d4c_ad21_4d0d_a86f_7d43a5ef71f2:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_3f29dcd9_7940_404f_921e_caac3c4890a5:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -624,9 +651,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="newsapi-pca-3-topic-lda-snippet" class="level4">
 <h4 class="anchored" data-anchor-id="newsapi-pca-3-topic-lda-snippet">NewsAPI PCA 3-Topic LDA Snippet</h4>
-<div id="7b06edc9" class="cell" data-execution_count="5">
+<div id="4c759efa" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
-<table id="itables_8013143b_e445_4e14_ad1f_ebbb93b4e0ff" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_e76d3f3f_46a1_4197_8ee3_1c95bd270cee" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -701,7 +728,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_8013143b_e445_4e14_ad1f_ebbb93b4e0ff:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_e76d3f3f_46a1_4197_8ee3_1c95bd270cee:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -721,9 +748,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="newsapi-pca-5-topic-iterative-lda-snippet" class="level4">
 <h4 class="anchored" data-anchor-id="newsapi-pca-5-topic-iterative-lda-snippet">NewsAPI PCA 5-Topic Iterative LDA Snippet</h4>
-<div id="690918e1" class="cell" data-execution_count="6">
+<div id="8ae2ba20" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
-<table id="itables_016308b8_1cad_4c27_bb0c_b561ad408ae8" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_9061f8cc_9f86_4f81_8160_72348f645780" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -798,7 +825,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_016308b8_1cad_4c27_bb0c_b561ad408ae8:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_9061f8cc_9f86_4f81_8160_72348f645780:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -830,9 +857,9 @@ Loading ITables v2.2.5 from the internet...
 <p>For efficiency, just the snippets of the dataset which had the best K-Means clustering result will be illustrated. However, the snippets of all the versions can be found <a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/images/clustering/kmeans/pca_results">here</a>.</p>
 </blockquote>
 <p><strong>Data Before Transformations</strong></p>
-<div id="f9cf7aae" class="cell" data-execution_count="7">
+<div id="57501a50" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
-<table id="itables_7bbfc05e_af7c_4665_92d3_c9a63113b70b" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_8032b474_3995_432a_93cb_99b6dbdd0bad" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -915,7 +942,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_7bbfc05e_af7c_4665_92d3_c9a63113b70b:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_8032b474_3995_432a_93cb_99b6dbdd0bad:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -934,9 +961,9 @@ Loading ITables v2.2.5 from the internet...
 </div>
 <section id="reddit-pca-base-schema-5-topic-iterative-lda-snippet" class="level4">
 <h4 class="anchored" data-anchor-id="reddit-pca-base-schema-5-topic-iterative-lda-snippet">Reddit PCA Base Schema: 5-Topic Iterative LDA Snippet</h4>
-<div id="bdaa449c" class="cell" data-execution_count="8">
+<div id="aa36ffa6" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
-<table id="itables_7fa1e1e2_dcb9_4d4d_8236_bbd2bd129899" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_243b0796_6499_4ee3_ab2d_7aefc6f77b27" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1011,7 +1038,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_7fa1e1e2_dcb9_4d4d_8236_bbd2bd129899:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_243b0796_6499_4ee3_ab2d_7aefc6f77b27:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1031,9 +1058,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="reddit-pca-author-schema-5-topic-iterative-lda-snippet" class="level4">
 <h4 class="anchored" data-anchor-id="reddit-pca-author-schema-5-topic-iterative-lda-snippet">Reddit PCA Author Schema: 5-Topic Iterative LDA Snippet</h4>
-<div id="ac72984e" class="cell" data-execution_count="9">
+<div id="883e9356" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
-<table id="itables_c96f87dd_2f3c_4afb_a70d_6455e2640f73" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_eeb46bee_de39_420f_a195_c02d7b633b93" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1108,7 +1135,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_c96f87dd_2f3c_4afb_a70d_6455e2640f73:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_eeb46bee_de39_420f_a195_c02d7b633b93:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1128,9 +1155,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="reddit-pca-thread-schema-3-topic-iterative-lda-snippet" class="level4">
 <h4 class="anchored" data-anchor-id="reddit-pca-thread-schema-3-topic-iterative-lda-snippet">Reddit PCA Thread Schema: 3-Topic Iterative LDA Snippet</h4>
-<div id="e39bf5e7" class="cell" data-execution_count="10">
+<div id="a5a04410" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display">
-<table id="itables_1cab85df_c398_44e4_98ca_afe2cc257cb3" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_5dcb9d1f_d064_4b0e_9082_c16ee01413e4" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1205,7 +1232,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_1cab85df_c398_44e4_98ca_afe2cc257cb3:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_5dcb9d1f_d064_4b0e_9082_c16ee01413e4:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1225,9 +1252,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="reddit-pca-subreddit-schema-3-topic-iterative-lda-snippet" class="level4">
 <h4 class="anchored" data-anchor-id="reddit-pca-subreddit-schema-3-topic-iterative-lda-snippet">Reddit PCA Subreddit Schema: 3-Topic Iterative LDA Snippet</h4>
-<div id="90c99b3d" class="cell" data-execution_count="11">
+<div id="3758871e" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
-<table id="itables_8764cc3c_9e5a_45e3_8c74_f002c0f1f694" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_c6566871_62f6_4bf5_93d3_7c1263f490dc" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1302,7 +1329,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_8764cc3c_9e5a_45e3_8c74_f002c0f1f694:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_c6566871_62f6_4bf5_93d3_7c1263f490dc:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1725,9 +1752,9 @@ Loading ITables v2.2.5 from the internet...
 <p>Following the stated strategy at the beginning of this section, this analysis will start with a vectorized version of the <strong>NewsAPI 4 Topic Iterative LDA</strong> wordset. This was the dataset that was used in the reporting of the best cluster for K-Means.</p>
 <section id="newsapi-data-1" class="level2">
 <h2 class="anchored" data-anchor-id="newsapi-data-1">NewsAPI Data</h2>
-<div id="15bf70e6" class="cell" data-execution_count="12">
+<div id="836209c3" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
-<table id="itables_75c54978_230c_4950_936f_17039defce07" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_24533ba0_e9e4_44d8_82af_3ce4644bed89" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1889,7 +1916,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_75c54978_230c_4950_936f_17039defce07:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_24533ba0_e9e4_44d8_82af_3ce4644bed89:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1911,9 +1938,9 @@ Loading ITables v2.2.5 from the internet...
 <h2 class="anchored" data-anchor-id="newsapi-clustering-results">NewsAPI Clustering Results</h2>
 <p>Using the columns (words) from that dataset, the cleaned and lemmatized news articles were further reduced to only those features. These reduced articles were then saved as text files in a corpus folder for the hierarchical clustering process in R. The corpus can be found <a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/data/corpuses/corpus_newsapi">here</a>.</p>
 <p>After performing hiearchical clustering, the results from 2-6 levels in the hiearchical structure were saved for further analysis.</p>
-<div id="fb8c324c" class="cell" data-execution_count="13">
+<div id="41bd0ad5" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
-<table id="itables_94003532_b579_4de4_8d46_bb441849723a" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_56f4b6ca_2d48_4bcd_b85d_f46c0df67c70" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1991,7 +2018,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_94003532_b579_4de4_8d46_bb441849723a:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_56f4b6ca_2d48_4bcd_b85d_f46c0df67c70:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 

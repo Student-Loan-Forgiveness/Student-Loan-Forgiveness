@@ -167,6 +167,33 @@ window.Quarto = {
     <a class="nav-link" href="./lda.html"> 
 <span class="menu-text">Latent Dirichlet Allocation</span></a>
   </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modeling" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Modeling</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modeling">    
+        <li>
+    <a class="dropdown-item" href="./modeling_prep.html">
+ <span class="dropdown-text">Modeling Preparations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modeling_nb.html">
+ <span class="dropdown-text">Naive Bayes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modeling_dt.html">
+ <span class="dropdown-text">Decision Trees</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modeling_svm.html">
+ <span class="dropdown-text">Support Vector Machines Classification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modeling_conclusion.html">
+ <span class="dropdown-text">Modeling Conclusions</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
@@ -251,9 +278,9 @@ window.Quarto = {
 <section id="strategy---further-preprocessing" class="level2">
 <h2 class="anchored" data-anchor-id="strategy---further-preprocessing">Strategy - Further Preprocessing</h2>
 <p>Recall that the prepared data looks like this:</p>
-<div id="0dd7b14b" class="cell" data-execution_count="2">
+<div id="374ce041" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_72c406aa_e384_4038_acc3_dfb227318725" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_80173ca3_0219_4c79_86f5_3b56cf50198a" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -336,7 +363,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_72c406aa_e384_4038_acc3_dfb227318725:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_80173ca3_0219_4c79_86f5_3b56cf50198a:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -387,9 +414,9 @@ Loading ITables v2.2.5 from the internet...
 <section id="countvectorizer" class="level3">
 <h3 class="anchored" data-anchor-id="countvectorizer">CountVectorizer</h3>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/newsapi_overall_cv.csv">Labeled Sample</a></p>
-<div id="39a6ca44" class="cell" data-execution_count="3">
+<div id="f949e3f0" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_e488fdec_234c_46ea_a018_fa19b6e06427" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_f0b0c6d0_4afe_44cf_b18f_efa3a11cd379" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -661,7 +688,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_e488fdec_234c_46ea_a018_fa19b6e06427:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_f0b0c6d0_4afe_44cf_b18f_efa3a11cd379:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -693,9 +720,9 @@ Loading ITables v2.2.5 from the internet...
 <section id="tfidfvectorizer" class="level3">
 <h3 class="anchored" data-anchor-id="tfidfvectorizer">TfidfVectorizer</h3>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/newsapi_overall_tf.csv">Labeled Sample</a></p>
-<div id="21c66848" class="cell" data-execution_count="4">
+<div id="ff1d4891" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<table id="itables_a2f61a8e_d2f1_42d1_af51_88964c4f223d" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_af66329f_9177_42ac_b838_a03d1cc04558" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -967,7 +994,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_a2f61a8e_d2f1_42d1_af51_88964c4f223d:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_af66329f_9177_42ac_b838_a03d1cc04558:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -991,9 +1018,9 @@ Loading ITables v2.2.5 from the internet...
 <section id="countvectorizer-1" class="level3">
 <h3 class="anchored" data-anchor-id="countvectorizer-1">CountVectorizer</h3>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/newsapi_overall_cv_lemmatized.csv">Labeled Sample</a></p>
-<div id="feb4189c" class="cell" data-execution_count="5">
+<div id="a5e5a26c" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
-<table id="itables_cbaa7bf7_c404_4b74_b8cf_ea74846d5a39" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_c58c28a4_c839_4598_a62f_4bcf6f3f111d" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1265,7 +1292,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_cbaa7bf7_c404_4b74_b8cf_ea74846d5a39:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_c58c28a4_c839_4598_a62f_4bcf6f3f111d:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1297,9 +1324,9 @@ Loading ITables v2.2.5 from the internet...
 <section id="tfidfvectorizer-1" class="level3">
 <h3 class="anchored" data-anchor-id="tfidfvectorizer-1">TfidfVectorizer</h3>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/newsapi_overall_tf_lemmatized.csv">Labeled Sample</a></p>
-<div id="fc001f0d" class="cell" data-execution_count="6">
+<div id="4ace5d35" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
-<table id="itables_8c73d3c8_9884_4a2c_8efd_d32970daa924" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_c42cc70f_9789_43a1_8ffe_a0e00a9add56" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1571,7 +1598,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_8c73d3c8_9884_4a2c_8efd_d32970daa924:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_c42cc70f_9789_43a1_8ffe_a0e00a9add56:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1595,9 +1622,9 @@ Loading ITables v2.2.5 from the internet...
 <section id="countvectorizer-2" class="level3">
 <h3 class="anchored" data-anchor-id="countvectorizer-2">CountVectorizer</h3>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/newsapi_overall_cv_stemmatized.csv">Labeled Sample</a></p>
-<div id="11133587" class="cell" data-execution_count="7">
+<div id="632b87a2" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
-<table id="itables_c2813666_b0c7_467e_86e3_70ac1738b843" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_9200a0b0_a8bd_400e_8dbe_4c192fa54ffa" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1869,7 +1896,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_c2813666_b0c7_467e_86e3_70ac1738b843:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_9200a0b0_a8bd_400e_8dbe_4c192fa54ffa:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1901,9 +1928,9 @@ Loading ITables v2.2.5 from the internet...
 <section id="tfidfvectorizer-2" class="level3">
 <h3 class="anchored" data-anchor-id="tfidfvectorizer-2">TfidfVectorizer</h3>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/newsapi_overall_tf_stemmatized.csv">Labeled Sample</a></p>
-<div id="65d06c08" class="cell" data-execution_count="8">
+<div id="b66f687d" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
-<table id="itables_2643226e_064b_41fa_aa63_b6822decaec0" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_612af057_4705_48a1_8275_c2a42e4ebad8" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -2175,7 +2202,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_2643226e_064b_41fa_aa63_b6822decaec0:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_612af057_4705_48a1_8275_c2a42e4ebad8:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -2206,9 +2233,9 @@ Loading ITables v2.2.5 from the internet...
 <section id="political-bias-left" class="level3">
 <h3 class="anchored" data-anchor-id="political-bias-left">Political Bias: Left</h3>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/left.csv">Labeled Sample</a></p>
-<div id="c6405c8a" class="cell" data-execution_count="9">
+<div id="c3453ae7" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
-<table id="itables_33202328_a249_4531_a4bd_3acf55cc5235" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_ce78dddc_8020_45ea_bdc3_6a9d7644b358" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -2480,7 +2507,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_33202328_a249_4531_a4bd_3acf55cc5235:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_ce78dddc_8020_45ea_bdc3_6a9d7644b358:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -2511,9 +2538,9 @@ Loading ITables v2.2.5 from the internet...
 <section id="political-bias-lean-left" class="level3">
 <h3 class="anchored" data-anchor-id="political-bias-lean-left">Political Bias: Lean Left</h3>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/lean_left.csv">Labeled Sample</a></p>
-<div id="409ed8e9" class="cell" data-execution_count="10">
+<div id="508d775c" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display">
-<table id="itables_aea303f7_ee17_4eb9_a660_27049e80f46b" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_b72fe3ae_22c4_4c67_9b33_86f9d62228f1" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -2785,7 +2812,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_aea303f7_ee17_4eb9_a660_27049e80f46b:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_b72fe3ae_22c4_4c67_9b33_86f9d62228f1:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -2816,9 +2843,9 @@ Loading ITables v2.2.5 from the internet...
 <section id="political-bias-center" class="level3">
 <h3 class="anchored" data-anchor-id="political-bias-center">Political Bias: Center</h3>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/center.csv">Labeled Sample</a></p>
-<div id="9f6a4fe3" class="cell" data-execution_count="11">
+<div id="850abacf" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
-<table id="itables_2df9d945_4b22_4cc0_a1ea_a7ce95d94365" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_280c0e8b_c48d_4c97_b20b_8311de29898a" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -3090,7 +3117,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_2df9d945_4b22_4cc0_a1ea_a7ce95d94365:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_280c0e8b_c48d_4c97_b20b_8311de29898a:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -3121,9 +3148,9 @@ Loading ITables v2.2.5 from the internet...
 <section id="political-bias-lean-right" class="level3">
 <h3 class="anchored" data-anchor-id="political-bias-lean-right">Political Bias: Lean Right</h3>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/lean_right.csv">Labeled Sample</a></p>
-<div id="d3d2e3a2" class="cell" data-execution_count="12">
+<div id="03c1f286" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
-<table id="itables_9af42876_437c_4400_a52d_7e19fd576ab0" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_0f161448_4146_43ad_a7d3_52655cc895bd" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -3395,7 +3422,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_9af42876_437c_4400_a52d_7e19fd576ab0:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_0f161448_4146_43ad_a7d3_52655cc895bd:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -3426,9 +3453,9 @@ Loading ITables v2.2.5 from the internet...
 <section id="political-bias-right" class="level3">
 <h3 class="anchored" data-anchor-id="political-bias-right">Political Bias: Right</h3>
 <p><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/data/newsapi_data/vectorized/right.csv">Labeled Sample</a></p>
-<div id="ecfbb1d3" class="cell" data-execution_count="13">
+<div id="be7981ef" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
-<table id="itables_c2379440_5463_4a64_ae3a_89d5468500cb" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_e0819a6a_3160_4903_b340_11baad705fc9" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -3700,7 +3727,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_c2379440_5463_4a64_ae3a_89d5468500cb:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_e0819a6a_3160_4903_b340_11baad705fc9:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
