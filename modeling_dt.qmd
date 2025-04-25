@@ -169,6 +169,11 @@ show(dt_reddit_results, style="width:50%;margin:auto")
 
 # Conclusion
 
+News articles published by organizations with known political biases were modeled in an attempt to project political bias on text content when it is unknown. Although political bias can vary between authors and news topics within a single organization, a model which produces a tree-like flowchart was used in attempt to do this. The model was most accurate when political bias was distinctly two categories. When the model was used on distinctly *Left* or *Right* categories of news sources, it performed adequately. This was an important outcome, as the hypothesis of this overall analysis was to identify specific features which could predict political bias in an attempt to project positive and negative sentiment on the topic of **Student Loan Forgiveness**. Ultimately, the model was used on Reddit Authors' combined content to analyze this sentiment on the social discourse platform. Given such a high performing model, sentiment was projected with how confident the model was on this.
+
+The flowchart which was produced by the best model shows where patterns of text can be separated to accurately partition text data into a political bias. In fact, it reduced subsets of news articles with 1000s of words into just 10 words where these partitions can be made.
+
+
 # Modeling Conclusions
 
 Please see [Modeling Conclusions](modeling_conclusion.qmd) for a complete synthesis of the supervised machine learning models, especially concerning bias and sentiment.

@@ -110,6 +110,9 @@ show(nb_reddit_results, style="width:50%;margin:auto")
 
 # Conclusion
 
+News articles published by organizations with known political biases were modeled in an attempt to project political bias on text content when it is unknown. Although political bias can vary between authors and news topics within a single organization, a model based on prior probabilities was used in an attempt to do this. The models were most accurate when political bias was distinctly three or two categories. The model captured patterns when political bias was either *Left*, *Center*, or *Right* adequately, and even better when it was just *Left* or *Right*. This was an important outcome, as the hypothesis of this overall analysis was to identify specific features which could predict political bias in an attempt to project positive and negative sentiment on the topic of **Student Loan Forgiveness**. Ultimately, the model was used on Reddit Authors' combined content to analyze this sentiment on the social discourse platform. Given such a high performing model, sentiment was projected with how confident the model was on this. Although the model did perform quite well, there is one word of caution with this moving forward. The downside of this model was that it was highly confident in its decisions even when it was incorrect.
+
+
 # Modeling Conclusions
 
 Please see [Modeling Conclusions](modeling_conclusion.qmd) for a complete synthesis of the supervised machine learning models, especially concerning bias and sentiment.

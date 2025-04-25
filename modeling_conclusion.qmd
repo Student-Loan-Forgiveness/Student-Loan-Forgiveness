@@ -126,6 +126,12 @@ show(reddit_content, classes="display")
 
 # Conclusion
 
+By fusing together several different well performing models built to analyze political bias within text, especially text surrounding the topic of **Student Loan Forgiveness**, overall weighted political bias scores for Reddit Authors were calculated. Given that this topic is generally split upon political party lines, with the *Left (or liberal)* showing more positive sentiment towards the topic and the *Right (or conservative)* showing more negative sentiment towards the topic, political bias was used in an attempt to project overall sentiment on the topic for Reddit Authors. Using this weighted political bias score, authors were grouped into the sentiment classes of Positive, Neutral, and Negative.
+
+Given this a complex topic, with arguments from financial equity to blame shifting, there are general undertones in many of the authors' contents that do appear to be positive or negative. Some of those with positive sentiment share the tones of the benefits of student loan forgiveness and are spiteful towards the *Right* side of the government for blocking this. Some of the neutral sentiment appears to be more targeted to sharing facts and helping others understand the topic better. The negative sentiment appears to contain authors who don't want these costs passed onto to tax payers as a whole, have "worked off their loans, so they should too" themes, along with negative sentiment towards student loan forgiveness ultimately being a failed promise, and some that spiteful towards the *Left* side of the government.
+
+Overall, having several metrics strung together does seem to produce scores and capture sentiment decently,  even given such a complex topic where there is rarely a definitive yes or no.
+
 
 ---
 

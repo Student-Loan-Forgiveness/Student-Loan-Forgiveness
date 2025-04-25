@@ -279,9 +279,9 @@ window.Quarto = {
 <p><strong>Sentiment Label</strong> (<span class="math inline">\(S_l\)</span>):</p>
 <p><span class="math display">\[S_l = \begin{cases} S_s \leq -1 : \text{Negative} \\ -1 &lt; S_s &lt; 1 : \text{Neutral} \\ S_s \geq 1 : \text{Positive} \end{cases}\]</span></p>
 <p>Using this probabilistic weighting method, the following results were derived:</p>
-<div id="2a701de0" class="cell" data-execution_count="2">
+<div id="56db5de7" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_2c73837c_48e7_428e_b598_5aaf68903e5c" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<table id="itables_295df96a_0b6b_44a0_9900_cdea7986350c" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -358,7 +358,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_2c73837c_48e7_428e_b598_5aaf68903e5c:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_295df96a_0b6b_44a0_9900_cdea7986350c:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -401,9 +401,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="reddit-author-content" class="level1">
 <h1>Reddit Author Content</h1>
-<div id="3c1bc99d" class="cell" data-execution_count="3">
+<div id="cc3a8e51" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_a5321e31_db4a_452c_9260_54f4ba1eece9" class="display" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<table id="itables_46ba41e4_540f_486d_b36d_fbb82aa01203" class="display" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
 <thead>
     <tr style="text-align: right;">
       
@@ -479,7 +479,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_a5321e31_db4a_452c_9260_54f4ba1eece9:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_46ba41e4_540f_486d_b36d_fbb82aa01203:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -499,6 +499,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
+<p>By fusing together several different well performing models built to analyze political bias within text, especially text surrounding the topic of <strong>Student Loan Forgiveness</strong>, overall weighted political bias scores for Reddit Authors were calculated. Given that this topic is generally split upon political party lines, with the <em>Left (or liberal)</em> showing more positive sentiment towards the topic and the <em>Right (or conservative)</em> showing more negative sentiment towards the topic, political bias was used in an attempt to project overall sentiment on the topic for Reddit Authors. Using this weighted political bias score, authors were grouped into the sentiment classes of Positive, Neutral, and Negative.</p>
+<p>Given this a complex topic, with arguments from financial equity to blame shifting, there are general undertones in many of the authors’ contents that do appear to be positive or negative. Some of those with positive sentiment share the tones of the benefits of student loan forgiveness and are spiteful towards the <em>Right</em> side of the government for blocking this. Some of the neutral sentiment appears to be more targeted to sharing facts and helping others understand the topic better. The negative sentiment appears to contain authors who don’t want these costs passed onto to tax payers as a whole, have “worked off their loans, so they should too” themes, along with negative sentiment towards student loan forgiveness ultimately being a failed promise, and some that spiteful towards the <em>Left</em> side of the government.</p>
+<p>Overall, having several metrics strung together does seem to produce scores and capture sentiment decently, even given such a complex topic where there is rarely a definitive yes or no.</p>
 <hr>
 </section>
 <section id="code-links" class="level1">
