@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -67,7 +67,39 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -180,8 +212,43 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#strategy-and-goals" id="toc-strategy-and-goals" class="nav-link" data-scroll-target="#strategy-and-goals">Strategy and Goals</a></li>
+  <li><a href="#hyperparameter-tuning" id="toc-hyperparameter-tuning" class="nav-link" data-scroll-target="#hyperparameter-tuning">Hyperparameter Tuning</a>
+  <ul class="collapse">
+  <li><a href="#hyperparameter-results" id="toc-hyperparameter-results" class="nav-link" data-scroll-target="#hyperparameter-results">Hyperparameter Results</a></li>
+  <li><a href="#hyperparameter-best-results" id="toc-hyperparameter-best-results" class="nav-link" data-scroll-target="#hyperparameter-best-results">Hyperparameter Best Results</a></li>
+  </ul></li>
+  <li><a href="#modeling" id="toc-modeling" class="nav-link" data-scroll-target="#modeling">Modeling</a>
+  <ul class="collapse">
+  <li><a href="#five-labels" id="toc-five-labels" class="nav-link" data-scroll-target="#five-labels">Five Labels</a></li>
+  <li><a href="#three-labels" id="toc-three-labels" class="nav-link" data-scroll-target="#three-labels">Three Labels</a></li>
+  <li><a href="#strict-three-labels" id="toc-strict-three-labels" class="nav-link" data-scroll-target="#strict-three-labels">Strict Three Labels</a></li>
+  <li><a href="#two-labels" id="toc-two-labels" class="nav-link" data-scroll-target="#two-labels">Two Labels</a></li>
+  <li><a href="#strict-two-labels" id="toc-strict-two-labels" class="nav-link" data-scroll-target="#strict-two-labels">Strict Two Labels</a></li>
+  <li><a href="#comparing-trees" id="toc-comparing-trees" class="nav-link" data-scroll-target="#comparing-trees">Comparing Trees</a></li>
+  </ul></li>
+  <li><a href="#reddit-projections" id="toc-reddit-projections" class="nav-link" data-scroll-target="#reddit-projections">Reddit Projections</a>
+  <ul class="collapse">
+  <li><a href="#feature-importance-through-permutation" id="toc-feature-importance-through-permutation" class="nav-link" data-scroll-target="#feature-importance-through-permutation">Feature Importance through Permutation</a>
+  <ul class="collapse">
+  <li><a href="#two-features---strict-two-political-biases" id="toc-two-features---strict-two-political-biases" class="nav-link" data-scroll-target="#two-features---strict-two-political-biases">Two Features - Strict Two Political Biases</a></li>
+  </ul></li>
+  <li><a href="#retrained-models" id="toc-retrained-models" class="nav-link" data-scroll-target="#retrained-models">Retrained Models</a>
+  <ul class="collapse">
+  <li><a href="#two-features" id="toc-two-features" class="nav-link" data-scroll-target="#two-features">Two Features</a></li>
+  </ul></li>
+  <li><a href="#reddit-projection-results" id="toc-reddit-projection-results" class="nav-link" data-scroll-target="#reddit-projection-results">Reddit Projection Results</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#code-links" id="toc-code-links" class="nav-link" data-scroll-target="#code-links">Code Links</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -205,8 +272,583 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Decision Trees are a heuristic based classification model which are useful for capturing non-linear trends and patterns in data. The heuristic aspect means that it follows a set of rules to provide an answer, whereas an algorithm follows steps to provide an answer which is always optimal. The tree aspect comes from the flowchart-like structure which features nodes and branches depending on decisions calculated from the data, constructing a logical pathway for classification.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/dt/dt_intro_1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>The example above, from this <a href="https://grantmcdermott.com/parttree/">documentation</a>, shows how decision trees can partition non-linear data. This is two-dimensional dataset example, but the same idea holds true for higher dimensions.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/dt/dt_intro_2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>The example above, from this <a href="https://venngage-wordpress.s3.amazonaws.com/uploads/2019/08/what-is-a-decision-tree-5.png">website</a>, shows the flowchart like structure, illustrating how a decision can be made by splitting logically on a criteria.</p>
+<p>Notice that this example uses both qualitative and quantitative data. Decision Trees are effective on even mixed data. In fact, given at least a single column of quantitivate data, there are an infinite number of trees that can be made depending on how the quantitiatve variables are split. In addition to an infinite number of ways to split the quantitative variables (especially continuous data), tree depth can add to the complexity of a model.</p>
+<p>Trees can be shallow or deep, meaning the number of branches and subsequent nodes that are allowed. A tree can be split until each node is pure or even only contains a single value. Purity in a node refers to the amount of labels within it. For example, given a decision tree whose task is to model a binary label dataset, if a node contains only a single label type, it is considered pure. Investigating the purity (and impurity) of a node is how “goodness” of split is measured. How are criteria for a split formed and how does this relate to purity? The common heuristics that are used in this process are:</p>
+<ul>
+<li>Gini</li>
+<li>Entropy</li>
+<li>Information Gain</li>
+</ul>
+<p>Gini and Entropy calculate the impurity of a node, and Information Gain measures the overall impurity after a split is made and either Gini or Impurity is calculated. The attribute with the highest Information Gain is chosen for the split.</p>
+<p>This section of the analysis will specifically use <strong>Decision Tree Classification</strong> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html">sklearn documentation</a>.</p>
+</section>
+<section id="strategy-and-goals" class="level1">
+<h1>Strategy and Goals</h1>
+<p>More specifically, Decision Trees will be used here to create models for predicting political bias from text data. Aftering training models with news article which have known political biases, these models will be applied to Reddit data to project political bias, which could be a decent indicator of sentiment towards student loan relief in online social discourse.</p>
+<blockquote class="blockquote">
+<p>See the <a href="./modeling_prep.html">Modeling Preparation</a> page for a detailed breakdown of the data fromatting, labels for supervised learning, and necessity for disjointness.</p>
+</blockquote>
+</section>
+<section id="hyperparameter-tuning" class="level1">
+<h1>Hyperparameter Tuning</h1>
+<p>Due to the availability of hyperparameters within the deciison tree classifier, <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html">GridSearchCV</a> was used to test each of the parameters for each the label aggregations. This uses the entire dataset and cross validates that, folding it into 5 different folds in this case. It essentially creates the training and testing sets during the process within the 5 different folds.</p>
+<p>The hyperparameters tested were:</p>
+<ul>
+<li>criterion:
+<ul>
+<li>gini</li>
+<li>entropy</li>
+<li>log_loss</li>
+</ul></li>
+<li>max_depth:
+<ul>
+<li>None</li>
+<li>5</li>
+<li>10</li>
+</ul></li>
+<li>max_features:
+<ul>
+<li>None</li>
+<li>sqrt</li>
+<li>log2</li>
+</ul></li>
+</ul>
+<section id="hyperparameter-results" class="level2">
+<h2 class="anchored" data-anchor-id="hyperparameter-results">Hyperparameter Results</h2>
+<div id="d9f9740f" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<table id="itables_963a9167_ff00_4807_aac2_ec3550877168" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>Label</th>
+      <th>mean_test_score</th>
+      <th>rank_test_score</th>
+      <th>param_criterion</th>
+      <th>param_max_depth</th>
+      <th>param_max_features</th>
+      <th>mean_fit_time</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_963a9167_ff00_4807_aac2_ec3550877168:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["Five", 0.417625, 9, "gini", NaN, "NaN", 0.16622], ["Five", 0.359285, 23, "gini", NaN, "sqrt", 0.036285], ["Five", 0.348751, 26, "gini", NaN, "log2", 0.032021], ["Five", 0.447965, 6, "gini", 5.0, "NaN", 0.081971], ["Five", 0.357854, 24, "gini", 5.0, "sqrt", 0.026809], ["Five", 0.354013, 25, "gini", 5.0, "log2", 0.030283], ["Five", 0.457448, 3, "gini", 10.0, "NaN", 0.146538], ["Five", 0.339329, 27, "gini", 10.0, "sqrt", 0.031125], ["Five", 0.375223, 18, "gini", 10.0, "log2", 0.025834], ["Five", 0.42694, 7, "entropy", NaN, "NaN", 0.204641], ["Five", 0.377925, 16, "entropy", NaN, "sqrt", 0.033123], ["Five", 0.393863, 12, "entropy", NaN, "log2", 0.028929], ["Five", 0.462799, 1, "entropy", 5.0, "NaN", 0.122276], ["Five", 0.37253, 19, "entropy", 5.0, "sqrt", 0.032712], ["Five", 0.37917, 14, "entropy", 5.0, "log2", 0.034041], ["Five", 0.450826, 4, "entropy", 10.0, "NaN", 0.209817], ["Five", 0.403064, 10, "entropy", 10.0, "sqrt", 0.037726], ["Five", 0.368645, 21, "entropy", 10.0, "log2", 0.033274], ["Five", 0.42694, 7, "log_loss", NaN, "NaN", 0.26021], ["Five", 0.377925, 16, "log_loss", NaN, "sqrt", 0.054881], ["Five", 0.393863, 12, "log_loss", NaN, "log2", 0.039833], ["Five", 0.462799, 1, "log_loss", 5.0, "NaN", 0.131893], ["Five", 0.37253, 19, "log_loss", 5.0, "sqrt", 0.035743], ["Five", 0.37917, 14, "log_loss", 5.0, "log2", 0.037489], ["Five", 0.450826, 4, "log_loss", 10.0, "NaN", 0.167954], ["Five", 0.403064, 10, "log_loss", 10.0, "sqrt", 0.041346], ["Five", 0.368645, 21, "log_loss", 10.0, "log2", 0.032921], ["Three", 0.49472, 14, "gini", NaN, "NaN", 0.16692], ["Three", 0.468212, 19, "gini", NaN, "sqrt", 0.031198], ["Three", 0.436433, 25, "gini", NaN, "log2", 0.027897], ["Three", 0.532062, 1, "gini", 5.0, "NaN", 0.084989], ["Three", 0.486843, 15, "gini", 5.0, "sqrt", 0.024483], ["Three", 0.518614, 2, "gini", 5.0, "log2", 0.03066], ["Three", 0.51464, 5, "gini", 10.0, "NaN", 0.184488], ["Three", 0.45479, 24, "gini", 10.0, "sqrt", 0.03435], ["Three", 0.470817, 18, "gini", 10.0, "log2", 0.029864], ["Three", 0.494817, 12, "entropy", NaN, "NaN", 0.243892], ["Three", 0.477475, 16, "entropy", NaN, "sqrt", 0.043047], ["Three", 0.454914, 22, "entropy", NaN, "log2", 0.05133], ["Three", 0.504009, 10, "entropy", 5.0, "NaN", 0.109619], ["Three", 0.514667, 3, "entropy", 5.0, "sqrt", 0.032196], ["Three", 0.506693, 8, "entropy", 5.0, "log2", 0.029595], ["Three", 0.513342, 6, "entropy", 10.0, "NaN", 0.198177], ["Three", 0.421722, 26, "entropy", 10.0, "sqrt", 0.03521], ["Three", 0.460159, 20, "entropy", 10.0, "log2", 0.030826], ["Three", 0.494817, 12, "log_loss", NaN, "NaN", 0.217602], ["Three", 0.477475, 16, "log_loss", NaN, "sqrt", 0.042012], ["Three", 0.454914, 22, "log_loss", NaN, "log2", 0.03432], ["Three", 0.504009, 10, "log_loss", 5.0, "NaN", 0.115824], ["Three", 0.514667, 3, "log_loss", 5.0, "sqrt", 0.032998], ["Three", 0.506693, 8, "log_loss", 5.0, "log2", 0.030513], ["Three", 0.513342, 6, "log_loss", 10.0, "NaN", 0.143294], ["Three", 0.421722, 26, "log_loss", 10.0, "sqrt", 0.035121], ["Three", 0.460159, 20, "log_loss", 10.0, "log2", 0.032153], ["Strict Three", 0.652544, 3, "gini", NaN, "NaN", 0.083706], ["Strict Three", 0.606447, 20, "gini", NaN, "sqrt", 0.021016], ["Strict Three", 0.610811, 17, "gini", NaN, "log2", 0.022644], ["Strict Three", 0.629276, 9, "gini", 5.0, "NaN", 0.060978], ["Strict Three", 0.619101, 12, "gini", 5.0, "sqrt", 0.021411], ["Strict Three", 0.589912, 21, "gini", 5.0, "log2", 0.023448], ["Strict Three", 0.648355, 6, "gini", 10.0, "NaN", 0.096488], ["Strict Three", 0.587873, 22, "gini", 10.0, "sqrt", 0.027813], ["Strict Three", 0.577412, 23, "gini", 10.0, "log2", 0.026037], ["Strict Three", 0.65239, 4, "entropy", NaN, "NaN", 0.101907], ["Strict Three", 0.619101, 12, "entropy", NaN, "sqrt", 0.027014], ["Strict Three", 0.619013, 15, "entropy", NaN, "log2", 0.026483], ["Strict Three", 0.648004, 7, "entropy", 5.0, "NaN", 0.068937], ["Strict Three", 0.606491, 18, "entropy", 5.0, "sqrt", 0.029681], ["Strict Three", 0.573289, 26, "entropy", 5.0, "log2", 0.026735], ["Strict Three", 0.667083, 1, "entropy", 10.0, "NaN", 0.108601], ["Strict Three", 0.619254, 10, "entropy", 10.0, "sqrt", 0.029661], ["Strict Three", 0.577325, 24, "entropy", 10.0, "log2", 0.028309], ["Strict Three", 0.65239, 4, "log_loss", NaN, "NaN", 0.105717], ["Strict Three", 0.619101, 12, "log_loss", NaN, "sqrt", 0.030276], ["Strict Three", 0.619013, 15, "log_loss", NaN, "log2", 0.027973], ["Strict Three", 0.648004, 7, "log_loss", 5.0, "NaN", 0.079363], ["Strict Three", 0.606491, 18, "log_loss", 5.0, "sqrt", 0.029918], ["Strict Three", 0.573289, 26, "log_loss", 5.0, "log2", 0.024802], ["Strict Three", 0.667083, 1, "log_loss", 10.0, "NaN", 0.081644], ["Strict Three", 0.619254, 10, "log_loss", 10.0, "sqrt", 0.02577], ["Strict Three", 0.577325, 24, "log_loss", 10.0, "log2", 0.028255], ["Two", 0.579817, 12, "gini", NaN, "NaN", 0.096089], ["Two", 0.579817, 12, "gini", NaN, "sqrt", 0.02439], ["Two", 0.629358, 2, "gini", NaN, "log2", 0.023896], ["Two", 0.594495, 11, "gini", 5.0, "NaN", 0.05938], ["Two", 0.522936, 27, "gini", 5.0, "sqrt", 0.02096], ["Two", 0.631193, 1, "gini", 5.0, "log2", 0.022061], ["Two", 0.568807, 17, "gini", 10.0, "NaN", 0.101917], ["Two", 0.574312, 16, "gini", 10.0, "sqrt", 0.026199], ["Two", 0.559633, 22, "gini", 10.0, "log2", 0.024526], ["Two", 0.565138, 20, "entropy", NaN, "NaN", 0.141391], ["Two", 0.577982, 14, "entropy", NaN, "sqrt", 0.029954], ["Two", 0.620183, 3, "entropy", NaN, "log2", 0.027645], ["Two", 0.601835, 9, "entropy", 5.0, "NaN", 0.076504], ["Two", 0.530275, 25, "entropy", 5.0, "sqrt", 0.02911], ["Two", 0.616514, 5, "entropy", 5.0, "log2", 0.029356], ["Two", 0.60367, 7, "entropy", 10.0, "NaN", 0.115118], ["Two", 0.566972, 18, "entropy", 10.0, "sqrt", 0.028789], ["Two", 0.543119, 23, "entropy", 10.0, "log2", 0.027825], ["Two", 0.565138, 20, "log_loss", NaN, "NaN", 0.140743], ["Two", 0.577982, 14, "log_loss", NaN, "sqrt", 0.036306], ["Two", 0.620183, 3, "log_loss", NaN, "log2", 0.030421], ["Two", 0.601835, 9, "log_loss", 5.0, "NaN", 0.084488], ["Two", 0.530275, 25, "log_loss", 5.0, "sqrt", 0.028008], ["Two", 0.616514, 5, "log_loss", 5.0, "log2", 0.025327], ["Two", 0.60367, 7, "log_loss", 10.0, "NaN", 0.097465], ["Two", 0.566972, 18, "log_loss", 10.0, "sqrt", 0.028761], ["Two", 0.543119, 23, "log_loss", 10.0, "log2", 0.028318], ["Strict Two", 0.780154, 4, "gini", NaN, "NaN", 0.037155], ["Strict Two", 0.66499, 24, "gini", NaN, "sqrt", 0.016575], ["Strict Two", 0.653948, 25, "gini", NaN, "log2", 0.02011], ["Strict Two", 0.768484, 8, "gini", 5.0, "NaN", 0.029764], ["Strict Two", 0.63522, 27, "gini", 5.0, "sqrt", 0.014971], ["Strict Two", 0.783927, 3, "gini", 5.0, "log2", 0.01497], ["Strict Two", 0.769043, 7, "gini", 10.0, "NaN", 0.038857], ["Strict Two", 0.653599, 26, "gini", 10.0, "sqrt", 0.017338], ["Strict Two", 0.738994, 17, "gini", 10.0, "log2", 0.017888], ["Strict Two", 0.757652, 9, "entropy", NaN, "NaN", 0.044882], ["Strict Two", 0.754647, 15, "entropy", NaN, "sqrt", 0.018596], ["Strict Two", 0.694759, 22, "entropy", NaN, "log2", 0.019352], ["Strict Two", 0.787282, 1, "entropy", 5.0, "NaN", 0.04686], ["Strict Two", 0.709294, 20, "entropy", 5.0, "sqrt", 0.022998], ["Strict Two", 0.772956, 5, "entropy", 5.0, "log2", 0.021193], ["Strict Two", 0.757652, 9, "entropy", 10.0, "NaN", 0.05283], ["Strict Two", 0.724878, 18, "entropy", 10.0, "sqrt", 0.021951], ["Strict Two", 0.757652, 9, "entropy", 10.0, "log2", 0.022711], ["Strict Two", 0.757652, 9, "log_loss", NaN, "NaN", 0.053971], ["Strict Two", 0.754647, 15, "log_loss", NaN, "sqrt", 0.024215], ["Strict Two", 0.694759, 22, "log_loss", NaN, "log2", 0.025036], ["Strict Two", 0.787282, 1, "log_loss", 5.0, "NaN", 0.049877], ["Strict Two", 0.709294, 20, "log_loss", 5.0, "sqrt", 0.024315], ["Strict Two", 0.772956, 5, "log_loss", 5.0, "log2", 0.02279], ["Strict Two", 0.757652, 9, "log_loss", 10.0, "NaN", 0.054983], ["Strict Two", 0.724878, 18, "log_loss", 10.0, "sqrt", 0.023682], ["Strict Two", 0.757652, 9, "log_loss", 10.0, "log2", 0.025933]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="hyperparameter-best-results" class="level2">
+<h2 class="anchored" data-anchor-id="hyperparameter-best-results">Hyperparameter Best Results</h2>
+<div id="170fddea" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<table id="itables_8f71200c_f201_4816_acf3_f4f49ca88a53" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>Criterion</th>
+      <th>Max_Depth</th>
+      <th>Max_Features</th>
+      <th>Model</th>
+      <th>Accuracy</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_8f71200c_f201_4816_acf3_f4f49ca88a53:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["entropy", 5, "NaN", "Five", 0.462799], ["gini", 5, "NaN", "Three", 0.532062], ["entropy", 10, "NaN", "Strict Three", 0.667083], ["gini", 5, "log2", "Two", 0.631193], ["entropy", 5, "NaN", "Strict Two", 0.787282]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Note that the combined search has rankings for each model based not only on accuracy but aspects such model fitting time. The best Hyperparameter Best Results will be used for the following modeling.</p>
+</blockquote>
+</section>
+</section>
+<section id="modeling" class="level1">
+<h1>Modeling</h1>
+<p>Due to the nature of decision trees, its possible to illustrate the actual node splits.</p>
+<section id="five-labels" class="level2">
+<h2 class="anchored" data-anchor-id="five-labels">Five Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/dt/cm_five_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/dt/dt_five_labels.png.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<p>This model across all five labels resulted in a 55.95% accuracy. It was particularly weak in predicting Lean Right correctly. The root node of the tree was <span class="math inline">\(news \leq 1.5\)</span>.</p>
+</section>
+<section id="three-labels" class="level2">
+<h2 class="anchored" data-anchor-id="three-labels">Three Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/dt/cm_three_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/dt/dt_three_labels.png.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<p>When combining Lean Left and Lean Right with Left and Right, respectively, the model accuracy was just below 60%. The root node of the tree was <span class="math inline">\(fox \leq 1.5\)</span>.</p>
+</section>
+<section id="strict-three-labels" class="level2">
+<h2 class="anchored" data-anchor-id="strict-three-labels">Strict Three Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/dt/cm_strict_three_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/dt/dt_strict_three_labels.png.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<p>When the leaning political biases weren’t combined, the accuracy of the model had a slight increase of about 5%. The root node of the tree was <span class="math inline">\(news \leq 1.5\)</span>.</p>
+</section>
+<section id="two-labels" class="level2">
+<h2 class="anchored" data-anchor-id="two-labels">Two Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/dt/cm_two_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/dt/dt_two_labels.png.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<p>When combining Lean Left and Lean Right with Left and Right, respectively, and dropping the Center label, the model accuracy was almost 61%. There were still a high amount of incorrect predictions, which could be reflective on the leanings. The root node of the tree was <span class="math inline">\(required \leq 0.5\)</span>.</p>
+</section>
+<section id="strict-two-labels" class="level2">
+<h2 class="anchored" data-anchor-id="strict-two-labels">Strict Two Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/dt/cm_strict_two_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/dt/dt_strict_two_labels.png.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<p>When the leaning political biases weren’t combined, and dropping the the Center label, the accuracy of the model increased by almost 20% over all other models. This is a respectable model, and the best performance with the Decision Tree classification in this section. Additionally, it had the simplest tree with the root node being <span class="math inline">\(news \leq 2.5\)</span>.</p>
+</section>
+<section id="comparing-trees" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-trees">Comparing Trees</h2>
+<p>The models using different subsets and aggregations of the data prodcued several different trees. Just examining the root node, <span class="math inline">\(news\)</span> was mainly the root node. However, the last tree provided a different split value of <span class="math inline">\(2.5\)</span> versus <span class="math inline">\(1.5\)</span> for the others with that root node. However, the other root nodes were <span class="math inline">\(required\)</span> and <span class="math inline">\(fox\)</span>.</p>
+</section>
+</section>
+<section id="reddit-projections" class="level1">
+<h1>Reddit Projections</h1>
+<p>To apply this model in projecting political bias on Reddit authors, feature permutation was performed on the best performing 2-Class model to obtain the most important features from the original 1000 labels. The 3-Class model had poor perfomance, so that wasn’t pursued for this section. Additionally, the important features were combined with the nodes of the tree. Subsequently:</p>
+<ol type="1">
+<li>The models were retrained on this subset of important features.</li>
+<li>The Reddit count vectorized data was then reduced to these feautres.</li>
+<li>The models were appplied to the Reddit subset.</li>
+</ol>
+<section id="feature-importance-through-permutation" class="level2">
+<h2 class="anchored" data-anchor-id="feature-importance-through-permutation">Feature Importance through Permutation</h2>
+<section id="two-features---strict-two-political-biases" class="level3">
+<h3 class="anchored" data-anchor-id="two-features---strict-two-political-biases">Two Features - Strict Two Political Biases</h3>
+<div id="ccc01541" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<table id="itables_c29841c0_7dde_4304_a4ee_0b52208aeb1a" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feature</th>
+      <th>importance</th>
+      <th>absolute_importance</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_c29841c0_7dde_4304_a4ee_0b52208aeb1a:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[0, "amazon", -0.014815, 0.014815], [993, "case", 0.009877, 0.009877], [994, "early", 0.009877, 0.009877], [995, "secretary", 0.017284, 0.017284], [996, "biden", 0.051852, 0.051852], [997, "related", 0.11358, 0.11358], [998, "app", 0.135802, 0.135802], [999, "news", 0.140741, 0.140741]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>After combining these features with the missing features from the decision tree nodes, the new model features only 11 words.</p>
+</blockquote>
+</section>
+</section>
+<section id="retrained-models" class="level2">
+<h2 class="anchored" data-anchor-id="retrained-models">Retrained Models</h2>
+<p>The retrained models with fewer features had roughly about the same accuracy.</p>
+<section id="two-features" class="level3">
+<h3 class="anchored" data-anchor-id="two-features">Two Features</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/nb/cm_important_two_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="reddit-projection-results" class="level2">
+<h2 class="anchored" data-anchor-id="reddit-projection-results">Reddit Projection Results</h2>
+<div id="1951b12a" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<table id="itables_ce4c75a9_a47f_4bf1_852a_c17ea9fecd3f" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>Author</th>
+      <th>Predicted Bias Two</th>
+      <th>Threshold Two</th>
+      <th>Threshold</th>
+      <th>Conclusion</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_ce4c75a9_a47f_4bf1_852a_c17ea9fecd3f:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["-CJF-", "Left", 0.95, 0.95, "Left"], ["42Pockets", "Left", 0.95, 0.95, "Left"], ["AffectionatePause152", "Left", 0.95, 0.95, "Left"], ["Alternative-Rub-7445", "Right", 1.0, 1.0, "Right"], ["Deepthunkd", "Left", 0.95, 0.95, "Left"], ["Deutsche_Bank_AG", "Left", 0.95, 0.95, "Left"], ["EmergencyThing5", "Left", 0.95, 0.95, "Left"], ["Expensive-Annual1024", "Right", 1.0, 1.0, "Right"], ["Flaky-Wing2205", "Left", 0.95, 0.95, "Left"], ["HyruleSmash855", "Right", 1.0, 1.0, "Right"], ["Idea-Technical", "Left", 0.95, 0.95, "Left"], ["Impressive-Peanut614", "Left", 0.95, 0.95, "Left"], ["Leann004", "Left", 0.95, 0.95, "Left"], ["LeetleBugg", "Left", 0.95, 0.95, "Left"], ["Logical_Holiday_2457", "Left", 0.95, 0.95, "Left"], ["Ok-Nefariousness-927", "Right", 1.0, 1.0, "Right"], ["OrangeTabbiesDad", "Left", 0.95, 0.95, "Left"], ["PandaKing6887", "Left", 0.95, 0.95, "Left"], ["Relevant-Platypus162", "Left", 0.95, 0.95, "Left"], ["SD-777", "Right", 1.0, 1.0, "Right"], ["TldrDev", "Left", 0.95, 0.95, "Left"], ["Ut_Prosim", "Left", 0.95, 0.95, "Left"], ["arinehim", "Left", 0.95, 0.95, "Left"], ["baby-luvs-gorgonzola", "Left", 0.95, 0.95, "Left"], ["blueskyandsea", "Left", 0.95, 0.95, "Left"], ["burner12077", "Left", 0.95, 0.95, "Left"], ["codece", "Left", 0.95, 0.95, "Left"], ["embiggenedmind", "Right", 1.0, 1.0, "Right"], ["girl_of_squirrels", "Left", 0.95, 0.95, "Left"], ["horsebycommittee", "Right", 1.0, 1.0, "Right"], ["hotjambalaya17", "Right", 1.0, 1.0, "Right"], ["indy1386", "Left", 0.95, 0.95, "Left"], ["ironboy157", "Left", 0.95, 0.95, "Left"], ["kungfuenglish", "Left", 0.95, 0.95, "Left"], ["milespoints", "Left", 0.95, 0.95, "Left"], ["mindmapsofficial", "Left", 0.95, 0.95, "Left"], ["mlotto7", "Left", 0.95, 0.95, "Left"], ["mxzf", "Left", 0.95, 0.95, "Left"], ["random-bot-2", "Left", 0.95, 0.95, "Left"], ["robotlasagna", "Left", 0.95, 0.95, "Left"], ["snoopyvibes", "Left", 0.95, 0.95, "Left"], ["throwawtphone", "Right", 1.0, 1.0, "Right"], ["tizuby", "Left", 0.95, 0.95, "Left"], ["urLocalpoopstain", "Left", 0.95, 0.95, "Left"], ["waterwicca", "Left", 0.95, 0.95, "Left"], ["wes7946", "Right", 1.0, 1.0, "Right"], ["xantharia", "Right", 1.0, 1.0, "Right"]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>The above illustrates the predicions for both the three and two label models as well as their probabilities. This was a strictly two-label projection onto the Reddit data and shows some decently high confidence from the model.</p>
+</blockquote>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<hr>
+</section>
+<section id="code-links" class="level1">
+<h1>Code Links</h1>
+<ul>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/modeling_functions.py">Modeling Functions</a></li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/decision_trees.py">Decision Tree Modeling</a></li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

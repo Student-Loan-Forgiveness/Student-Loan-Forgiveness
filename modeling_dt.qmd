@@ -3,3 +3,176 @@ title: "Modeling - Decision Trees"
 execute:
   echo: false
 ---
+
+```{python}
+# import libraries
+import pandas as pd
+from itables import show
+
+# import important features and reddit projection results
+feature_importance_two = pd.read_csv('data/modeling/dt/feature_importance_two.csv')
+dt_reddit_results = pd.read_csv('data/modeling/dt/dt_reddit_results.csv')
+
+# grid search results
+grid_search_best = pd.read_csv('data/modeling/dt/grid_search.csv')
+grid_search_combined = pd.read_csv('data/modeling/dt/detailed_combined.csv')
+
+```
+
+# Introduction
+
+Decision Trees are a heuristic based classification model which are useful for capturing non-linear trends and patterns in data. The heuristic aspect means that it follows a set of rules to provide an answer, whereas an algorithm follows steps to provide an answer which is always optimal. The tree aspect comes from the flowchart-like structure which features nodes and branches depending on decisions calculated from the data, constructing a logical pathway for classification.
+
+![](images/modeling/dt/dt_intro_1.png){width=50% fig-align="center"}
+
+The example above, from this [documentation](https://grantmcdermott.com/parttree/), shows how decision trees can partition non-linear data. This is two-dimensional dataset example, but the same idea holds true for higher dimensions.
+
+![](images/modeling/dt/dt_intro_2.png){width=50% fig-align="center"}
+
+The example above, from this [website](https://venngage-wordpress.s3.amazonaws.com/uploads/2019/08/what-is-a-decision-tree-5.png), shows the flowchart like structure, illustrating how a decision can be made by splitting logically on a criteria.
+
+Notice that this example uses both qualitative and quantitative data. Decision Trees are effective on even mixed data. In fact, given at least a single column of quantitivate data, there are an infinite number of trees that can be made depending on how the quantitiatve variables are split. In addition to an infinite number of ways to split the quantitative variables (especially continuous data), tree depth can add to the complexity of a model.
+
+Trees can be shallow or deep, meaning the number of branches and subsequent nodes that are allowed. A tree can be split until each node is pure or even only contains a single value. Purity in a node refers to the amount of labels within it. For example, given a decision tree whose task is to model a binary label dataset, if a node contains only a single label type, it is considered pure. Investigating the purity (and impurity) of a node is how "goodness" of split is measured. How are criteria for a split formed and how does this relate to purity? The common heuristics that are used in this process are:
+
+- Gini
+- Entropy
+- Information Gain
+
+Gini and Entropy calculate the impurity of a node, and Information Gain measures the overall impurity after a split is made and either Gini or Impurity is calculated. The attribute with the highest Information Gain is chosen for the split.
+
+This section of the analysis will specifically use **Decision Tree Classification** [sklearn documentation](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html).
+
+# Strategy and Goals
+
+More specifically, Decision Trees will be used here to create models for predicting political bias from text data. Aftering training models with news article which have known political biases, these models will be applied to Reddit data to project political bias, which could be a decent indicator of sentiment towards student loan relief in online social discourse.
+
+>See the [Modeling Preparation](modeling_prep.qmd) page for a detailed breakdown of the data fromatting, labels for supervised learning, and necessity for disjointness.
+
+# Hyperparameter Tuning
+
+Due to the availability of hyperparameters within the deciison tree classifier, [GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) was used to test each of the parameters for each the label aggregations. This uses the entire dataset and cross validates that, folding it into 5 different folds in this case. It essentially creates the training and testing sets during the process within the 5 different folds.
+
+The hyperparameters tested were:
+
+- criterion:
+  - gini
+  - entropy
+  - log_loss
+- max_depth:
+  - None
+  - 5
+  - 10
+- max_features:
+  - None
+  - sqrt
+  - log2
+  
+## Hyperparameter Results
+
+```{python}
+show(grid_search_combined, style="width:100%;margin:auto")
+```
+
+## Hyperparameter Best Results
+
+```{python}
+show(grid_search_best, style="width:50%;margin:auto")
+```
+
+> Note that the combined search has rankings for each model based not only on accuracy but aspects such model fitting time. The best Hyperparameter Best Results will be used for the following modeling.
+
+# Modeling
+
+Due to the nature of decision trees, its possible to illustrate the actual node splits.
+
+## Five Labels
+
+![](images/modeling/dt/cm_five_labels.png){width=50% fig-align="center"}
+
+![](images/modeling/dt/dt_five_labels.png.png){width=100% fig-align="center"}
+
+This model across all five labels resulted in a 55.95% accuracy. It was particularly weak in predicting Lean Right correctly. The root node of the tree was $news \leq 1.5$.
+
+## Three Labels
+
+![](images/modeling/dt/cm_three_labels.png){width=50% fig-align="center"}
+
+![](images/modeling/dt/dt_three_labels.png.png){width=100% fig-align="center"}
+
+When combining Lean Left and Lean Right with Left and Right, respectively, the model accuracy was just below 60%. The root node of the tree was $fox \leq 1.5$.
+
+## Strict Three Labels
+
+![](images/modeling/dt/cm_strict_three_labels.png){width=50% fig-align="center"}
+
+![](images/modeling/dt/dt_strict_three_labels.png.png){width=100% fig-align="center"}
+
+When the leaning political biases weren't combined, the accuracy of the model had a slight increase of about 5%. The root node of the tree was $news \leq 1.5$.
+
+## Two Labels
+
+![](images/modeling/dt/cm_two_labels.png){width=50% fig-align="center"}
+
+![](images/modeling/dt/dt_two_labels.png.png){width=100% fig-align="center"}
+
+When combining Lean Left and Lean Right with Left and Right, respectively, and dropping the Center label, the model accuracy was almost 61%. There were still a high amount of incorrect predictions, which could be reflective on the leanings. The root node of the tree was $required \leq 0.5$.
+
+## Strict Two Labels
+
+![](images/modeling/dt/cm_strict_two_labels.png){width=50% fig-align="center"}
+
+![](images/modeling/dt/dt_strict_two_labels.png.png){width=100% fig-align="center"}
+
+When the leaning political biases weren't combined, and dropping the the Center label, the accuracy of the model increased by almost 20% over all other models. This is a respectable model, and the best performance with the Decision Tree classification in this section. Additionally, it had the simplest tree with the root node being $news \leq 2.5$.
+
+## Comparing Trees
+
+The models using different subsets and aggregations of the data prodcued several different trees. Just examining the root node, $news$ was mainly the root node. However, the last tree provided a different split value of $2.5$ versus $1.5$ for the others with that root node. However, the other root nodes were $required$ and $fox$.
+
+
+# Reddit Projections
+
+To apply this model in projecting political bias on Reddit authors, feature permutation was performed on the best performing 2-Class model to obtain the most important features from the original 1000 labels. The 3-Class model had poor perfomance, so that wasn't pursued for this section. Additionally, the important features were combined with the nodes of the tree. Subsequently:
+
+1. The models were retrained on this subset of important features.
+2. The Reddit count vectorized data was then reduced to these feautres.
+3. The models were appplied to the Reddit subset.
+
+## Feature Importance through Permutation
+
+### Two Features - Strict Two Political Biases
+
+```{python}
+show(feature_importance_two[feature_importance_two['absolute_importance']>0], style="width:50%;margin:auto")
+```
+
+>After combining these features with the missing features from the decision tree nodes, the new model features only 11 words.
+
+
+## Retrained Models
+
+The retrained models with fewer features had roughly about the same accuracy.
+
+### Two Features
+
+![](images/modeling/nb/cm_important_two_labels.png){width=50% fig-align="center"}
+
+## Reddit Projection Results
+
+```{python}
+show(dt_reddit_results, style="width:50%;margin:auto")
+```
+
+>The above illustrates the predicions for both the three and two label models as well as their probabilities. This was a strictly two-label projection onto the Reddit data and shows some decently high confidence from the model.
+
+
+# Conclusion
+
+
+---
+
+# Code Links
+
+- [Modeling Functions](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/modeling_functions.py)
+- [Decision Tree Modeling](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/decision_trees.py)

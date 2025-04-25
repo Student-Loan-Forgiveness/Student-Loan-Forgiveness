@@ -490,6 +490,90 @@
     "text": "Reddit Author Schema Discussion\n15 words over 3 topics were discovered within the NewsAPI documents. The first image shows the words per topic, and the second image shows the frequencies of the words by weighting compared to the vocabulary in the vectorized dataset.\nManual Topic Labeling:\n\nFirst Topic: Monthly Payments and Credit Scores Related\n\nWords like “payment”, “credit”, “month”, “payment”, “balance”, “score”, and “account” have high frequencies particular to this topic.\n\nSecond Topic: Political Divide on Forgiveness Related\n\nWords like “forginess” or “forgin” (forgiveness), “biden”, “republican”, “trump”, and “vote” have high frequencies particular to this topic.\n\nThird Topic: Debt from Degree or School Related\n\nWords like “debt”, “college”, “money”, “school” and “degree” have high frequencies particular to this topic.\n\n\nAgain, certain high frequency words across all documents are expected to be repeated, such as “loan”. However, there are some clear topic choices knowing the overall climate surrounding this."
   },
   {
+    "objectID": "modeling_dt.html",
+    "href": "modeling_dt.html",
+    "title": "Modeling - Decision Trees",
+    "section": "",
+    "text": "Decision Trees are a heuristic based classification model which are useful for capturing non-linear trends and patterns in data. The heuristic aspect means that it follows a set of rules to provide an answer, whereas an algorithm follows steps to provide an answer which is always optimal. The tree aspect comes from the flowchart-like structure which features nodes and branches depending on decisions calculated from the data, constructing a logical pathway for classification.\n\n\n\n\n\nThe example above, from this documentation, shows how decision trees can partition non-linear data. This is two-dimensional dataset example, but the same idea holds true for higher dimensions.\n\n\n\n\n\nThe example above, from this website, shows the flowchart like structure, illustrating how a decision can be made by splitting logically on a criteria.\nNotice that this example uses both qualitative and quantitative data. Decision Trees are effective on even mixed data. In fact, given at least a single column of quantitivate data, there are an infinite number of trees that can be made depending on how the quantitiatve variables are split. In addition to an infinite number of ways to split the quantitative variables (especially continuous data), tree depth can add to the complexity of a model.\nTrees can be shallow or deep, meaning the number of branches and subsequent nodes that are allowed. A tree can be split until each node is pure or even only contains a single value. Purity in a node refers to the amount of labels within it. For example, given a decision tree whose task is to model a binary label dataset, if a node contains only a single label type, it is considered pure. Investigating the purity (and impurity) of a node is how “goodness” of split is measured. How are criteria for a split formed and how does this relate to purity? The common heuristics that are used in this process are:\n\nGini\nEntropy\nInformation Gain\n\nGini and Entropy calculate the impurity of a node, and Information Gain measures the overall impurity after a split is made and either Gini or Impurity is calculated. The attribute with the highest Information Gain is chosen for the split.\nThis section of the analysis will specifically use Decision Tree Classification sklearn documentation."
+  },
+  {
+    "objectID": "modeling_dt.html#hyperparameter-results",
+    "href": "modeling_dt.html#hyperparameter-results",
+    "title": "Modeling - Decision Trees",
+    "section": "Hyperparameter Results",
+    "text": "Hyperparameter Results\n\n\n\n\n    \n      \n      Label\n      mean_test_score\n      rank_test_score\n      param_criterion\n      param_max_depth\n      param_max_features\n      mean_fit_time\n    \n  \n\n\n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\nLoading ITables v2.2.5 from the internet...\n(need help?)"
+  },
+  {
+    "objectID": "modeling_dt.html#hyperparameter-best-results",
+    "href": "modeling_dt.html#hyperparameter-best-results",
+    "title": "Modeling - Decision Trees",
+    "section": "Hyperparameter Best Results",
+    "text": "Hyperparameter Best Results\n\n\n\n\n    \n      \n      Criterion\n      Max_Depth\n      Max_Features\n      Model\n      Accuracy\n    \n  \n\n\n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\nLoading ITables v2.2.5 from the internet...\n(need help?)\n\n\n\n\n\n\n\nNote that the combined search has rankings for each model based not only on accuracy but aspects such model fitting time. The best Hyperparameter Best Results will be used for the following modeling."
+  },
+  {
+    "objectID": "modeling_dt.html#five-labels",
+    "href": "modeling_dt.html#five-labels",
+    "title": "Modeling - Decision Trees",
+    "section": "Five Labels",
+    "text": "Five Labels\n\n\n\n\n\n\n\n\n\n\nThis model across all five labels resulted in a 55.95% accuracy. It was particularly weak in predicting Lean Right correctly. The root node of the tree was \\(news \\leq 1.5\\)."
+  },
+  {
+    "objectID": "modeling_dt.html#three-labels",
+    "href": "modeling_dt.html#three-labels",
+    "title": "Modeling - Decision Trees",
+    "section": "Three Labels",
+    "text": "Three Labels\n\n\n\n\n\n\n\n\n\n\nWhen combining Lean Left and Lean Right with Left and Right, respectively, the model accuracy was just below 60%. The root node of the tree was \\(fox \\leq 1.5\\)."
+  },
+  {
+    "objectID": "modeling_dt.html#strict-three-labels",
+    "href": "modeling_dt.html#strict-three-labels",
+    "title": "Modeling - Decision Trees",
+    "section": "Strict Three Labels",
+    "text": "Strict Three Labels\n\n\n\n\n\n\n\n\n\n\nWhen the leaning political biases weren’t combined, the accuracy of the model had a slight increase of about 5%. The root node of the tree was \\(news \\leq 1.5\\)."
+  },
+  {
+    "objectID": "modeling_dt.html#two-labels",
+    "href": "modeling_dt.html#two-labels",
+    "title": "Modeling - Decision Trees",
+    "section": "Two Labels",
+    "text": "Two Labels\n\n\n\n\n\n\n\n\n\n\nWhen combining Lean Left and Lean Right with Left and Right, respectively, and dropping the Center label, the model accuracy was almost 61%. There were still a high amount of incorrect predictions, which could be reflective on the leanings. The root node of the tree was \\(required \\leq 0.5\\)."
+  },
+  {
+    "objectID": "modeling_dt.html#strict-two-labels",
+    "href": "modeling_dt.html#strict-two-labels",
+    "title": "Modeling - Decision Trees",
+    "section": "Strict Two Labels",
+    "text": "Strict Two Labels\n\n\n\n\n\n\n\n\n\n\nWhen the leaning political biases weren’t combined, and dropping the the Center label, the accuracy of the model increased by almost 20% over all other models. This is a respectable model, and the best performance with the Decision Tree classification in this section. Additionally, it had the simplest tree with the root node being \\(news \\leq 2.5\\)."
+  },
+  {
+    "objectID": "modeling_dt.html#comparing-trees",
+    "href": "modeling_dt.html#comparing-trees",
+    "title": "Modeling - Decision Trees",
+    "section": "Comparing Trees",
+    "text": "Comparing Trees\nThe models using different subsets and aggregations of the data prodcued several different trees. Just examining the root node, \\(news\\) was mainly the root node. However, the last tree provided a different split value of \\(2.5\\) versus \\(1.5\\) for the others with that root node. However, the other root nodes were \\(required\\) and \\(fox\\)."
+  },
+  {
+    "objectID": "modeling_dt.html#feature-importance-through-permutation",
+    "href": "modeling_dt.html#feature-importance-through-permutation",
+    "title": "Modeling - Decision Trees",
+    "section": "Feature Importance through Permutation",
+    "text": "Feature Importance through Permutation\n\nTwo Features - Strict Two Political Biases\n\n\n\n\n    \n      \n      feature\n      importance\n      absolute_importance\n    \n  \n\n\n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\nLoading ITables v2.2.5 from the internet...\n(need help?)\n\n\n\n\n\n\n\nAfter combining these features with the missing features from the decision tree nodes, the new model features only 11 words."
+  },
+  {
+    "objectID": "modeling_dt.html#retrained-models",
+    "href": "modeling_dt.html#retrained-models",
+    "title": "Modeling - Decision Trees",
+    "section": "Retrained Models",
+    "text": "Retrained Models\nThe retrained models with fewer features had roughly about the same accuracy.\n\nTwo Features"
+  },
+  {
+    "objectID": "modeling_dt.html#reddit-projection-results",
+    "href": "modeling_dt.html#reddit-projection-results",
+    "title": "Modeling - Decision Trees",
+    "section": "Reddit Projection Results",
+    "text": "Reddit Projection Results\n\n\n\n\n    \n      \n      Author\n      Predicted Bias Two\n      Threshold Two\n      Threshold\n      Conclusion\n    \n  \n\n\n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\nLoading ITables v2.2.5 from the internet...\n(need help?)\n\n\n\n\n\n\n\nThe above illustrates the predicions for both the three and two label models as well as their probabilities. This was a strictly two-label projection onto the Reddit data and shows some decently high confidence from the model."
+  },
+  {
     "objectID": "modeling_prep.html",
     "href": "modeling_prep.html",
     "title": "Modeling - Preparation",
