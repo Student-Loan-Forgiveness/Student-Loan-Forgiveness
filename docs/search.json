@@ -105,6 +105,69 @@
     "text": "NewsApi - Reddit Subreddits\n\n\nCode\n# extract corpus\nnewsapi_reddit_subreddit &lt;- Corpus(DirSource('corpus_newsapi_reddit_subreddit'))\n\n\n\n\nCode\n# create document term matrix\ndtm_newsapi_reddit_subreddit &lt;- DocumentTermMatrix(newsapi_reddit_subreddit)\n\n\n\n\nCode\n# calculate tfidf\ntfidf_newsapi_reddit_subreddit &lt;- as.matrix(weightTfIdf(dtm_newsapi_reddit_subreddit))\n\n\n\n\nCode\n# calculate cosine similarity distance\ncosine_newsapi_reddit_subreddit &lt;- dist(tfidf_newsapi_reddit_subreddit, method='cosine')\n\n\n\n\nCode\n# create clusters\nclusters_newsapi_reddit_subreddit &lt;- hclust(cosine_newsapi_reddit_subreddit, method='ward.D2')\n\n\n\n\nCode\n# create cuts (2 - 6)\ncut_2_newsapi_reddit_subreddit &lt;- cutree(clusters_newsapi_reddit_subreddit, k=2)\ncut_3_newsapi_reddit_subreddit &lt;- cutree(clusters_newsapi_reddit_subreddit, k=3)\ncut_4_newsapi_reddit_subreddit &lt;- cutree(clusters_newsapi_reddit_subreddit, k=4)\ncut_5_newsapi_reddit_subreddit &lt;- cutree(clusters_newsapi_reddit_subreddit, k=5)\ncut_6_newsapi_reddit_subreddit &lt;- cutree(clusters_newsapi_reddit_subreddit, k=6)\n\n\n\n\nCode\n# create results dataframe\nresults_newsapi_reddit_subreddit &lt;- data.frame(\n    File = rownames(tfidf_newsapi_reddit_subreddit),\n    cluster_2 = cut_2_newsapi_reddit_subreddit,\n    cluster_3 = cut_3_newsapi_reddit_subreddit,\n    cluster_4 = cut_4_newsapi_reddit_subreddit,\n    cluster_5 = cut_5_newsapi_reddit_subreddit,\n    cluster_6 = cut_6_newsapi_reddit_subreddit\n)\n\n\n\n\nCode\n# save results dataframe\nwrite.csv(results_newsapi_reddit_subreddit, 'hierarchical_results/hierarchical_newsapi_reddit_subreddit.csv', row.names=FALSE)\n\n\n\n\nCode\nnews_subreddit &lt;- as.dendrogram(clusters_newsapi_reddit_subreddit)\n\n\n\n\nCode\n# function to rename the labels\nlabels(news_subreddit) &lt;- sapply(labels(news_subreddit), function(x) {\n  if (startsWith(x, \"Reddit\")) {\n    return(\"Reddit\")\n  } else if (startsWith(x, \"NewsAPI\")) {\n    return(\"NewsAPI\")\n  } else {\n    # retain label if not Reddit or NewsAPI  \n    return(x)\n  }\n})\n\n\n\n\nCode\n# function to color the labels\nlabel_colors &lt;- function(node) {\n  label &lt;- attr(node, \"label\")\n  if (!is.null(label)) {\n    if (label == \"Reddit\") {\n      attr(node, \"nodePar\") &lt;- list(lab.col = \"red\")\n    } else if (label == \"NewsAPI\") {\n      attr(node, \"nodePar\") &lt;- list(lab.col = \"blue\")\n    }\n  }\n  return(node)\n}\n\n\n\n\nCode\n# apply the color function to the dendrogram labels\nnews_subreddit &lt;- dendrapply(news_subreddit, label_colors)\n\n\n\n\nCode\n# plot dendrogram with altered labels\npar(mar = c(1, 1, 1, 7))\nplot(news_subreddit, horiz = TRUE, axes = FALSE, main=\"NewsAPI Source Schema vs. Reddit Subreddit Schema\")\nabline(v = 350, lty = 2)"
   },
   {
+    "objectID": "modeling_nb.html",
+    "href": "modeling_nb.html",
+    "title": "Modeling - Naive Bayes",
+    "section": "",
+    "text": "Naive Bayes is a generative supervised machine learning classification method. The generative aspect indicates that the model learns from the probability of the data given previous knowledge of the label. This is in comparison to a discriminative model, where the goal is to find a function which distinguishes between groups (i.e. Logistic Regression). The supervised aspect means that the model is given labels to learn from. The Naïve aspect comes from the assumption that the categories have conditional independence in order to apply the Bayes’ Theorem. This is a Naive assumption because it’s unlikely that the variables within the data have true independence. For example, consider a model built from customer reviews which is trying to classify if the review was positive or negative. The review might have language such as “happy” and “glad”, which are clearly not independent terms. However, the assumption of independence is made to allow for the calculations to work. This example is one of sentiment analysis, however there are many potential applications of this method as it is implicitly acceptable for n-class classification. For example, predicting weather a label is “true” or “false” is a 2-class problem, but Naive Bayes can extend this to multiple labels. Back to the sentiment analysis example, a review could be “positive”, “negative”, or “neutral”. Applications also include document classification, which could be used to classify an article into categories such as “politics”, “sports”, “entertainment”, among many other overall article types.\nIn general, Naive Bayes uses the conditional independence assumption to apply the Bayes’ Theorem. Essentially, the goal is to find the probability of a label given a datapoint. The Bayes’ Theorem is appropriate for this task and uses several components of the probabilities within the data to calculate this. Namely, the probability of the data itself occurring, the probability of the label occurring, and the conditional probability in the opposite direction (i.e. the probability of the datapoint given a label). Especially in larger datasets, some of the conditional probabilities can be zero. This presents an issue due to the multiplicative calculations required, which would zero out the entire probability. Smoothing techniques are used to account for this, with the Laplacian Correction being the most common. This technique adds 1 to each case’s count. The general smoothing technique adds a specified variable (or alpha) to the count.\nThis section of the analysis will specifically use Multinomial Naive Bayes Classification, which “is suitable for discrete features (e.g., word counts for text classification)” sklearn documentation."
+  },
+  {
+    "objectID": "modeling_nb.html#five-labels",
+    "href": "modeling_nb.html#five-labels",
+    "title": "Modeling - Naive Bayes",
+    "section": "Five Labels",
+    "text": "Five Labels\n\n\n\n\n\nThe overall accuracy for testing across all five labels is 48.02%. Lean Left and Lean Right have a hard time being recognized correctly, as illustrated by the other categories being predicted almost as much as the others when that is the true label."
+  },
+  {
+    "objectID": "modeling_nb.html#three-labels",
+    "href": "modeling_nb.html#three-labels",
+    "title": "Modeling - Naive Bayes",
+    "section": "Three Labels",
+    "text": "Three Labels\n\n\n\n\n\nWhen combining Lean Left and Lean Right with Left and Right, respectively, the model accuracy increasing to 57.27%. The model has a decent performance, with predictions for the Right political bias outperforming the other prediction categories. Left performed the worse."
+  },
+  {
+    "objectID": "modeling_nb.html#strict-three-labels",
+    "href": "modeling_nb.html#strict-three-labels",
+    "title": "Modeling - Naive Bayes",
+    "section": "Strict Three Labels",
+    "text": "Strict Three Labels\n\n\n\n\n\nWhen the leaning political biases weren’t combined, the accuracy of the model increased by almost 20% for the three political bias labels. Overall decent results with its best performance on Center and Right labels, respectively."
+  },
+  {
+    "objectID": "modeling_nb.html#two-labels",
+    "href": "modeling_nb.html#two-labels",
+    "title": "Modeling - Naive Bayes",
+    "section": "Two Labels",
+    "text": "Two Labels\n\n\n\n\n\nWhen combining Lean Left and Lean Right with Left and Right, respectively, and dropping the Center label, the model accuracy was 65.85%. There were still a high amount of incorrect predictions, which could be reflective on the leanings."
+  },
+  {
+    "objectID": "modeling_nb.html#strict-two-labels",
+    "href": "modeling_nb.html#strict-two-labels",
+    "title": "Modeling - Naive Bayes",
+    "section": "Strict Two Labels",
+    "text": "Strict Two Labels\n\n\n\n\n\nWhen the leaning political biases weren’t combined, and dropping the the Center label, the accuracy of the model increased by almost 20% over the aggregated version of the two labels. This is a respectable model, and the best performance with the Naive Bayes classification in this section."
+  },
+  {
+    "objectID": "modeling_nb.html#feature-importance-through-permutation",
+    "href": "modeling_nb.html#feature-importance-through-permutation",
+    "title": "Modeling - Naive Bayes",
+    "section": "Feature Importance through Permutation",
+    "text": "Feature Importance through Permutation\n\nThree Features - Strict Three Political Biases\n\n\n\n\n    \n      \n      feature\n      importance\n      absolute_importance\n    \n  \n\n\n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\nLoading ITables v2.2.5 from the internet...\n(need help?)\n\n\n\n\n\n\n\n\nTwo Features - Strict Two Political Biases\n\n\n\n\n    \n      \n      feature\n      importance\n      absolute_importance\n    \n  \n\n\n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\nLoading ITables v2.2.5 from the internet...\n(need help?)\n\n\n\n\n\n\n\nThe new Three Label Model will have 577 features and the new Two Label Model will have 280 features."
+  },
+  {
+    "objectID": "modeling_nb.html#retrained-models",
+    "href": "modeling_nb.html#retrained-models",
+    "title": "Modeling - Naive Bayes",
+    "section": "Retrained Models",
+    "text": "Retrained Models\nThe retrained models with fewer features had roughly about the same accuracy.\n\nThree Features\n\n\n\n\n\n\n\nTwo Features"
+  },
+  {
+    "objectID": "modeling_nb.html#reddit-projection-results",
+    "href": "modeling_nb.html#reddit-projection-results",
+    "title": "Modeling - Naive Bayes",
+    "section": "Reddit Projection Results",
+    "text": "Reddit Projection Results\n\n\n\n\n    \n      \n      Author\n      Predicted Bias Three\n      Threshold Three\n      Predicted Bias Two\n      Threshold Two\n      Threshold\n      Conclusion\n    \n  \n\n\n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\nLoading ITables v2.2.5 from the internet...\n(need help?)\n\n\n\n\n\n\n\nThe above illustrates the predicions for both the three and two label models as well as their probabilities. Combining the results in the last two columns illustrates the overall political bias (including leanings). Recall that the Reddit data is unlabeled, so the probabilities act as sure the model is in predicting the political biases."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Introduction",

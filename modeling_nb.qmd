@@ -3,3 +3,116 @@ title: "Modeling - Naive Bayes"
 execute:
   echo: false
 ---
+
+```{python}
+# import libraries
+import pandas as pd
+from itables import show
+
+# import important features and reddit projection results
+feature_importance_three = pd.read_csv('data/modeling/nb/feature_importance_three.csv')
+feature_importance_two = pd.read_csv('data/modeling/nb/feature_importance_two.csv')
+nb_reddit_results = pd.read_csv('data/modeling/nb/nb_reddit_results.csv')
+
+```
+
+# Introduction
+
+Naive Bayes is a generative supervised machine learning classification method. The generative aspect indicates that the model learns from the probability of the data given previous knowledge of the label. This is in comparison to a discriminative model, where the goal is to find a function which distinguishes between groups (i.e. Logistic Regression). The supervised aspect means that the model is given labels to learn from. The Naïve aspect comes from the assumption that the categories have conditional independence in order to apply the Bayes’ Theorem. This is a Naive assumption because it’s unlikely that the variables within the data have true independence. For example, consider a model built from customer reviews which is trying to classify if the review was positive or negative. The review might have language such as “happy” and “glad”, which are clearly not independent terms. However, the assumption of independence is made to allow for the calculations to work. This example is one of sentiment analysis, however there are many potential applications of this method as it is implicitly acceptable for n-class classification. For example, predicting weather a label is “true” or “false” is a 2-class problem, but Naive Bayes can extend this to multiple labels. Back to the sentiment analysis example, a review could be “positive”, “negative”, or “neutral”. Applications also include document classification, which could be used to classify an article into categories such as “politics”, “sports”, “entertainment”, among many other overall article types.
+
+In general, Naive Bayes uses the conditional independence assumption to apply the Bayes’ Theorem. Essentially, the goal is to find the probability of a label given a datapoint. The Bayes’ Theorem is appropriate for this task and uses several components of the probabilities within the data to calculate this. Namely, the probability of the data itself occurring, the probability of the label occurring, and the conditional probability in the opposite direction (i.e. the probability of the datapoint given a label). Especially in larger datasets, some of the conditional probabilities can be zero. This presents an issue due to the multiplicative calculations required, which would zero out the entire probability. Smoothing techniques are used to account for this, with the Laplacian Correction being the most common. This technique adds 1 to each case’s count. The general smoothing technique adds a specified variable (or alpha) to the count.
+
+This section of the analysis will specifically use **Multinomial Naive Bayes Classification**, which "is suitable for discrete features (e.g., word counts for text classification)" [sklearn documentation](https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html).
+
+# Strategy and Goals
+
+More specifically, Multinomial Naive Bayes will be used here to create models for predicting political bias from text data. Aftering training models with news article which have known political biases, these models will be applied to Reddit data to project political bias, which could be a decent indicator of sentiment towards student loan relief in online social discourse.
+
+>See the [Modeling Preparation](modeling_prep.qmd) page for a detailed breakdown of the data fromatting, labels for supervised learning, and necessity for disjointness.
+
+# Modeling
+
+## Five Labels
+
+![](images/modeling/nb/cm_five_labels.png){width=50% fig-align="center"}
+
+The overall accuracy for testing across all five labels is 48.02%. Lean Left and Lean Right have a hard time being recognized correctly, as illustrated by the other categories being predicted almost as much as the others when that is the true label.
+
+## Three Labels
+
+![](images/modeling/nb/cm_three_labels.png){width=50% fig-align="center"}
+
+When combining Lean Left and Lean Right with Left and Right, respectively, the model accuracy increasing to 57.27%. The model has a decent performance, with predictions for the Right political bias outperforming the other prediction categories. Left performed the worse.
+
+## Strict Three Labels
+
+![](images/modeling/nb/cm_strict_three_labels.png){width=50% fig-align="center"}
+
+When the leaning political biases weren't combined, the accuracy of the model increased by almost 20% for the three political bias labels. Overall decent results with its best performance on Center and Right labels, respectively.
+
+## Two Labels
+
+![](images/modeling/nb/cm_two_labels.png){width=50% fig-align="center"}
+
+When combining Lean Left and Lean Right with Left and Right, respectively, and dropping the Center label, the model accuracy was 65.85%. There were still a high amount of incorrect predictions, which could be reflective on the leanings.
+
+## Strict Two Labels
+
+![](images/modeling/nb/cm_strict_two_labels.png){width=50% fig-align="center"}
+
+When the leaning political biases weren't combined, and dropping the the Center label, the accuracy of the model increased by almost 20% over the aggregated version of the two labels. This is a respectable model, and the best performance with the Naive Bayes classification in this section.
+
+# Reddit Projections
+
+To apply this model in projecting political bias on Reddit authors, feature permutation was performed on the best performing 3-Class and 2-Class models to obtain the most important features from the original 1000 labels. Subsequently:
+
+1. The models were retrained on this subset of important features.
+2. The Reddit count vectorized data was then reduced to these feautres.
+3. The models were appplied to the Reddit subset.
+
+## Feature Importance through Permutation
+
+### Three Features - Strict Three Political Biases
+
+```{python}
+show(feature_importance_three[feature_importance_three['absolute_importance']>0], style="width:50%;margin:auto")
+```
+
+### Two Features - Strict Two Political Biases
+
+```{python}
+show(feature_importance_two[feature_importance_two['absolute_importance']>0], style="width:50%;margin:auto")
+```
+
+>The new Three Label Model will have 577 features and the new Two Label Model will have 280 features.
+
+
+## Retrained Models
+
+The retrained models with fewer features had roughly about the same accuracy.
+
+### Three Features
+
+![](images/modeling/nb/cm_important_three_labels.png){width=50% fig-align="center"}
+
+### Two Features
+
+![](images/modeling/nb/cm_important_two_labels.png){width=50% fig-align="center"}
+
+## Reddit Projection Results
+
+```{python}
+show(nb_reddit_results, style="width:50%;margin:auto")
+```
+
+>The above illustrates the predicions for both the three and two label models as well as their probabilities. Combining the results in the last two columns illustrates the overall political bias (including leanings). Recall that the Reddit data is unlabeled, so the probabilities act as sure the model is in predicting the political biases.
+
+
+# Conclusion
+
+---
+
+# Code Links
+
+- [Modeling Functions](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/modeling_functions.py)
+- [Naive Bayes Modeling](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/naive_bayes.py)

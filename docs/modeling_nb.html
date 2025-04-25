@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -67,6 +67,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -180,8 +183,39 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#strategy-and-goals" id="toc-strategy-and-goals" class="nav-link" data-scroll-target="#strategy-and-goals">Strategy and Goals</a></li>
+  <li><a href="#modeling" id="toc-modeling" class="nav-link" data-scroll-target="#modeling">Modeling</a>
+  <ul class="collapse">
+  <li><a href="#five-labels" id="toc-five-labels" class="nav-link" data-scroll-target="#five-labels">Five Labels</a></li>
+  <li><a href="#three-labels" id="toc-three-labels" class="nav-link" data-scroll-target="#three-labels">Three Labels</a></li>
+  <li><a href="#strict-three-labels" id="toc-strict-three-labels" class="nav-link" data-scroll-target="#strict-three-labels">Strict Three Labels</a></li>
+  <li><a href="#two-labels" id="toc-two-labels" class="nav-link" data-scroll-target="#two-labels">Two Labels</a></li>
+  <li><a href="#strict-two-labels" id="toc-strict-two-labels" class="nav-link" data-scroll-target="#strict-two-labels">Strict Two Labels</a></li>
+  </ul></li>
+  <li><a href="#reddit-projections" id="toc-reddit-projections" class="nav-link" data-scroll-target="#reddit-projections">Reddit Projections</a>
+  <ul class="collapse">
+  <li><a href="#feature-importance-through-permutation" id="toc-feature-importance-through-permutation" class="nav-link" data-scroll-target="#feature-importance-through-permutation">Feature Importance through Permutation</a>
+  <ul class="collapse">
+  <li><a href="#three-features---strict-three-political-biases" id="toc-three-features---strict-three-political-biases" class="nav-link" data-scroll-target="#three-features---strict-three-political-biases">Three Features - Strict Three Political Biases</a></li>
+  <li><a href="#two-features---strict-two-political-biases" id="toc-two-features---strict-two-political-biases" class="nav-link" data-scroll-target="#two-features---strict-two-political-biases">Two Features - Strict Two Political Biases</a></li>
+  </ul></li>
+  <li><a href="#retrained-models" id="toc-retrained-models" class="nav-link" data-scroll-target="#retrained-models">Retrained Models</a>
+  <ul class="collapse">
+  <li><a href="#three-features" id="toc-three-features" class="nav-link" data-scroll-target="#three-features">Three Features</a></li>
+  <li><a href="#two-features" id="toc-two-features" class="nav-link" data-scroll-target="#two-features">Two Features</a></li>
+  </ul></li>
+  <li><a href="#reddit-projection-results" id="toc-reddit-projection-results" class="nav-link" data-scroll-target="#reddit-projection-results">Reddit Projection Results</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#code-links" id="toc-code-links" class="nav-link" data-scroll-target="#code-links">Code Links</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -205,8 +239,413 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Naive Bayes is a generative supervised machine learning classification method. The generative aspect indicates that the model learns from the probability of the data given previous knowledge of the label. This is in comparison to a discriminative model, where the goal is to find a function which distinguishes between groups (i.e.&nbsp;Logistic Regression). The supervised aspect means that the model is given labels to learn from. The Naïve aspect comes from the assumption that the categories have conditional independence in order to apply the Bayes’ Theorem. This is a Naive assumption because it’s unlikely that the variables within the data have true independence. For example, consider a model built from customer reviews which is trying to classify if the review was positive or negative. The review might have language such as “happy” and “glad”, which are clearly not independent terms. However, the assumption of independence is made to allow for the calculations to work. This example is one of sentiment analysis, however there are many potential applications of this method as it is implicitly acceptable for n-class classification. For example, predicting weather a label is “true” or “false” is a 2-class problem, but Naive Bayes can extend this to multiple labels. Back to the sentiment analysis example, a review could be “positive”, “negative”, or “neutral”. Applications also include document classification, which could be used to classify an article into categories such as “politics”, “sports”, “entertainment”, among many other overall article types.</p>
+<p>In general, Naive Bayes uses the conditional independence assumption to apply the Bayes’ Theorem. Essentially, the goal is to find the probability of a label given a datapoint. The Bayes’ Theorem is appropriate for this task and uses several components of the probabilities within the data to calculate this. Namely, the probability of the data itself occurring, the probability of the label occurring, and the conditional probability in the opposite direction (i.e.&nbsp;the probability of the datapoint given a label). Especially in larger datasets, some of the conditional probabilities can be zero. This presents an issue due to the multiplicative calculations required, which would zero out the entire probability. Smoothing techniques are used to account for this, with the Laplacian Correction being the most common. This technique adds 1 to each case’s count. The general smoothing technique adds a specified variable (or alpha) to the count.</p>
+<p>This section of the analysis will specifically use <strong>Multinomial Naive Bayes Classification</strong>, which “is suitable for discrete features (e.g., word counts for text classification)” <a href="https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html">sklearn documentation</a>.</p>
+</section>
+<section id="strategy-and-goals" class="level1">
+<h1>Strategy and Goals</h1>
+<p>More specifically, Multinomial Naive Bayes will be used here to create models for predicting political bias from text data. Aftering training models with news article which have known political biases, these models will be applied to Reddit data to project political bias, which could be a decent indicator of sentiment towards student loan relief in online social discourse.</p>
+<blockquote class="blockquote">
+<p>See the <a href="./modeling_prep.html">Modeling Preparation</a> page for a detailed breakdown of the data fromatting, labels for supervised learning, and necessity for disjointness.</p>
+</blockquote>
+</section>
+<section id="modeling" class="level1">
+<h1>Modeling</h1>
+<section id="five-labels" class="level2">
+<h2 class="anchored" data-anchor-id="five-labels">Five Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/nb/cm_five_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>The overall accuracy for testing across all five labels is 48.02%. Lean Left and Lean Right have a hard time being recognized correctly, as illustrated by the other categories being predicted almost as much as the others when that is the true label.</p>
+</section>
+<section id="three-labels" class="level2">
+<h2 class="anchored" data-anchor-id="three-labels">Three Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/nb/cm_three_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>When combining Lean Left and Lean Right with Left and Right, respectively, the model accuracy increasing to 57.27%. The model has a decent performance, with predictions for the Right political bias outperforming the other prediction categories. Left performed the worse.</p>
+</section>
+<section id="strict-three-labels" class="level2">
+<h2 class="anchored" data-anchor-id="strict-three-labels">Strict Three Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/nb/cm_strict_three_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>When the leaning political biases weren’t combined, the accuracy of the model increased by almost 20% for the three political bias labels. Overall decent results with its best performance on Center and Right labels, respectively.</p>
+</section>
+<section id="two-labels" class="level2">
+<h2 class="anchored" data-anchor-id="two-labels">Two Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/nb/cm_two_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>When combining Lean Left and Lean Right with Left and Right, respectively, and dropping the Center label, the model accuracy was 65.85%. There were still a high amount of incorrect predictions, which could be reflective on the leanings.</p>
+</section>
+<section id="strict-two-labels" class="level2">
+<h2 class="anchored" data-anchor-id="strict-two-labels">Strict Two Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/nb/cm_strict_two_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>When the leaning political biases weren’t combined, and dropping the the Center label, the accuracy of the model increased by almost 20% over the aggregated version of the two labels. This is a respectable model, and the best performance with the Naive Bayes classification in this section.</p>
+</section>
+</section>
+<section id="reddit-projections" class="level1">
+<h1>Reddit Projections</h1>
+<p>To apply this model in projecting political bias on Reddit authors, feature permutation was performed on the best performing 3-Class and 2-Class models to obtain the most important features from the original 1000 labels. Subsequently:</p>
+<ol type="1">
+<li>The models were retrained on this subset of important features.</li>
+<li>The Reddit count vectorized data was then reduced to these feautres.</li>
+<li>The models were appplied to the Reddit subset.</li>
+</ol>
+<section id="feature-importance-through-permutation" class="level2">
+<h2 class="anchored" data-anchor-id="feature-importance-through-permutation">Feature Importance through Permutation</h2>
+<section id="three-features---strict-three-political-biases" class="level3">
+<h3 class="anchored" data-anchor-id="three-features---strict-three-political-biases">Three Features - Strict Three Political Biases</h3>
+<div id="817ebaf7" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<table id="itables_51d7c773_2752_4bec_8310_2c761e339c47" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feature</th>
+      <th>importance</th>
+      <th>absolute_importance</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_51d7c773_2752_4bec_8310_2c761e339c47:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[0, "trump", -0.009722222, 0.009722222], [1, "federal", -0.008333333, 0.008333333], [2, "house", -0.008333333, 0.008333333], [3, "egg", -0.008333333, 0.008333333], [4, "response", -0.008333333, 0.008333333], [5, "said", -0.006944444, 0.006944444], [6, "payment", -0.006944444, 0.006944444], [7, "sunday", -0.006944444, 0.006944444], [8, "president", -0.006944444, 0.006944444], [9, "leading", -0.006944444, 0.006944444], [10, "democracy", -0.006944444, 0.006944444], [11, "regulation", -0.006944444, 0.006944444], [12, "total", -0.006944444, 0.006944444], [13, "level", -0.006944444, 0.006944444], [14, "challenge", -0.006944444, 0.006944444], [15, "immigration", -0.006944444, 0.006944444], [16, "age", -0.006944444, 0.006944444], [17, "doing", -0.005555556, 0.005555556], [18, "income", -0.005555556, 0.005555556], [19, "including", -0.005555556, 0.005555556], [20, "white", -0.005555556, 0.005555556], [21, "super", -0.005555556, 0.005555556], [22, "credit", -0.005555556, 0.005555556], [23, "doe", -0.005555556, 0.005555556], [24, "twitter", -0.005555556, 0.005555556], [25, "eligible", -0.005555556, 0.005555556], [26, "pay", -0.005555556, 0.005555556], [27, "nonprofit", -0.005555556, 0.005555556], [28, "monthly", -0.005555556, 0.005555556], [29, "working", -0.005555556, 0.005555556], [30, "government", -0.005555556, 0.005555556], [31, "campaign", -0.005555556, 0.005555556], [32, "making", -0.005555556, 0.005555556], [33, "wing", -0.005555556, 0.005555556], [34, "ice", -0.005555556, 0.005555556], [35, "democrat", -0.005555556, 0.005555556], [36, "thing", -0.005555556, 0.005555556], [37, "make", -0.005555556, 0.005555556], [38, "work", -0.005555556, 0.005555556], [39, "program", -0.004166667, 0.004166667], [40, "lower", -0.004166667, 0.004166667], [41, "public", -0.004166667, 0.004166667], [42, "term", -0.004166667, 0.004166667], [43, "having", -0.004166667, 0.004166667], [44, "presidential", -0.004166667, 0.004166667], [45, "lawsuit", -0.004166667, 0.004166667], [46, "save", -0.004166667, 0.004166667], [47, "servicer", -0.004166667, 0.004166667], [48, "forbearance", -0.004166667, 0.004166667], [49, "attack", -0.004166667, 0.004166667], [50, "year", -0.004166667, 0.004166667], [51, "bowl", -0.004166667, 0.004166667], [52, "time", -0.004166667, 0.004166667], [53, "director", -0.004166667, 0.004166667], [54, "wo", -0.004166667, 0.004166667], [55, "clear", -0.004166667, 0.004166667], [56, "likely", -0.004166667, 0.004166667], [57, "protection", -0.004166667, 0.004166667], [58, "lot", -0.004166667, 0.004166667], [59, "private", -0.004166667, 0.004166667], [60, "power", -0.004166667, 0.004166667], [61, "low", -0.004166667, 0.004166667], [62, "told", -0.004166667, 0.004166667], [63, "law", -0.004166667, 0.004166667], [64, "democratic", -0.004166667, 0.004166667], [65, "tax", -0.004166667, 0.004166667], [66, "chief", -0.004166667, 0.004166667], [67, "given", -0.004166667, 0.004166667], [68, "able", -0.004166667, 0.004166667], [69, "continued", -0.004166667, 0.004166667], [70, "want", -0.004166667, 0.004166667], [71, "help", -0.004166667, 0.004166667], [72, "option", -0.004166667, 0.004166667], [73, "office", -0.004166667, 0.004166667], [74, "child", -0.002777778, 0.002777778], [75, "new", -0.002777778, 0.002777778], [76, "report", -0.002777778, 0.002777778], [77, "group", -0.002777778, 0.002777778], [78, "million", -0.002777778, 0.002777778], [79, "state", -0.002777778, 0.002777778], [80, "vice", -0.002777778, 0.002777778], [81, "week", -0.002777778, 0.002777778], [82, "real", -0.002777778, 0.002777778], [83, "court", -0.002777778, 0.002777778], [84, "really", -0.002777778, 0.002777778], [85, "start", -0.002777778, 0.002777778], [86, "according", -0.002777778, 0.002777778], [87, "required", -0.002777778, 0.002777778], [88, "offer", -0.002777778, 0.002777778], [89, "cfpb", -0.002777778, 0.002777778], [90, "certain", -0.002777778, 0.002777778], [91, "prevent", -0.002777778, 0.002777778], [92, "financial", -0.002777778, 0.002777778], [93, "create", -0.002777778, 0.002777778], [94, "set", -0.002777778, 0.002777778], [95, "stand", -0.002777778, 0.002777778], [96, "recently", -0.002777778, 0.002777778], [97, "default", -0.002777778, 0.002777778], [98, "check", -0.002777778, 0.002777778], [99, "official", -0.002777778, 0.002777778], [100, "hour", -0.002777778, 0.002777778], [101, "small", -0.002777778, 0.002777778], [102, "illegal", -0.002777778, 0.002777778], [103, "push", -0.002777778, 0.002777778], [104, "filing", -0.002777778, 0.002777778], [105, "add", -0.002777778, 0.002777778], [106, "taken", -0.002777778, 0.002777778], [107, "coming", -0.002777778, 0.002777778], [108, "situation", -0.002777778, 0.002777778], [109, "similar", -0.002777778, 0.002777778], [110, "collection", -0.002777778, 0.002777778], [111, "project", -0.002777778, 0.002777778], [112, "qualify", -0.002777778, 0.002777778], [113, "hit", -0.002777778, 0.002777778], [114, "history", -0.002777778, 0.002777778], [115, "world", -0.002777778, 0.002777778], [116, "consumer", -0.002777778, 0.002777778], [117, "held", -0.002777778, 0.002777778], [118, "debt", -0.002777778, 0.002777778], [119, "need", -0.002777778, 0.002777778], [120, "actually", -0.002777778, 0.002777778], [121, "close", -0.002777778, 0.002777778], [122, "relief", -0.002777778, 0.002777778], [123, "called", -0.002777778, 0.002777778], [124, "filed", -0.002777778, 0.002777778], [125, "effort", -0.002777778, 0.002777778], [126, "based", -0.002777778, 0.002777778], [127, "face", -0.002777778, 0.002777778], [128, "balance", -0.002777778, 0.002777778], [129, "received", -0.002777778, 0.002777778], [130, "month", -0.002777778, 0.002777778], [131, "love", -0.002777778, 0.002777778], [132, "available", -0.002777778, 0.002777778], [133, "expert", -0.002777778, 0.002777778], [134, "majority", -0.002777778, 0.002777778], [135, "value", -0.002777778, 0.002777778], [136, "passed", -0.002777778, 0.002777778], [137, "market", -0.002777778, 0.002777778], [138, "view", -0.002777778, 0.002777778], [139, "believe", -0.002777778, 0.002777778], [140, "apply", -0.002777778, 0.002777778], [141, "particularly", -0.002777778, 0.002777778], [142, "mean", -0.002777778, 0.002777778], [143, "expect", -0.002777778, 0.002777778], [144, "rule", -0.002777778, 0.002777778], [145, "run", -0.002777778, 0.002777778], [146, "essential", -0.002777778, 0.002777778], [147, "member", -0.002777778, 0.002777778], [148, "allows", -0.002777778, 0.002777778], [149, "way", -0.002777778, 0.002777778], [150, "outside", -0.002777778, 0.002777778], [151, "end", -0.002777778, 0.002777778], [152, "especially", -0.002777778, 0.002777778], [153, "aid", -0.002777778, 0.002777778], [154, "mind", -0.002777778, 0.002777778], [155, "partner", -0.002777778, 0.002777778], [156, "family", -0.002777778, 0.002777778], [157, "looking", -0.002777778, 0.002777778], [158, "policy", -0.002777778, 0.002777778], [159, "possible", -0.002777778, 0.002777778], [160, "plan", -0.002777778, 0.002777778], [161, "early", -0.002777778, 0.002777778], [162, "branch", -0.002777778, 0.002777778], [163, "build", -0.002777778, 0.002777778], [164, "tried", -0.002777778, 0.002777778], [165, "easy", -0.002777778, 0.002777778], [166, "point", -0.002777778, 0.002777778], [167, "presidency", -0.002777778, 0.002777778], [168, "key", -0.002777778, 0.002777778], [169, "broad", -0.002777778, 0.002777778], [170, "legal", -0.002777778, 0.002777778], [171, "buy", -0.002777778, 0.002777778], [172, "fan", -0.002777778, 0.002777778], [173, "left", -0.002777778, 0.002777778], [174, "pslf", -0.001388889, 0.001388889], [175, "vote", -0.001388889, 0.001388889], [176, "donald", -0.001388889, 0.001388889], [177, "repayment", -0.001388889, 0.001388889], [178, "giving", -0.001388889, 0.001388889], [179, "resource", -0.001388889, 0.001388889], [180, "game", -0.001388889, 0.001388889], [181, "gen", -0.001388889, 0.001388889], [182, "entire", -0.001388889, 0.001388889], [183, "general", -0.001388889, 0.001388889], [184, "getting", -0.001388889, 0.001388889], [185, "note", -0.001388889, 0.001388889], [186, "gift", -0.001388889, 0.001388889], [187, "require", -0.001388889, 0.001388889], [188, "feel", -0.001388889, 0.001388889], [189, "rural", -0.001388889, 0.001388889], [190, "requires", -0.001388889, 0.001388889], [191, "field", -0.001388889, 0.001388889], [192, "going", -0.001388889, 0.001388889], [193, "return", -0.001388889, 0.001388889], [194, "expense", -0.001388889, 0.001388889], [195, "follow", -0.001388889, 0.001388889], [196, "review", -0.001388889, 0.001388889], [197, "far", -0.001388889, 0.001388889], [198, "offered", -0.001388889, 0.001388889], [199, "form", -0.001388889, 0.001388889], [200, "nfl", -0.001388889, 0.001388889], [201, "fear", -0.001388889, 0.001388889], [202, "risk", -0.001388889, 0.001388889], [203, "rep", -0.001388889, 0.001388889], [204, "fiscal", -0.001388889, 0.001388889], [205, "feature", -0.001388889, 0.001388889], [206, "free", -0.001388889, 0.001388889], [207, "friend", -0.001388889, 0.001388889], [208, "fund", -0.001388889, 0.001388889], [209, "result", -0.001388889, 0.001388889], [210, "experience", -0.001388889, 0.001388889], [211, "food", -0.001388889, 0.001388889], [212, "funding", -0.001388889, 0.001388889], [213, "future", -0.001388889, 0.001388889], [214, "force", -0.001388889, 0.001388889], [215, "good", -0.001388889, 0.001388889], [216, "online", -0.001388889, 0.001388889], [217, "got", -0.001388889, 0.001388889], [218, "platform", -0.001388889, 0.001388889], [219, "let", -0.001388889, 0.001388889], [220, "lender", -0.001388889, 0.001388889], [221, "led", -0.001388889, 0.001388889], [222, "leader", -0.001388889, 0.001388889], [223, "latest", -0.001388889, 0.001388889], [224, "later", -0.001388889, 0.001388889], [225, "place", -0.001388889, 0.001388889], [226, "large", -0.001388889, 0.001388889], [227, "potentially", -0.001388889, 0.001388889], [228, "practice", -0.001388889, 0.001388889], [229, "kind", -0.001388889, 0.001388889], [230, "omb", -0.001388889, 0.001388889], [231, "justice", -0.001388889, 0.001388889], [232, "judge", -0.001388889, 0.001388889], [233, "joe", -0.001388889, 0.001388889], [234, "ongoing", -0.001388889, 0.001388889], [235, "limit", -0.001388889, 0.001388889], [236, "live", -0.001388889, 0.001388889], [237, "living", -0.001388889, 0.001388889], [238, "money", -0.001388889, 0.001388889], [239, "minute", -0.001388889, 0.001388889], [240, "opportunity", -0.001388889, 0.001388889], [241, "military", -0.001388889, 0.001388889], [242, "middle", -0.001388889, 0.001388889], [243, "orleans", -0.001388889, 0.001388889], [244, "overall", -0.001388889, 0.001388889], [245, "medical", -0.001388889, 0.001388889], [246, "median", -0.001388889, 0.001388889], [247, "measure", -0.001388889, 0.001388889], [248, "party", -0.001388889, 0.001388889], [249, "managing", -0.001388889, 0.001388889], [250, "pause", -0.001388889, 0.001388889], [251, "major", -0.001388889, 0.001388889], [252, "look", -0.001388889, 0.001388889], [253, "longer", -0.001388889, 0.001388889], [254, "location", -0.001388889, 0.001388889], [255, "job", -0.001388889, 0.001388889], [256, "gop", -0.001388889, 0.001388889], [257, "jan", -0.001388889, 0.001388889], [258, "issue", -0.001388889, 0.001388889], [259, "musk", -0.001388889, 0.001388889], [260, "providing", -0.001388889, 0.001388889], [261, "household", -0.001388889, 0.001388889], [262, "hold", -0.001388889, 0.001388889], [263, "qualifying", -0.001388889, 0.001388889], [264, "hearing", -0.001388889, 0.001388889], [265, "health", -0.001388889, 0.001388889], [266, "idea", -0.001388889, 0.001388889], [267, "quickly", -0.001388889, 0.001388889], [268, "range", -0.001388889, 0.001388889], [269, "half", -0.001388889, 0.001388889], [270, "reach", -0.001388889, 0.001388889], [271, "green", -0.001388889, 0.001388889], [272, "great", -0.001388889, 0.001388889], [273, "grant", -0.001388889, 0.001388889], [274, "receive", -0.001388889, 0.001388889], [275, "hand", -0.001388889, 0.001388889], [276, "provide", -0.001388889, 0.001388889], [277, "protect", -0.001388889, 0.001388889], [278, "proposed", -0.001388889, 0.001388889], [279, "previously", -0.001388889, 0.001388889], [280, "interview", -0.001388889, 0.001388889], [281, "international", -0.001388889, 0.001388889], [282, "pro", -0.001388889, 0.001388889], [283, "institute", -0.001388889, 0.001388889], [284, "instead", -0.001388889, 0.001388889], [285, "probably", -0.001388889, 0.001388889], [286, "initiative", -0.001388889, 0.001388889], [287, "multiple", -0.001388889, 0.001388889], [288, "problem", -0.001388889, 0.001388889], [289, "industry", -0.001388889, 0.001388889], [290, "safety", -0.001388889, 0.001388889], [291, "independent", -0.001388889, 0.001388889], [292, "increase", -0.001388889, 0.001388889], [293, "progress", -0.001388889, 0.001388889], [294, "monday", -0.001388889, 0.001388889], [295, "proposal", -0.001388889, 0.001388889], [296, "moving", -0.001388889, 0.001388889], [297, "promised", -0.001388889, 0.001388889], [298, "leadership", -0.001388889, 0.001388889], [299, "environment", -0.001388889, 0.001388889], [300, "using", -0.001388889, 0.001388889], [301, "contact", -0.001388889, 0.001388889], [302, "constitutional", -0.001388889, 0.001388889], [303, "constitution", -0.001388889, 0.001388889], [304, "attempt", -0.001388889, 0.001388889], [305, "studentaid", -0.001388889, 0.001388889], [306, "consider", -0.001388889, 0.001388889], [307, "valuable", -0.001388889, 0.001388889], [308, "attorney", -0.001388889, 0.001388889], [309, "conservative", -0.001388889, 0.001388889], [310, "connection", -0.001388889, 0.001388889], [311, "congressional", -0.001388889, 0.001388889], [312, "user", -0.001388889, 0.001388889], [313, "used", -0.001388889, 0.001388889], [314, "support", -0.001388889, 0.001388889], [315, "use", -0.001388889, 0.001388889], [316, "authority", -0.001388889, 0.001388889], [317, "sure", -0.001388889, 0.001388889], [318, "asked", -0.001388889, 0.001388889], [319, "various", -0.001388889, 0.001388889], [320, "cut", -0.001388889, 0.001388889], [321, "currently", -0.001388889, 0.001388889], [322, "crucial", -0.001388889, 0.001388889], [323, "spokesperson", -0.001388889, 0.001388889], [324, "vought", -0.001388889, 0.001388889], [325, "criminal", -0.001388889, 0.001388889], [326, "creating", -0.001388889, 0.001388889], [327, "ask", -0.001388889, 0.001388889], [328, "created", -0.001388889, 0.001388889], [329, "trying", -0.001388889, 0.001388889], [330, "video", -0.001388889, 0.001388889], [331, "stay", -0.001388889, 0.001388889], [332, "count", -0.001388889, 0.001388889], [333, "cost", -0.001388889, 0.001388889], [334, "steel", -0.001388889, 0.001388889], [335, "step", -0.001388889, 0.001388889], [336, "standard", -0.001388889, 0.001388889], [337, "american", -0.001388889, 0.001388889], [338, "community", -0.001388889, 0.001388889], [339, "commitment", -0.001388889, 0.001388889], [340, "card", -0.001388889, 0.001388889], [341, "calling", -0.001388889, 0.001388889], [342, "california", -0.001388889, 0.001388889], [343, "ca", -0.001388889, 0.001388889], [344, "blue", -0.001388889, 0.001388889], [345, "business", -0.001388889, 0.001388889], [346, "bureau", -0.001388889, 0.001388889], [347, "bird", -0.001388889, 0.001388889], [348, "board", -0.001388889, 0.001388889], [349, "building", -0.001388889, 0.001388889], [350, "budget", -0.001388889, 0.001388889], [351, "brought", -0.001388889, 0.001388889], [352, "book", -0.001388889, 0.001388889], [353, "trillion", -0.001388889, 0.001388889], [354, "try", -0.001388889, 0.001388889], [355, "boost", -0.001388889, 0.001388889], [356, "tuesday", -0.001388889, 0.001388889], [357, "swift", -0.001388889, 0.001388889], [358, "care", -0.001388889, 0.001388889], [359, "typically", -0.001388889, 0.001388889], [360, "university", -0.001388889, 0.001388889], [361, "bankruptcy", -0.001388889, 0.001388889], [362, "united", -0.001388889, 0.001388889], [363, "claim", -0.001388889, 0.001388889], [364, "begin", -0.001388889, 0.001388889], [365, "temporarily", -0.001388889, 0.001388889], [366, "texas", -0.001388889, 0.001388889], [367, "billionaire", -0.001388889, 0.001388889], [368, "undergraduate", -0.001388889, 0.001388889], [369, "uncertainty", -0.001388889, 0.001388889], [370, "center", -0.001388889, 0.001388889], [371, "thursday", -0.001388889, 0.001388889], [372, "cause", -0.001388889, 0.001388889], [373, "ultimately", -0.001388889, 0.001388889], [374, "case", -0.001388889, 0.001388889], [375, "biggest", -0.001388889, 0.001388889], [376, "change", -0.001388889, 0.001388889], [377, "special", -0.001388889, 0.001388889], [378, "couple", -0.001388889, 0.001388889], [379, "data", -0.001388889, 0.001388889], [380, "worried", -0.001388889, 0.001388889], [381, "seeking", -0.001388889, 0.001388889], [382, "worker", -0.001388889, 0.001388889], [383, "senior", -0.001388889, 0.001388889], [384, "address", -0.001388889, 0.001388889], [385, "serve", -0.001388889, 0.001388889], [386, "economic", -0.001388889, 0.001388889], [387, "woman", -0.001388889, 0.001388889], [388, "affect", -0.001388889, 0.001388889], [389, "affordable", -0.001388889, 0.001388889], [390, "directly", -0.001388889, 0.001388889], [391, "agency", -0.001388889, 0.001388889], [392, "win", -0.001388889, 0.001388889], [393, "short", -0.001388889, 0.001388889], [394, "doge", -0.001388889, 0.001388889], [395, "score", -0.001388889, 0.001388889], [396, "science", -0.001388889, 0.001388889], [397, "action", -0.001388889, 0.001388889], [398, "saturday", -0.001388889, 0.001388889], [399, "saving", -0.001388889, 0.001388889], [400, "ended", -0.001388889, 0.001388889], [401, "employment", -0.001388889, 0.001388889], [402, "employer", -0.001388889, 0.001388889], [403, "employee", -0.001388889, 0.001388889], [404, "saw", -0.001388889, 0.001388889], [405, "yes", -0.001388889, 0.001388889], [406, "email", -0.001388889, 0.001388889], [407, "say", -0.001388889, 0.001388889], [408, "saying", -0.001388889, 0.001388889], [409, "scheduled", -0.001388889, 0.001388889], [410, "elect", -0.001388889, 0.001388889], [411, "acting", -0.001388889, 0.001388889], [412, "efficiency", -0.001388889, 0.001388889], [413, "sign", -0.001388889, 0.001388889], [414, "signed", -0.001388889, 0.001388889], [415, "self", -0.001388889, 0.001388889], [416, "border", -0.001388889, 0.001388889], [417, "amazon", -0.001388889, 0.001388889], [418, "deduction", -0.001388889, 0.001388889], [419, "allowed", -0.001388889, 0.001388889], [420, "allow", -0.001388889, 0.001388889], [421, "space", -0.001388889, 0.001388889], [422, "day", -0.001388889, 0.001388889], [423, "agreement", -0.001388889, 0.001388889], [424, "went", -0.001388889, 0.001388889], [425, "air", -0.001388889, 0.001388889], [426, "decade", -0.001388889, 0.001388889], [427, "demand", -0.001388889, 0.001388889], [428, "solution", -0.001388889, 0.001388889], [429, "single", -0.001388889, 0.001388889], [430, "despite", -0.001388889, 0.001388889], [431, "significantly", -0.001388889, 0.001388889], [432, "water", -0.001388889, 0.001388889], [433, "act", -2.220446e-17, 2.220446e-17], [434, "eagle", -2.220446e-17, 2.220446e-17], [435, "just", -2.220446e-17, 2.220446e-17], [436, "forgiveness", -2.220446e-17, 2.220446e-17], [860, "meeting", 0.001388889, 0.001388889], [861, "think", 0.001388889, 0.001388889], [862, "politics", 0.001388889, 0.001388889], [863, "art", 0.001388889, 0.001388889], [864, "order", 0.001388889, 0.001388889], [865, "account", 0.001388889, 0.001388889], [866, "article", 0.001388889, 0.001388889], [867, "nominee", 0.001388889, 0.001388889], [868, "meet", 0.001388889, 0.001388889], [869, "technology", 0.001388889, 0.001388889], [870, "tech", 0.001388889, 0.001388889], [871, "team", 0.001388889, 0.001388889], [872, "teacher", 0.001388889, 0.001388889], [873, "usaid", 0.001388889, 0.001388889], [874, "police", 0.001388889, 0.001388889], [875, "legislation", 0.001388889, 0.001388889], [876, "lost", 0.001388889, 0.001388889], [877, "philadelphia", 0.001388889, 0.001388889], [878, "track", 0.001388889, 0.001388889], [879, "watch", 0.001388889, 0.001388889], [880, "ap", 0.001388889, 0.001388889], [881, "america", 0.001388889, 0.001388889], [882, "like", 0.001388889, 0.001388889], [883, "percentage", 0.001388889, 0.001388889], [884, "agenda", 0.001388889, 0.001388889], [885, "today", 0.001388889, 0.001388889], [886, "category", 0.001388889, 0.001388889], [887, "tip", 0.001388889, 0.001388889], [888, "life", 0.001388889, 0.001388889], [889, "borrower", 0.001388889, 0.001388889], [890, "won", 0.001388889, 0.001388889], [891, "administration", 0.001388889, 0.001388889], [892, "man", 0.001388889, 0.001388889], [893, "click", 0.001388889, 0.001388889], [894, "foundation", 0.001388889, 0.001388889], [895, "gov", 0.001388889, 0.001388889], [896, "reported", 0.001388889, 0.001388889], [897, "reporting", 0.001388889, 0.001388889], [898, "record", 0.001388889, 0.001388889], [899, "professional", 0.001388889, 0.001388889], [900, "son", 0.001388889, 0.001388889], [901, "rate", 0.001388889, 0.001388889], [902, "republican", 0.001388889, 0.001388889], [903, "north", 0.001388889, 0.001388889], [904, "investment", 0.001388889, 0.001388889], [905, "did", 0.001388889, 0.001388889], [906, "failed", 0.001388889, 0.001388889], [907, "season", 0.001388889, 0.001388889], [908, "seat", 0.001388889, 0.001388889], [909, "document", 0.001388889, 0.001388889], [910, "human", 0.001388889, 0.001388889], [911, "resident", 0.001388889, 0.001388889], [912, "september", 0.001388889, 0.001388889], [913, "driven", 0.001388889, 0.001388889], [914, "different", 0.001388889, 0.001388889], [915, "covid", 0.001388889, 0.001388889], [916, "production", 0.001388889, 0.001388889], [917, "graduate", 0.001388889, 0.001388889], [918, "factor", 0.001388889, 0.001388889], [919, "lawmaker", 0.001388889, 0.001388889], [920, "following", 0.001388889, 0.001388889], [921, "positive", 0.001388889, 0.001388889], [922, "compared", 0.001388889, 0.001388889], [923, "star", 0.001388889, 0.001388889], [924, "supply", 0.001388889, 0.001388889], [925, "post", 0.001388889, 0.001388889], [926, "senator", 0.001388889, 0.001388889], [927, "read", 0.001388889, 0.001388889], [928, "status", 0.001388889, 0.001388889], [929, "related", 0.001388889, 0.001388889], [930, "era", 0.001388889, 0.001388889], [931, "rubin", 0.001388889, 0.001388889], [932, "street", 0.001388889, 0.001388889], [933, "congress", 0.002777778, 0.002777778], [934, "host", 0.002777778, 0.002777778], [935, "fall", 0.002777778, 0.002777778], [936, "right", 0.002777778, 0.002777778], [937, "pandemic", 0.002777778, 0.002777778], [938, "mcmahon", 0.002777778, 0.002777778], [939, "moment", 0.002777778, 0.002777778], [940, "estimate", 0.002777778, 0.002777778], [941, "election", 0.002777778, 0.002777778], [942, "earlier", 0.002777778, 0.002777778], [943, "enforcement", 0.002777778, 0.002777778], [944, "governor", 0.002777778, 0.002777778], [945, "annual", 0.002777778, 0.002777778], [946, "sen", 0.002777778, 0.002777778], [947, "past", 0.002777778, 0.002777778], [948, "york", 0.002777778, 0.002777778], [949, "committee", 0.002777778, 0.002777778], [950, "political", 0.002777778, 0.002777778], [951, "city", 0.002777778, 0.002777778], [952, "november", 0.002777778, 0.002777778], [953, "january", 0.002777778, 0.002777778], [954, "country", 0.002777778, 0.002777778], [955, "coverage", 0.002777778, 0.002777778], [956, "department", 0.002777778, 0.002777778], [957, "senate", 0.002777778, 0.002777778], [958, "break", 0.002777778, 0.002777778], [959, "simply", 0.002777778, 0.002777778], [960, "loss", 0.002777778, 0.002777778], [961, "march", 0.002777778, 0.002777778], [962, "share", 0.002777778, 0.002777778], [963, "image", 0.002777778, 0.002777778], [964, "mortgage", 0.002777778, 0.002777778], [965, "sense", 0.004166667, 0.004166667], [966, "big", 0.004166667, 0.004166667], [967, "reason", 0.004166667, 0.004166667], [968, "black", 0.004166667, 0.004166667], [969, "final", 0.004166667, 0.004166667], [970, "getty", 0.004166667, 0.004166667], [971, "people", 0.004166667, 0.004166667], [972, "list", 0.004166667, 0.004166667], [973, "agent", 0.004166667, 0.004166667], [974, "digital", 0.004166667, 0.004166667], [975, "thought", 0.004166667, 0.004166667], [976, "affected", 0.005555556, 0.005555556], [977, "ability", 0.005555556, 0.005555556], [978, "school", 0.005555556, 0.005555556], [979, "com", 0.005555556, 0.005555556], [980, "secretary", 0.005555556, 0.005555556], [981, "late", 0.005555556, 0.005555556], [982, "app", 0.006944444, 0.006944444], [983, "sport", 0.006944444, 0.006944444], [984, "daily", 0.006944444, 0.006944444], [985, "ad", 0.006944444, 0.006944444], [986, "answer", 0.006944444, 0.006944444], [987, "climate", 0.006944444, 0.006944444], [988, "district", 0.006944444, 0.006944444], [989, "college", 0.008333333, 0.008333333], [990, "word", 0.008333333, 0.008333333], [991, "feb", 0.008333333, 0.008333333], [992, "loan", 0.008333333, 0.008333333], [993, "student", 0.008333333, 0.008333333], [994, "february", 0.009722222, 0.009722222], [995, "simple", 0.009722222, 0.009722222], [996, "news", 0.0125, 0.0125], [997, "biden", 0.01388889, 0.01388889], [998, "fox", 0.01388889, 0.01388889], [999, "education", 0.01388889, 0.01388889]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="two-features---strict-two-political-biases" class="level3">
+<h3 class="anchored" data-anchor-id="two-features---strict-two-political-biases">Two Features - Strict Two Political Biases</h3>
+<div id="675c8536" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<table id="itables_7c49f5e2_56e6_4b79_9bd6_a4a4d634027e" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feature</th>
+      <th>importance</th>
+      <th>absolute_importance</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_7c49f5e2_56e6_4b79_9bd6_a4a4d634027e:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[0, "plus", -0.01234568, 0.01234568], [1, "decade", -0.01234568, 0.01234568], [2, "went", -0.01234568, 0.01234568], [3, "age", -0.01234568, 0.01234568], [4, "people", -0.01234568, 0.01234568], [5, "hospital", -0.01234568, 0.01234568], [6, "problem", -0.01234568, 0.01234568], [7, "woman", -0.01234568, 0.01234568], [8, "growing", -0.01234568, 0.01234568], [9, "health", -0.01234568, 0.01234568], [10, "institute", -0.01234568, 0.01234568], [11, "really", -0.01234568, 0.01234568], [12, "patient", -0.01234568, 0.01234568], [13, "particularly", -0.01234568, 0.01234568], [14, "expert", -0.01234568, 0.01234568], [15, "job", -0.01234568, 0.01234568], [16, "sale", -0.01234568, 0.01234568], [17, "young", -0.01234568, 0.01234568], [18, "culture", -0.01234568, 0.01234568], [19, "started", -0.01234568, 0.01234568], [20, "maybe", -0.01234568, 0.01234568], [21, "turn", -0.01234568, 0.01234568], [22, "lot", -0.01234568, 0.01234568], [23, "men", -0.01234568, 0.01234568], [24, "low", -0.01234568, 0.01234568], [25, "cause", -0.01234568, 0.01234568], [26, "look", -0.01234568, 0.01234568], [27, "charge", -0.01234568, 0.01234568], [28, "soon", -0.009876543, 0.009876543], [29, "donald", -0.009876543, 0.009876543], [30, "think", -0.009876543, 0.009876543], [31, "time", -0.009876543, 0.009876543], [32, "far", -0.009876543, 0.009876543], [33, "saying", -0.009876543, 0.009876543], [34, "thing", -0.009876543, 0.009876543], [35, "early", -0.009876543, 0.009876543], [36, "home", -0.009876543, 0.009876543], [37, "way", -0.009876543, 0.009876543], [38, "later", -0.009876543, 0.009876543], [39, "lead", -0.009876543, 0.009876543], [40, "life", -0.009876543, 0.009876543], [41, "need", -0.009876543, 0.009876543], [42, "like", -0.009876543, 0.009876543], [43, "bad", -0.009876543, 0.009876543], [44, "just", -0.007407407, 0.007407407], [45, "january", -0.007407407, 0.007407407], [46, "statement", -0.007407407, 0.007407407], [47, "week", -0.007407407, 0.007407407], [48, "america", -0.007407407, 0.007407407], [49, "led", -0.007407407, 0.007407407], [50, "year", -0.007407407, 0.007407407], [51, "city", -0.004938272, 0.004938272], [52, "office", -0.004938272, 0.004938272], [53, "team", -0.004938272, 0.004938272], [54, "defense", -0.004938272, 0.004938272], [55, "today", -0.004938272, 0.004938272], [56, "failed", -0.004938272, 0.004938272], [57, "professional", -0.004938272, 0.004938272], [58, "ability", -0.004938272, 0.004938272], [59, "branch", -0.004938272, 0.004938272], [60, "released", -0.004938272, 0.004938272], [61, "effort", -0.004938272, 0.004938272], [62, "efficiency", -0.004938272, 0.004938272], [63, "despite", -0.004938272, 0.004938272], [64, "campaign", -0.004938272, 0.004938272], [65, "support", -0.004938272, 0.004938272], [66, "said", -0.004938272, 0.004938272], [67, "sent", -0.004938272, 0.004938272], [68, "era", -0.004938272, 0.004938272], [69, "disaster", -0.004938272, 0.004938272], [70, "spending", -0.004938272, 0.004938272], [71, "military", -0.004938272, 0.004938272], [72, "individual", -0.004938272, 0.004938272], [73, "leading", -0.004938272, 0.004938272], [74, "white", -0.004938272, 0.004938272], [75, "operation", -0.004938272, 0.004938272], [76, "impact", -0.004938272, 0.004938272], [77, "house", -0.004938272, 0.004938272], [78, "held", -0.004938272, 0.004938272], [79, "action", -0.004938272, 0.004938272], [80, "aid", -0.004938272, 0.004938272], [81, "percentage", -0.004938272, 0.004938272], [82, "congress", -0.004938272, 0.004938272], [83, "reported", -0.002469136, 0.002469136], [84, "current", -0.002469136, 0.002469136], [85, "joe", -0.002469136, 0.002469136], [86, "democrat", -0.002469136, 0.002469136], [87, "debt", -0.002469136, 0.002469136], [88, "left", -0.002469136, 0.002469136], [89, "majority", -0.002469136, 0.002469136], [90, "monday", -0.002469136, 0.002469136], [91, "los", -0.002469136, 0.002469136], [92, "committee", -0.002469136, 0.002469136], [93, "comment", -0.002469136, 0.002469136], [94, "large", -0.002469136, 0.002469136], [95, "deliver", -0.002469136, 0.002469136], [96, "democratic", -0.002469136, 0.002469136], [97, "labor", -0.002469136, 0.002469136], [98, "commitment", -0.002469136, 0.002469136], [99, "running", -0.002469136, 0.002469136], [100, "legal", -0.002469136, 0.002469136], [101, "million", -0.002469136, 0.002469136], [102, "confirmed", -0.002469136, 0.002469136], [103, "considered", -0.002469136, 0.002469136], [104, "medium", -0.002469136, 0.002469136], [105, "constitutional", -0.002469136, 0.002469136], [106, "significant", -0.002469136, 0.002469136], [107, "continued", -0.002469136, 0.002469136], [108, "minute", -0.002469136, 0.002469136], [109, "contributed", -0.002469136, 0.002469136], [110, "court", -0.002469136, 0.002469136], [111, "senator", -0.002469136, 0.002469136], [112, "loss", -0.002469136, 0.002469136], [113, "security", -0.002469136, 0.002469136], [114, "key", -0.002469136, 0.002469136], [115, "community", -0.002469136, 0.002469136], [116, "meet", -0.002469136, 0.002469136], [117, "police", -0.002469136, 0.002469136], [118, "report", -0.002469136, 0.002469136], [119, "justice", -0.002469136, 0.002469136], [120, "provide", -0.002469136, 0.002469136], [121, "february", -0.002469136, 0.002469136], [122, "feel", -0.002469136, 0.002469136], [123, "having", -0.002469136, 0.002469136], [124, "follow", -0.002469136, 0.002469136], [125, "following", -0.002469136, 0.002469136], [126, "harris", -0.002469136, 0.002469136], [127, "provided", -0.002469136, 0.002469136], [128, "pro", -0.002469136, 0.002469136], [129, "pressure", -0.002469136, 0.002469136], [130, "close", -0.002469136, 0.002469136], [131, "presidential", -0.002469136, 0.002469136], [132, "president", -0.002469136, 0.002469136], [133, "politics", -0.002469136, 0.002469136], [134, "given", -0.002469136, 0.002469136], [135, "hamas", -0.002469136, 0.002469136], [136, "priority", -0.002469136, 0.002469136], [137, "doge", -0.002469136, 0.002469136], [138, "provides", -0.002469136, 0.002469136], [139, "history", -0.002469136, 0.002469136], [140, "great", -0.002469136, 0.002469136], [141, "institution", -0.002469136, 0.002469136], [142, "offer", -0.002469136, 0.002469136], [143, "election", -0.002469136, 0.002469136], [144, "eligible", -0.002469136, 0.002469136], [145, "emergency", -0.002469136, 0.002469136], [146, "employee", -0.002469136, 0.002469136], [147, "head", -0.002469136, 0.002469136], [148, "region", -0.002469136, 0.002469136], [149, "organization", -0.002469136, 0.002469136], [150, "essential", -0.002469136, 0.002469136], [151, "human", -0.002469136, 0.002469136], [152, "rate", -0.002469136, 0.002469136], [153, "partner", -0.002469136, 0.002469136], [154, "push", -0.002469136, 0.002469136], [155, "purchase", -0.002469136, 0.002469136], [156, "inclusion", -0.002469136, 0.002469136], [157, "press", -0.002469136, 0.002469136], [158, "management", -0.002469136, 0.002469136], [159, "tariff", -0.002469136, 0.002469136], [160, "additionally", -0.002469136, 0.002469136], [161, "win", -0.002469136, 0.002469136], [162, "billionaire", -0.002469136, 0.002469136], [163, "title", -0.002469136, 0.002469136], [164, "threat", -0.002469136, 0.002469136], [165, "water", -0.002469136, 0.002469136], [166, "union", -0.002469136, 0.002469136], [167, "subject", -0.002469136, 0.002469136], [168, "wanted", -0.002469136, 0.002469136], [169, "texas", -0.002469136, 0.002469136], [170, "used", -0.002469136, 0.002469136], [171, "area", -0.002469136, 0.002469136], [172, "approach", -0.002469136, 0.002469136], [173, "break", -0.002469136, 0.002469136], [174, "american", -0.002469136, 0.002469136], [175, "angeles", -0.002469136, 0.002469136], [176, "target", -0.002469136, 0.002469136], [177, "technology", -0.002469136, 0.002469136], [178, "trump", -0.002469136, 0.002469136], [179, "tech", -0.002469136, 0.002469136], [180, "business", -0.002469136, 0.002469136], [181, "building", -0.002469136, 0.002469136], [182, "various", -0.002469136, 0.002469136], [183, "won", -0.002469136, 0.002469136], [184, "steel", -0.002469136, 0.002469136], [185, "bureau", -0.002469136, 0.002469136], [186, "spent", -0.002469136, 0.002469136], [187, "access", -0.002469136, 0.002469136], [188, "spot", -0.002469136, 0.002469136], [189, "benefit", -0.002469136, 0.002469136], [190, "state", -0.002469136, 0.002469136], [191, "ap", -4.440892e-17, 4.440892e-17], [192, "hurt", -2.220446e-17, 2.220446e-17], [193, "gift", -2.220446e-17, 2.220446e-17], [194, "lawmaker", -2.220446e-17, 2.220446e-17], [195, "according", -2.220446e-17, 2.220446e-17], [196, "agent", -2.220446e-17, 2.220446e-17], [197, "agenda", -2.220446e-17, 2.220446e-17], [198, "announced", -2.220446e-17, 2.220446e-17], [199, "enforcement", -2.220446e-17, 2.220446e-17], [200, "girl", -2.220446e-17, 2.220446e-17], [201, "billion", -2.220446e-17, 2.220446e-17], [202, "vice", -2.220446e-17, 2.220446e-17], [203, "rep", -2.220446e-17, 2.220446e-17], [204, "com", -2.220446e-17, 2.220446e-17], [205, "county", -2.220446e-17, 2.220446e-17], [206, "feb", -2.220446e-17, 2.220446e-17], [207, "pick", -2.220446e-17, 2.220446e-17], [208, "research", -2.220446e-17, 2.220446e-17], [209, "plan", -2.220446e-17, 2.220446e-17], [930, "dei", 0.002469136, 0.002469136], [931, "jan", 0.002469136, 0.002469136], [932, "gov", 0.002469136, 0.002469136], [933, "illegal", 0.002469136, 0.002469136], [934, "final", 0.002469136, 0.002469136], [935, "tip", 0.002469136, 0.002469136], [936, "executive", 0.002469136, 0.002469136], [937, "department", 0.002469136, 0.002469136], [938, "sen", 0.002469136, 0.002469136], [939, "reform", 0.002469136, 0.002469136], [940, "virginia", 0.002469136, 0.002469136], [941, "largest", 0.002469136, 0.002469136], [942, "regulation", 0.002469136, 0.002469136], [943, "vote", 0.002469136, 0.002469136], [944, "wing", 0.002469136, 0.002469136], [945, "memo", 0.002469136, 0.002469136], [946, "light", 0.002469136, 0.002469136], [947, "amazon", 0.002469136, 0.002469136], [948, "college", 0.002469136, 0.002469136], [949, "release", 0.002469136, 0.002469136], [950, "parent", 0.002469136, 0.002469136], [951, "friend", 0.002469136, 0.002469136], [952, "previously", 0.002469136, 0.002469136], [953, "content", 0.002469136, 0.002469136], [954, "university", 0.002469136, 0.002469136], [955, "teacher", 0.002469136, 0.002469136], [956, "borrower", 0.002469136, 0.002469136], [957, "border", 0.002469136, 0.002469136], [958, "book", 0.002469136, 0.002469136], [959, "thought", 0.002469136, 0.002469136], [960, "higher", 0.002469136, 0.002469136], [961, "crime", 0.002469136, 0.002469136], [962, "supply", 0.002469136, 0.002469136], [963, "school", 0.002469136, 0.002469136], [964, "post", 0.002469136, 0.002469136], [965, "transgender", 0.002469136, 0.002469136], [966, "attempt", 0.002469136, 0.002469136], [967, "irs", 0.002469136, 0.002469136], [968, "blagojevich", 0.002469136, 0.002469136], [969, "citizen", 0.002469136, 0.002469136], [970, "musk", 0.004938272, 0.004938272], [971, "service", 0.004938272, 0.004938272], [972, "ice", 0.004938272, 0.004938272], [973, "september", 0.004938272, 0.004938272], [974, "york", 0.004938272, 0.004938272], [975, "immigration", 0.004938272, 0.004938272], [976, "photo", 0.004938272, 0.004938272], [977, "daily", 0.004938272, 0.004938272], [978, "washington", 0.004938272, 0.004938272], [979, "relief", 0.004938272, 0.004938272], [980, "legislation", 0.004938272, 0.004938272], [981, "forgiveness", 0.007407407, 0.007407407], [982, "secretary", 0.007407407, 0.007407407], [983, "loan", 0.007407407, 0.007407407], [984, "foundation", 0.007407407, 0.007407407], [985, "board", 0.009876543, 0.009876543], [986, "administration", 0.009876543, 0.009876543], [987, "swift", 0.01234568, 0.01234568], [988, "judge", 0.01234568, 0.01234568], [989, "image", 0.01234568, 0.01234568], [990, "digital", 0.01234568, 0.01234568], [991, "app", 0.01234568, 0.01234568], [992, "available", 0.01234568, 0.01234568], [993, "student", 0.01481481, 0.01481481], [994, "getty", 0.01728395, 0.01728395], [995, "click", 0.01728395, 0.01728395], [996, "fox", 0.02716049, 0.02716049], [997, "education", 0.02962963, 0.02962963], [998, "news", 0.02962963, 0.02962963], [999, "biden", 0.04197531, 0.04197531]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>The new Three Label Model will have 577 features and the new Two Label Model will have 280 features.</p>
+</blockquote>
+</section>
+</section>
+<section id="retrained-models" class="level2">
+<h2 class="anchored" data-anchor-id="retrained-models">Retrained Models</h2>
+<p>The retrained models with fewer features had roughly about the same accuracy.</p>
+<section id="three-features" class="level3">
+<h3 class="anchored" data-anchor-id="three-features">Three Features</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/nb/cm_important_three_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="two-features" class="level3">
+<h3 class="anchored" data-anchor-id="two-features">Two Features</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/nb/cm_important_two_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="reddit-projection-results" class="level2">
+<h2 class="anchored" data-anchor-id="reddit-projection-results">Reddit Projection Results</h2>
+<div id="4130fb87" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<table id="itables_ed132dce_1e38_471f_9dd1_3462793200d8" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>Author</th>
+      <th>Predicted Bias Three</th>
+      <th>Threshold Three</th>
+      <th>Predicted Bias Two</th>
+      <th>Threshold Two</th>
+      <th>Threshold</th>
+      <th>Conclusion</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_ed132dce_1e38_471f_9dd1_3462793200d8:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["-CJF-", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["42Pockets", "Left", 0.999977, "Left", 0.999999, 0.999976, "Left"], ["AffectionatePause152", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["Alternative-Rub-7445", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["Deepthunkd", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["Deutsche_Bank_AG", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["EmergencyThing5", "Center", 1.0, "Left", 0.999893, 0.999893, "Lean Left"], ["Expensive-Annual1024", "Center", 1.0, "Left", 0.999998, 0.999998, "Lean Left"], ["Flaky-Wing2205", "Center", 1.0, "Left", 0.999864, 0.999864, "Lean Left"], ["HyruleSmash855", "Center", 1.0, "Right", 1.0, 1.0, "Lean Right"], ["Idea-Technical", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["Impressive-Peanut614", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["Leann004", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["LeetleBugg", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["Logical_Holiday_2457", "Center", 1.0, "Left", 0.999998, 0.999998, "Lean Left"], ["Ok-Nefariousness-927", "Center", 1.0, "Left", 0.979538, 0.979538, "Lean Left"], ["OrangeTabbiesDad", "Center", 0.787653, "Left", 1.0, 0.787653, "Lean Left"], ["PandaKing6887", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["Relevant-Platypus162", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["SD-777", "Center", 1.0, "Left", 0.999987, 0.999987, "Lean Left"], ["TldrDev", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["Ut_Prosim", "Center", 1.0, "Left", 0.999998, 0.999998, "Lean Left"], ["arinehim", "Left", 0.997814, "Left", 1.0, 0.997814, "Left"], ["baby-luvs-gorgonzola", "Center", 1.0, "Left", 0.995684, 0.995684, "Lean Left"], ["blueskyandsea", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["burner12077", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["codece", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["embiggenedmind", "Right", 0.999949, "Left", 0.999959, 0.999908, "Center"], ["girl_of_squirrels", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["horsebycommittee", "Center", 1.0, "Right", 0.949573, 0.949573, "Lean Right"], ["hotjambalaya17", "Center", 1.0, "Left", 0.987057, 0.987057, "Lean Left"], ["indy1386", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["ironboy157", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["kungfuenglish", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["milespoints", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["mindmapsofficial", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["mlotto7", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["mxzf", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["random-bot-2", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["robotlasagna", "Center", 1.0, "Right", 0.993708, 0.993708, "Lean Right"], ["snoopyvibes", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["throwawtphone", "Center", 1.0, "Right", 1.0, 1.0, "Lean Right"], ["tizuby", "Center", 1.0, "Right", 0.556444, 0.556444, "Lean Right"], ["urLocalpoopstain", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["waterwicca", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"], ["wes7946", "Center", 1.0, "Right", 0.999992, 0.999992, "Lean Right"], ["xantharia", "Center", 1.0, "Left", 1.0, 1.0, "Lean Left"]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>The above illustrates the predicions for both the three and two label models as well as their probabilities. Combining the results in the last two columns illustrates the overall political bias (including leanings). Recall that the Reddit data is unlabeled, so the probabilities act as sure the model is in predicting the political biases.</p>
+</blockquote>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<hr>
+</section>
+<section id="code-links" class="level1">
+<h1>Code Links</h1>
+<ul>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/modeling_functions.py">Modeling Functions</a></li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/naive_bayes.py">Naive Bayes Modeling</a></li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
