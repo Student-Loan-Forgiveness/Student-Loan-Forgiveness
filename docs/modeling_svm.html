@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -67,6 +67,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -180,8 +183,45 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#strategy-and-goals" id="toc-strategy-and-goals" class="nav-link" data-scroll-target="#strategy-and-goals">Strategy and Goals</a></li>
+  <li><a href="#hyperparameter-tuning" id="toc-hyperparameter-tuning" class="nav-link" data-scroll-target="#hyperparameter-tuning">Hyperparameter Tuning</a>
+  <ul class="collapse">
+  <li><a href="#hyperparameter-results" id="toc-hyperparameter-results" class="nav-link" data-scroll-target="#hyperparameter-results">Hyperparameter Results</a></li>
+  <li><a href="#hyperparameter-best-results" id="toc-hyperparameter-best-results" class="nav-link" data-scroll-target="#hyperparameter-best-results">Hyperparameter Best Results</a></li>
+  </ul></li>
+  <li><a href="#modeling" id="toc-modeling" class="nav-link" data-scroll-target="#modeling">Modeling</a>
+  <ul class="collapse">
+  <li><a href="#five-labels" id="toc-five-labels" class="nav-link" data-scroll-target="#five-labels">Five Labels</a></li>
+  <li><a href="#three-labels" id="toc-three-labels" class="nav-link" data-scroll-target="#three-labels">Three Labels</a></li>
+  <li><a href="#strict-three-labels" id="toc-strict-three-labels" class="nav-link" data-scroll-target="#strict-three-labels">Strict Three Labels</a></li>
+  <li><a href="#two-labels" id="toc-two-labels" class="nav-link" data-scroll-target="#two-labels">Two Labels</a></li>
+  <li><a href="#strict-two-labels" id="toc-strict-two-labels" class="nav-link" data-scroll-target="#strict-two-labels">Strict Two Labels</a></li>
+  </ul></li>
+  <li><a href="#reddit-projections" id="toc-reddit-projections" class="nav-link" data-scroll-target="#reddit-projections">Reddit Projections</a>
+  <ul class="collapse">
+  <li><a href="#feature-importance-through-permutation" id="toc-feature-importance-through-permutation" class="nav-link" data-scroll-target="#feature-importance-through-permutation">Feature Importance through Permutation</a>
+  <ul class="collapse">
+  <li><a href="#three-features---strict-three-political-biases" id="toc-three-features---strict-three-political-biases" class="nav-link" data-scroll-target="#three-features---strict-three-political-biases">Three Features - Strict Three Political Biases</a></li>
+  <li><a href="#two-features---strict-two-political-biases" id="toc-two-features---strict-two-political-biases" class="nav-link" data-scroll-target="#two-features---strict-two-political-biases">Two Features - Strict Two Political Biases</a></li>
+  </ul></li>
+  <li><a href="#retrained-models" id="toc-retrained-models" class="nav-link" data-scroll-target="#retrained-models">Retrained Models</a>
+  <ul class="collapse">
+  <li><a href="#three-features" id="toc-three-features" class="nav-link" data-scroll-target="#three-features">Three Features</a></li>
+  <li><a href="#two-features" id="toc-two-features" class="nav-link" data-scroll-target="#two-features">Two Features</a></li>
+  </ul></li>
+  <li><a href="#reddit-projection-results" id="toc-reddit-projection-results" class="nav-link" data-scroll-target="#reddit-projection-results">Reddit Projection Results</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#modeling-conclusions" id="toc-modeling-conclusions" class="nav-link" data-scroll-target="#modeling-conclusions">Modeling Conclusions</a></li>
+  <li><a href="#code-links" id="toc-code-links" class="nav-link" data-scroll-target="#code-links">Code Links</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -205,8 +245,651 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Support Vector Machines (SVMs) are supervised learning methods which transform features into a higher dimensional space to separate the labels. The usefulness of an SVM comes from when the input data in its original dimensional space isn’t linearly separable, but in a higher dimensional space there exists a hyperplane which can linearly separate the groups of the data.</p>
+<p>SVMs use a quadratic optimization algorithm, in which the final optimal dual form contains a dot product (or inner product). This allows for the use of kernels, which are functions that return an inner product in a higher dimensional space. Being able to apply kernels is essential, as just the solution to the dot product is needed and doesn’t actually need to be transformed into a higher dimensional space in practice.</p>
+<p>Being able to use a dot product, and subsequently a kernel, allows for just the solution of the dot product to be used instead of actually transforming the data into a higher dimensional space. This makes SVMs highly efficient. Additionally, SVMs create a margin between the groups in the higher dimensional space. Any point on the margin is known as a support vector. Not only are they computationally efficient but they are also more resistant to outliers and noise due to this. Keep in mind that a single SVM is a binary classifier, however multiple SVMs can be ensembled together for more than a 2-class problem.</p>
+<p>SVMs can only work on labeled numeric data. First, an SVM is a supervised machine learning method. This means, that it can only be used on labeled data in order to train the model. Second, due to the mathematic nature of dot products, and subsequently kernels, the data must be numeric.</p>
+<p>Some of the common SVM kernels are:</p>
+<ul>
+<li>RBF (Radial Basis Function or Gaussian)</li>
+<li>Polynomial</li>
+<li>Linear</li>
+<li>Sigmoid</li>
+</ul>
+<p>This section of the analysis will specifically use <strong>Support Vector Machine Classification</strong> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html">sklearn documentation</a>.</p>
+</section>
+<section id="strategy-and-goals" class="level1">
+<h1>Strategy and Goals</h1>
+<p>More specifically, SVMs will be used here to create models for predicting political bias from text data. Aftering training models with news article which have known political biases, these models will be applied to Reddit data to project political bias, which could be a decent indicator of sentiment towards student loan relief in online social discourse.</p>
+<blockquote class="blockquote">
+<p>See the <a href="./modeling_prep.html">Modeling Preparation</a> page for a detailed breakdown of the data fromatting, labels for supervised learning, and necessity for disjointness.</p>
+</blockquote>
+</section>
+<section id="hyperparameter-tuning" class="level1">
+<h1>Hyperparameter Tuning</h1>
+<p>Due to the availability of hyperparameters within the deciison tree classifier, <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html">GridSearchCV</a> was used to test each of the parameters for each the label aggregations. This uses the entire dataset and cross validates that, folding it into 5 different folds in this case. It essentially creates the training and testing sets during the process within the 5 different folds.</p>
+<p>The hyperparameters tested were:</p>
+<ul>
+<li>C (cost):
+<ul>
+<li>0.5</li>
+<li>1.0</li>
+<li>1.5</li>
+<li>2.0</li>
+<li>2.5</li>
+<li>3.0</li>
+</ul></li>
+<li>kernel:
+<ul>
+<li>linear</li>
+<li>poly (polynomial)</li>
+<li>rbf (radial basis function or gaussian)</li>
+</ul></li>
+</ul>
+<section id="hyperparameter-results" class="level2">
+<h2 class="anchored" data-anchor-id="hyperparameter-results">Hyperparameter Results</h2>
+<div id="5ecf1e60" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<table id="itables_ceabe0a2_a51d_40ac_945b_ee2cfdef5411" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>Label</th>
+      <th>mean_test_score</th>
+      <th>rank_test_score</th>
+      <th>param_C</th>
+      <th>param_degree</th>
+      <th>param_kernel</th>
+      <th>mean_fit_time</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_ceabe0a2_a51d_40ac_945b_ee2cfdef5411:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["Five", 0.489351, 10, 0.5, 2, "linear", 3.008918], ["Five", 0.316804, 44, 0.5, 2, "poly", 4.20941], ["Five", 0.412309, 34, 0.5, 2, "rbf", 8.811857], ["Five", 0.489351, 10, 0.5, 3, "linear", 3.572946], ["Five", 0.270472, 53, 0.5, 3, "poly", 4.376037], ["Five", 0.412309, 34, 0.5, 3, "rbf", 5.195281], ["Five", 0.489351, 10, 0.5, 4, "linear", 2.927545], ["Five", 0.283806, 48, 0.5, 4, "poly", 3.345715], ["Five", 0.412309, 34, 0.5, 4, "rbf", 5.737134], ["Five", 0.489351, 10, 1.0, 2, "linear", 3.32791], ["Five", 0.328724, 41, 1.0, 2, "poly", 4.204894], ["Five", 0.450755, 31, 1.0, 2, "rbf", 5.005045], ["Five", 0.489351, 10, 1.0, 3, "linear", 3.337735], ["Five", 0.282375, 49, 1.0, 3, "poly", 3.568655], ["Five", 0.450755, 31, 1.0, 3, "rbf", 5.233162], ["Five", 0.489351, 10, 1.0, 4, "linear", 3.201117], ["Five", 0.26913, 54, 1.0, 4, "poly", 3.664439], ["Five", 0.450755, 31, 1.0, 4, "rbf", 5.599284], ["Five", 0.489351, 10, 1.5, 2, "linear", 2.530243], ["Five", 0.347267, 40, 1.5, 2, "poly", 4.393991], ["Five", 0.477272, 28, 1.5, 2, "rbf", 4.859054], ["Five", 0.489351, 10, 1.5, 3, "linear", 2.434177], ["Five", 0.285015, 47, 1.5, 3, "poly", 4.456331], ["Five", 0.477272, 28, 1.5, 3, "rbf", 5.914064], ["Five", 0.489351, 10, 1.5, 4, "linear", 3.310676], ["Five", 0.278393, 51, 1.5, 4, "poly", 3.711601], ["Five", 0.477272, 28, 1.5, 4, "rbf", 5.051597], ["Five", 0.489351, 10, 2.0, 2, "linear", 3.050845], ["Five", 0.361854, 39, 2.0, 2, "poly", 3.87743], ["Five", 0.495841, 7, 2.0, 2, "rbf", 5.300994], ["Five", 0.489351, 10, 2.0, 3, "linear", 2.96165], ["Five", 0.308857, 45, 2.0, 3, "poly", 3.946976], ["Five", 0.495841, 7, 2.0, 3, "rbf", 5.383934], ["Five", 0.489351, 10, 2.0, 4, "linear", 3.246467], ["Five", 0.273095, 52, 2.0, 4, "poly", 4.583647], ["Five", 0.495841, 7, 2.0, 4, "rbf", 4.464894], ["Five", 0.489351, 10, 2.5, 2, "linear", 3.318996], ["Five", 0.37381, 38, 2.5, 2, "poly", 4.023377], ["Five", 0.506455, 4, 2.5, 2, "rbf", 5.745816], ["Five", 0.489351, 10, 2.5, 3, "linear", 3.268487], ["Five", 0.326075, 42, 2.5, 3, "poly", 3.825185], ["Five", 0.506455, 4, 2.5, 3, "rbf", 6.258899], ["Five", 0.489351, 10, 2.5, 4, "linear", 3.180633], ["Five", 0.281042, 50, 2.5, 4, "poly", 4.393152], ["Five", 0.506455, 4, 2.5, 4, "rbf", 4.877955], ["Five", 0.489351, 10, 3.0, 2, "linear", 3.098543], ["Five", 0.406967, 37, 3.0, 2, "poly", 3.886599], ["Five", 0.510437, 1, 3.0, 2, "rbf", 5.31265], ["Five", 0.489351, 10, 3.0, 3, "linear", 3.210469], ["Five", 0.319453, 43, 3.0, 3, "poly", 4.187211], ["Five", 0.510437, 1, 3.0, 3, "rbf", 5.067402], ["Five", 0.489351, 10, 3.0, 4, "linear", 3.151553], ["Five", 0.291638, 46, 3.0, 4, "poly", 4.234955], ["Five", 0.510437, 1, 3.0, 4, "rbf", 3.22415], ["Three", 0.49343, 9, 0.5, 2, "linear", 5.909816], ["Three", 0.473316, 36, 0.5, 2, "poly", 8.086725], ["Three", 0.441589, 47, 0.5, 2, "rbf", 11.089126], ["Three", 0.49343, 9, 0.5, 3, "linear", 5.352903], ["Three", 0.444177, 46, 0.5, 3, "poly", 7.098981], ["Three", 0.441589, 47, 0.5, 3, "rbf", 8.989637], ["Three", 0.49343, 9, 0.5, 4, "linear", 6.187201], ["Three", 0.432256, 54, 0.5, 4, "poly", 8.055305], ["Three", 0.441589, 47, 0.5, 4, "rbf", 8.941966], ["Three", 0.481501, 17, 1.0, 2, "linear", 4.720466], ["Three", 0.477298, 32, 1.0, 2, "poly", 7.228325], ["Three", 0.464124, 37, 1.0, 2, "rbf", 8.601256], ["Three", 0.481501, 17, 1.0, 3, "linear", 5.463681], ["Three", 0.44815, 44, 1.0, 3, "poly", 7.538185], ["Three", 0.464124, 37, 1.0, 3, "rbf", 7.580527], ["Three", 0.481501, 17, 1.0, 4, "linear", 5.890005], ["Three", 0.434896, 53, 1.0, 4, "poly", 7.441706], ["Three", 0.464124, 37, 1.0, 4, "rbf", 8.914688], ["Three", 0.481501, 17, 1.5, 2, "linear", 6.69726], ["Three", 0.483929, 16, 1.5, 2, "poly", 7.20293], ["Three", 0.474746, 33, 1.5, 2, "rbf", 8.08567], ["Three", 0.481501, 17, 1.5, 3, "linear", 5.716163], ["Three", 0.452124, 43, 1.5, 3, "poly", 7.052483], ["Three", 0.474746, 33, 1.5, 3, "rbf", 8.198301], ["Three", 0.481501, 17, 1.5, 4, "linear", 5.461921], ["Three", 0.436221, 52, 1.5, 4, "poly", 8.506515], ["Three", 0.474746, 33, 1.5, 4, "rbf", 8.276089], ["Three", 0.481501, 17, 2.0, 2, "linear", 5.24223], ["Three", 0.485272, 15, 2.0, 2, "poly", 6.510049], ["Three", 0.485377, 12, 2.0, 2, "rbf", 10.15013], ["Three", 0.481501, 17, 2.0, 3, "linear", 5.627574], ["Three", 0.460079, 42, 2.0, 3, "poly", 6.976768], ["Three", 0.485377, 12, 2.0, 3, "rbf", 7.200608], ["Three", 0.481501, 17, 2.0, 4, "linear", 4.984951], ["Three", 0.438879, 51, 2.0, 4, "poly", 7.844759], ["Three", 0.485377, 12, 2.0, 4, "rbf", 10.371964], ["Three", 0.481501, 17, 2.5, 2, "linear", 5.279523], ["Three", 0.49457, 8, 2.5, 2, "poly", 6.635504], ["Three", 0.498667, 4, 2.5, 2, "rbf", 8.685093], ["Three", 0.481501, 17, 2.5, 3, "linear", 4.511554], ["Three", 0.462728, 41, 2.5, 3, "poly", 7.210617], ["Three", 0.498667, 4, 2.5, 3, "rbf", 9.681372], ["Three", 0.481501, 17, 2.5, 4, "linear", 5.69815], ["Three", 0.440203, 50, 2.5, 4, "poly", 7.925664], ["Three", 0.498667, 4, 2.5, 4, "rbf", 8.326741], ["Three", 0.481501, 17, 3.0, 2, "linear", 5.53754], ["Three", 0.497219, 7, 3.0, 2, "poly", 7.114457], ["Three", 0.513298, 1, 3.0, 2, "rbf", 9.55904], ["Three", 0.481501, 17, 3.0, 3, "linear", 5.875701], ["Three", 0.464053, 40, 3.0, 3, "poly", 8.290415], ["Three", 0.513298, 1, 3.0, 3, "rbf", 9.379327], ["Three", 0.481501, 17, 3.0, 4, "linear", 5.850292], ["Three", 0.446834, 45, 3.0, 4, "poly", 6.623901], ["Three", 0.513298, 1, 3.0, 4, "rbf", 4.657065], ["Strict Three", 0.690241, 16, 0.5, 2, "linear", 1.089618], ["Strict Three", 0.449474, 46, 0.5, 2, "poly", 1.801391], ["Strict Three", 0.629342, 34, 0.5, 2, "rbf", 2.200299], ["Strict Three", 0.690241, 16, 0.5, 3, "linear", 0.936791], ["Strict Three", 0.420395, 50, 0.5, 3, "poly", 1.363044], ["Strict Three", 0.629342, 34, 0.5, 3, "rbf", 1.923032], ["Strict Three", 0.690241, 16, 0.5, 4, "linear", 0.980485], ["Strict Three", 0.443553, 47, 0.5, 4, "poly", 1.403057], ["Strict Three", 0.629342, 34, 0.5, 4, "rbf", 1.864425], ["Strict Three", 0.690241, 16, 1.0, 2, "linear", 0.786312], ["Strict Three", 0.497412, 41, 1.0, 2, "poly", 1.338085], ["Strict Three", 0.694254, 13, 1.0, 2, "rbf", 1.822765], ["Strict Three", 0.690241, 16, 1.0, 3, "linear", 0.889489], ["Strict Three", 0.413991, 53, 1.0, 3, "poly", 1.238422], ["Strict Three", 0.694254, 13, 1.0, 3, "rbf", 1.689314], ["Strict Three", 0.690241, 16, 1.0, 4, "linear", 1.071196], ["Strict Three", 0.40568, 54, 1.0, 4, "poly", 1.44214], ["Strict Three", 0.694254, 13, 1.0, 4, "rbf", 1.873631], ["Strict Three", 0.690241, 16, 1.5, 2, "linear", 1.015882], ["Strict Three", 0.532961, 39, 1.5, 2, "poly", 1.112866], ["Strict Three", 0.710965, 10, 1.5, 2, "rbf", 1.663749], ["Strict Three", 0.690241, 16, 1.5, 3, "linear", 0.790726], ["Strict Three", 0.443158, 48, 1.5, 3, "poly", 1.286338], ["Strict Three", 0.710965, 10, 1.5, 3, "rbf", 1.546092], ["Strict Three", 0.690241, 16, 1.5, 4, "linear", 0.950294], ["Strict Three", 0.416096, 52, 1.5, 4, "poly", 1.373832], ["Strict Three", 0.710965, 10, 1.5, 4, "rbf", 1.803848], ["Strict Three", 0.690241, 16, 2.0, 2, "linear", 1.022626], ["Strict Three", 0.530943, 40, 2.0, 2, "poly", 1.179649], ["Strict Three", 0.717259, 7, 2.0, 2, "rbf", 1.631102], ["Strict Three", 0.690241, 16, 2.0, 3, "linear", 0.965153], ["Strict Three", 0.472325, 44, 2.0, 3, "poly", 1.161972], ["Strict Three", 0.717259, 7, 2.0, 3, "rbf", 1.697011], ["Strict Three", 0.690241, 16, 2.0, 4, "linear", 1.032384], ["Strict Three", 0.41818, 51, 2.0, 4, "poly", 1.272322], ["Strict Three", 0.717259, 7, 2.0, 4, "rbf", 1.926788], ["Strict Three", 0.690241, 16, 2.5, 2, "linear", 0.86209], ["Strict Three", 0.543575, 38, 2.5, 2, "poly", 1.287078], ["Strict Three", 0.721469, 4, 2.5, 2, "rbf", 1.55218], ["Strict Three", 0.690241, 16, 2.5, 3, "linear", 0.88509], ["Strict Three", 0.472346, 43, 2.5, 3, "poly", 1.168722], ["Strict Three", 0.721469, 4, 2.5, 3, "rbf", 1.888826], ["Strict Three", 0.690241, 16, 2.5, 4, "linear", 1.022908], ["Strict Three", 0.432763, 49, 2.5, 4, "poly", 1.493181], ["Strict Three", 0.721469, 4, 2.5, 4, "rbf", 1.465424], ["Strict Three", 0.690241, 16, 3.0, 2, "linear", 0.918584], ["Strict Three", 0.564649, 37, 3.0, 2, "poly", 0.957753], ["Strict Three", 0.721491, 1, 3.0, 2, "rbf", 1.893452], ["Strict Three", 0.690241, 16, 3.0, 3, "linear", 1.17833], ["Strict Three", 0.476557, 42, 3.0, 3, "poly", 1.379159], ["Strict Three", 0.721491, 1, 3.0, 3, "rbf", 1.523589], ["Strict Three", 0.690241, 16, 3.0, 4, "linear", 0.903206], ["Strict Three", 0.457763, 45, 3.0, 4, "poly", 1.184643], ["Strict Three", 0.721491, 1, 3.0, 4, "rbf", 0.976495], ["Two", 0.59633, 1, 0.5, 2, "linear", 2.799305], ["Two", 0.550459, 40, 0.5, 2, "poly", 3.973285], ["Two", 0.543119, 44, 0.5, 2, "rbf", 4.914638], ["Two", 0.59633, 1, 0.5, 3, "linear", 2.787485], ["Two", 0.52844, 52, 0.5, 3, "poly", 3.764966], ["Two", 0.543119, 44, 0.5, 3, "rbf", 4.621498], ["Two", 0.59633, 1, 0.5, 4, "linear", 2.582988], ["Two", 0.526606, 53, 0.5, 4, "poly", 4.129146], ["Two", 0.543119, 44, 0.5, 4, "rbf", 4.041715], ["Two", 0.592661, 13, 1.0, 2, "linear", 2.292131], ["Two", 0.574312, 35, 1.0, 2, "poly", 3.993809], ["Two", 0.572477, 36, 1.0, 2, "rbf", 4.382266], ["Two", 0.592661, 13, 1.0, 3, "linear", 2.52527], ["Two", 0.53578, 47, 1.0, 3, "poly", 4.430474], ["Two", 0.572477, 36, 1.0, 3, "rbf", 3.744666], ["Two", 0.592661, 13, 1.0, 4, "linear", 2.364283], ["Two", 0.530275, 50, 1.0, 4, "poly", 3.810758], ["Two", 0.572477, 36, 1.0, 4, "rbf", 4.073351], ["Two", 0.592661, 13, 1.5, 2, "linear", 2.907272], ["Two", 0.587156, 28, 1.5, 2, "poly", 3.983262], ["Two", 0.583486, 32, 1.5, 2, "rbf", 4.247755], ["Two", 0.592661, 13, 1.5, 3, "linear", 2.263029], ["Two", 0.544954, 43, 1.5, 3, "poly", 4.241703], ["Two", 0.583486, 32, 1.5, 3, "rbf", 4.055143], ["Two", 0.592661, 13, 1.5, 4, "linear", 2.340866], ["Two", 0.526606, 54, 1.5, 4, "poly", 3.804537], ["Two", 0.583486, 32, 1.5, 4, "rbf", 4.463832], ["Two", 0.592661, 13, 2.0, 2, "linear", 3.106565], ["Two", 0.594495, 4, 2.0, 2, "poly", 3.235705], ["Two", 0.585321, 29, 2.0, 2, "rbf", 4.723122], ["Two", 0.592661, 13, 2.0, 3, "linear", 2.68469], ["Two", 0.550459, 40, 2.0, 3, "poly", 3.393174], ["Two", 0.585321, 29, 2.0, 3, "rbf", 4.164278], ["Two", 0.592661, 13, 2.0, 4, "linear", 2.684532], ["Two", 0.530275, 50, 2.0, 4, "poly", 3.719315], ["Two", 0.585321, 29, 2.0, 4, "rbf", 4.793795], ["Two", 0.592661, 13, 2.5, 2, "linear", 2.869502], ["Two", 0.592661, 8, 2.5, 2, "poly", 3.298438], ["Two", 0.594495, 4, 2.5, 2, "rbf", 4.021007], ["Two", 0.592661, 13, 2.5, 3, "linear", 2.641032], ["Two", 0.550459, 40, 2.5, 3, "poly", 4.02347], ["Two", 0.594495, 4, 2.5, 3, "rbf", 3.745502], ["Two", 0.592661, 13, 2.5, 4, "linear", 2.997612], ["Two", 0.533945, 49, 2.5, 4, "poly", 3.346653], ["Two", 0.594495, 4, 2.5, 4, "rbf", 4.002981], ["Two", 0.592661, 13, 3.0, 2, "linear", 3.734099], ["Two", 0.592661, 8, 3.0, 2, "poly", 3.235414], ["Two", 0.592661, 8, 3.0, 2, "rbf", 3.813884], ["Two", 0.592661, 13, 3.0, 3, "linear", 2.720027], ["Two", 0.555963, 39, 3.0, 3, "poly", 4.013448], ["Two", 0.592661, 8, 3.0, 3, "rbf", 4.082552], ["Two", 0.592661, 13, 3.0, 4, "linear", 2.607965], ["Two", 0.53578, 47, 3.0, 4, "poly", 3.278548], ["Two", 0.592661, 8, 3.0, 4, "rbf", 2.968705], ["Strict Two", 0.787701, 13, 0.5, 2, "linear", 0.271162], ["Strict Two", 0.568763, 46, 0.5, 2, "poly", 0.313871], ["Strict Two", 0.754088, 35, 0.5, 2, "rbf", 0.401825], ["Strict Two", 0.787701, 13, 0.5, 3, "linear", 0.214228], ["Strict Two", 0.550105, 50, 0.5, 3, "poly", 0.218503], ["Strict Two", 0.754088, 35, 0.5, 3, "rbf", 0.335266], ["Strict Two", 0.787701, 13, 0.5, 4, "linear", 0.219881], ["Strict Two", 0.550105, 50, 0.5, 4, "poly", 0.271272], ["Strict Two", 0.754088, 35, 0.5, 4, "rbf", 0.355671], ["Strict Two", 0.787701, 13, 1.0, 2, "linear", 0.245144], ["Strict Two", 0.67645, 42, 1.0, 2, "poly", 0.22562], ["Strict Two", 0.772607, 32, 1.0, 2, "rbf", 0.348064], ["Strict Two", 0.787701, 13, 1.0, 3, "linear", 0.23078], ["Strict Two", 0.56492, 48, 1.0, 3, "poly", 0.282859], ["Strict Two", 0.772607, 32, 1.0, 3, "rbf", 0.315365], ["Strict Two", 0.787701, 13, 1.0, 4, "linear", 0.203124], ["Strict Two", 0.557582, 49, 1.0, 4, "poly", 0.251752], ["Strict Two", 0.772607, 32, 1.0, 4, "rbf", 0.327382], ["Strict Two", 0.787701, 13, 1.5, 2, "linear", 0.229608], ["Strict Two", 0.77631, 31, 1.5, 2, "poly", 0.240596], ["Strict Two", 0.802446, 7, 1.5, 2, "rbf", 0.440796], ["Strict Two", 0.787701, 13, 1.5, 3, "linear", 0.224802], ["Strict Two", 0.579874, 45, 1.5, 3, "poly", 0.248294], ["Strict Two", 0.802446, 7, 1.5, 3, "rbf", 0.357589], ["Strict Two", 0.787701, 13, 1.5, 4, "linear", 0.199014], ["Strict Two", 0.56499, 47, 1.5, 4, "poly", 0.20895], ["Strict Two", 0.802446, 7, 1.5, 4, "rbf", 0.340711], ["Strict Two", 0.787701, 13, 2.0, 2, "linear", 0.249377], ["Strict Two", 0.724319, 38, 2.0, 2, "poly", 0.224496], ["Strict Two", 0.802446, 7, 2.0, 2, "rbf", 0.348075], ["Strict Two", 0.787701, 13, 2.0, 3, "linear", 0.246245], ["Strict Two", 0.636059, 43, 2.0, 3, "poly", 0.266373], ["Strict Two", 0.802446, 7, 2.0, 3, "rbf", 0.389382], ["Strict Two", 0.787701, 13, 2.0, 4, "linear", 0.236967], ["Strict Two", 0.539064, 53, 2.0, 4, "poly", 0.305735], ["Strict Two", 0.802446, 7, 2.0, 4, "rbf", 0.424803], ["Strict Two", 0.787701, 13, 2.5, 2, "linear", 0.210709], ["Strict Two", 0.709504, 40, 2.5, 2, "poly", 0.2301], ["Strict Two", 0.80608, 1, 2.5, 2, "rbf", 0.363682], ["Strict Two", 0.787701, 13, 2.5, 3, "linear", 0.27449], ["Strict Two", 0.620755, 44, 2.5, 3, "poly", 0.268494], ["Strict Two", 0.80608, 1, 2.5, 3, "rbf", 0.366587], ["Strict Two", 0.787701, 13, 2.5, 4, "linear", 0.267812], ["Strict Two", 0.53536, 54, 2.5, 4, "poly", 0.279764], ["Strict Two", 0.80608, 1, 2.5, 4, "rbf", 0.3404], ["Strict Two", 0.787701, 13, 3.0, 2, "linear", 0.230547], ["Strict Two", 0.709434, 41, 3.0, 2, "poly", 0.258195], ["Strict Two", 0.80608, 1, 3.0, 2, "rbf", 0.352253], ["Strict Two", 0.787701, 13, 3.0, 3, "linear", 0.269288], ["Strict Two", 0.724319, 38, 3.0, 3, "poly", 0.302607], ["Strict Two", 0.80608, 1, 3.0, 3, "rbf", 0.323961], ["Strict Two", 0.787701, 13, 3.0, 4, "linear", 0.249733], ["Strict Two", 0.546471, 52, 3.0, 4, "poly", 0.272908], ["Strict Two", 0.80608, 1, 3.0, 4, "rbf", 0.213619]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="hyperparameter-best-results" class="level2">
+<h2 class="anchored" data-anchor-id="hyperparameter-best-results">Hyperparameter Best Results</h2>
+<div id="32ee493f" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<table id="itables_d0430482_1eb4_4b3c_b39d_2b902d1300eb" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>C</th>
+      <th>Degree</th>
+      <th>Kernel</th>
+      <th>Model</th>
+      <th>Accuracy</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_d0430482_1eb4_4b3c_b39d_2b902d1300eb:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[3.0, 2, "rbf", "Five", 0.510437], [3.0, 2, "rbf", "Three", 0.513298], [3.0, 2, "rbf", "Strict Three", 0.721491], [0.5, 2, "linear", "Two", 0.59633], [2.5, 2, "rbf", "Strict Two", 0.80608]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Note that the combined search has rankings for each model based not only on accuracy but aspects such model fitting time. The Hyperparameter Best Results will be used for the following modeling.</p>
+</blockquote>
+</section>
+</section>
+<section id="modeling" class="level1">
+<h1>Modeling</h1>
+<section id="five-labels" class="level2">
+<h2 class="anchored" data-anchor-id="five-labels">Five Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/svm/cm_five_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>The overall accuracy for testing across all five labels is about 55.51%. Predictions for Center performed overwhelmingly well. This could be indicative to the proportion of the labels as discussed in the modeling preparations page.</p>
+</section>
+<section id="three-labels" class="level2">
+<h2 class="anchored" data-anchor-id="three-labels">Three Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/svm/cm_three_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>When combining Lean Left and Lean Right with Left and Right, respectively, the model accuracy increasing to 61.23%. The model has a decent performance, with predictions for the Right political bias outperforming the other prediction categories. Left performed the worse.</p>
+</section>
+<section id="strict-three-labels" class="level2">
+<h2 class="anchored" data-anchor-id="strict-three-labels">Strict Three Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/svm/cm_strict_three_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>When the leaning political biases weren’t combined, the accuracy of the model increased by over 10% for the three political bias labels. Overall decent results with its best performance on Right labels.</p>
+</section>
+<section id="two-labels" class="level2">
+<h2 class="anchored" data-anchor-id="two-labels">Two Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/svm/cm_two_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>When combining Lean Left and Lean Right with Left and Right, respectively, and dropping the Center label, the model accuracy was about 60%. There were still a high amount of incorrect predictions, which could be reflective on the leanings.</p>
+</section>
+<section id="strict-two-labels" class="level2">
+<h2 class="anchored" data-anchor-id="strict-two-labels">Strict Two Labels</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/svm/cm_strict_two_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p>When the leaning political biases weren’t combined, and dropping the the Center label, the accuracy of the model was phenomenonal! On this particular training and testing set, there was a 96% accuracy. This is a respectable model, and the best performance with the SVM classification in this section. <em>It should be noted that this model on the grid search performance was only just above 80% accuracy when averaged across several different training and testing datasets</em>.</p>
+</section>
+</section>
+<section id="reddit-projections" class="level1">
+<h1>Reddit Projections</h1>
+<p>To apply this model in projecting political bias on Reddit authors, feature permutation was performed on the best performing 3-Class and 2-Class models to obtain the most important features from the original 1000 labels. Subsequently:</p>
+<ol type="1">
+<li>The models were retrained on this subset of important features.</li>
+<li>The Reddit count vectorized data was then reduced to these feautres.</li>
+<li>The models were appplied to the Reddit subset.</li>
+</ol>
+<section id="feature-importance-through-permutation" class="level2">
+<h2 class="anchored" data-anchor-id="feature-importance-through-permutation">Feature Importance through Permutation</h2>
+<section id="three-features---strict-three-political-biases" class="level3">
+<h3 class="anchored" data-anchor-id="three-features---strict-three-political-biases">Three Features - Strict Three Political Biases</h3>
+<div id="84cd3191" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<table id="itables_5182af3a_0209_4e04_afa0_916efb909ecf" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feature</th>
+      <th>importance</th>
+      <th>absolute_importance</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_5182af3a_0209_4e04_afa0_916efb909ecf:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[0, "cfpb", -0.006944444, 0.006944444], [1, "consumer", -0.006944444, 0.006944444], [2, "acting", -0.006944444, 0.006944444], [3, "control", -0.006944444, 0.006944444], [4, "vought", -0.005555556, 0.005555556], [5, "court", -0.005555556, 0.005555556], [6, "congress", -0.005555556, 0.005555556], [7, "digital", -0.004166667, 0.004166667], [8, "black", -0.002777778, 0.002777778], [9, "agency", -0.002777778, 0.002777778], [10, "election", -0.001388889, 0.001388889], [11, "performance", -0.001388889, 0.001388889], [12, "daily", -0.001388889, 0.001388889], [13, "host", -0.001388889, 0.001388889], [14, "article", -0.001388889, 0.001388889], [15, "reporter", -0.001388889, 0.001388889], [16, "treasury", -0.001388889, 0.001388889], [17, "sign", -0.001388889, 0.001388889], [18, "going", -0.001388889, 0.001388889], [19, "democrat", -0.001388889, 0.001388889], [20, "supreme", -0.001388889, 0.001388889], [21, "wing", -0.001388889, 0.001388889], [22, "york", -0.001388889, 0.001388889], [23, "financial", -0.001388889, 0.001388889], [24, "tax", -0.001388889, 0.001388889], [827, "people", 2.220446e-17, 2.220446e-17], [828, "account", 2.220446e-17, 2.220446e-17], [829, "work", 0.001388889, 0.001388889], [830, "super", 0.001388889, 0.001388889], [831, "bowl", 0.001388889, 0.001388889], [832, "market", 0.001388889, 0.001388889], [833, "great", 0.001388889, 0.001388889], [834, "budget", 0.001388889, 0.001388889], [835, "united", 0.001388889, 0.001388889], [836, "justice", 0.001388889, 0.001388889], [837, "major", 0.001388889, 0.001388889], [838, "answer", 0.001388889, 0.001388889], [839, "amazon", 0.001388889, 0.001388889], [840, "user", 0.001388889, 0.001388889], [841, "mean", 0.001388889, 0.001388889], [842, "area", 0.001388889, 0.001388889], [843, "light", 0.001388889, 0.001388889], [844, "vance", 0.001388889, 0.001388889], [845, "later", 0.001388889, 0.001388889], [846, "including", 0.001388889, 0.001388889], [847, "income", 0.001388889, 0.001388889], [848, "total", 0.001388889, 0.001388889], [849, "today", 0.001388889, 0.001388889], [850, "make", 0.001388889, 0.001388889], [851, "living", 0.001388889, 0.001388889], [852, "local", 0.001388889, 0.001388889], [853, "higher", 0.001388889, 0.001388889], [854, "based", 0.001388889, 0.001388889], [855, "looking", 0.001388889, 0.001388889], [856, "term", 0.001388889, 0.001388889], [857, "white", 0.001388889, 0.001388889], [858, "health", 0.001388889, 0.001388889], [859, "technology", 0.001388889, 0.001388889], [860, "big", 0.001388889, 0.001388889], [861, "lot", 0.001388889, 0.001388889], [862, "joe", 0.001388889, 0.001388889], [863, "tariff", 0.001388889, 0.001388889], [864, "avoid", 0.001388889, 0.001388889], [865, "model", 0.001388889, 0.001388889], [866, "defense", 0.001388889, 0.001388889], [867, "right", 0.001388889, 0.001388889], [868, "sent", 0.001388889, 0.001388889], [869, "real", 0.001388889, 0.001388889], [870, "expense", 0.001388889, 0.001388889], [871, "past", 0.001388889, 0.001388889], [872, "reduce", 0.001388889, 0.001388889], [873, "sen", 0.001388889, 0.001388889], [874, "expert", 0.001388889, 0.001388889], [875, "cut", 0.001388889, 0.001388889], [876, "collection", 0.001388889, 0.001388889], [877, "college", 0.001388889, 0.001388889], [878, "second", 0.001388889, 0.001388889], [879, "related", 0.001388889, 0.001388889], [880, "crisis", 0.001388889, 0.001388889], [881, "feel", 0.001388889, 0.001388889], [882, "cost", 0.001388889, 0.001388889], [883, "retirement", 0.001388889, 0.001388889], [884, "review", 0.001388889, 0.001388889], [885, "official", 0.001388889, 0.001388889], [886, "foreign", 0.001388889, 0.001388889], [887, "forbearance", 0.001388889, 0.001388889], [888, "constitutional", 0.001388889, 0.001388889], [889, "company", 0.001388889, 0.001388889], [890, "saving", 0.001388889, 0.001388889], [891, "constitution", 0.001388889, 0.001388889], [892, "default", 0.001388889, 0.001388889], [893, "service", 0.001388889, 0.001388889], [894, "period", 0.001388889, 0.001388889], [895, "business", 0.001388889, 0.001388889], [896, "star", 0.001388889, 0.001388889], [897, "buyback", 0.001388889, 0.001388889], [898, "gop", 0.001388889, 0.001388889], [899, "good", 0.001388889, 0.001388889], [900, "goal", 0.001388889, 0.001388889], [901, "price", 0.001388889, 0.001388889], [902, "campaign", 0.001388889, 0.001388889], [903, "gift", 0.001388889, 0.001388889], [904, "mexico", 0.001388889, 0.001388889], [905, "eagle", 0.001388889, 0.001388889], [906, "ensure", 0.001388889, 0.001388889], [907, "percent", 0.001388889, 0.001388889], [908, "connection", 0.001388889, 0.001388889], [909, "essential", 0.001388889, 0.001388889], [910, "philadelphia", 0.001388889, 0.001388889], [911, "public", 0.001388889, 0.001388889], [912, "purchase", 0.001388889, 0.001388889], [913, "egg", 0.001388889, 0.001388889], [914, "did", 0.001388889, 0.001388889], [915, "month", 0.001388889, 0.001388889], [916, "challenge", 0.001388889, 0.001388889], [917, "change", 0.001388889, 0.001388889], [918, "future", 0.001388889, 0.001388889], [919, "funding", 0.001388889, 0.001388889], [920, "doe", 0.001388889, 0.001388889], [921, "pay", 0.001388889, 0.001388889], [922, "office", 0.001388889, 0.001388889], [923, "regulatory", 0.001388889, 0.001388889], [924, "government", 0.001388889, 0.001388889], [925, "president", 0.002777778, 0.002777778], [926, "military", 0.002777778, 0.002777778], [927, "prevent", 0.002777778, 0.002777778], [928, "season", 0.002777778, 0.002777778], [929, "need", 0.002777778, 0.002777778], [930, "act", 0.002777778, 0.002777778], [931, "deal", 0.002777778, 0.002777778], [932, "free", 0.002777778, 0.002777778], [933, "decision", 0.002777778, 0.002777778], [934, "lamar", 0.002777778, 0.002777778], [935, "fund", 0.002777778, 0.002777778], [936, "executive", 0.002777778, 0.002777778], [937, "chief", 0.002777778, 0.002777778], [938, "getty", 0.002777778, 0.002777778], [939, "card", 0.002777778, 0.002777778], [940, "word", 0.002777778, 0.002777778], [941, "help", 0.002777778, 0.002777778], [942, "image", 0.002777778, 0.002777778], [943, "day", 0.002777778, 0.002777778], [944, "power", 0.002777778, 0.002777778], [945, "life", 0.002777778, 0.002777778], [946, "house", 0.002777778, 0.002777778], [947, "family", 0.002777778, 0.002777778], [948, "federal", 0.002777778, 0.002777778], [949, "issue", 0.002777778, 0.002777778], [950, "american", 0.002777778, 0.002777778], [951, "school", 0.004166667, 0.004166667], [952, "credit", 0.004166667, 0.004166667], [953, "program", 0.004166667, 0.004166667], [954, "payment", 0.004166667, 0.004166667], [955, "state", 0.004166667, 0.004166667], [956, "city", 0.004166667, 0.004166667], [957, "spending", 0.005555556, 0.005555556], [958, "relief", 0.005555556, 0.005555556], [959, "department", 0.005555556, 0.005555556], [960, "rate", 0.005555556, 0.005555556], [961, "billion", 0.005555556, 0.005555556], [962, "debt", 0.006944444, 0.006944444], [963, "donald", 0.006944444, 0.006944444], [964, "save", 0.006944444, 0.006944444], [965, "ai", 0.006944444, 0.006944444], [966, "according", 0.006944444, 0.006944444], [967, "told", 0.006944444, 0.006944444], [968, "sunday", 0.006944444, 0.006944444], [969, "republican", 0.006944444, 0.006944444], [970, "home", 0.006944444, 0.006944444], [971, "activity", 0.006944444, 0.006944444], [972, "climate", 0.006944444, 0.006944444], [973, "available", 0.006944444, 0.006944444], [974, "february", 0.006944444, 0.006944444], [975, "option", 0.008333333, 0.008333333], [976, "wrote", 0.008333333, 0.008333333], [977, "administration", 0.008333333, 0.008333333], [978, "million", 0.008333333, 0.008333333], [979, "experience", 0.008333333, 0.008333333], [980, "new", 0.008333333, 0.008333333], [981, "best", 0.008333333, 0.008333333], [982, "time", 0.009722222, 0.009722222], [983, "game", 0.009722222, 0.009722222], [984, "forgiveness", 0.01111111, 0.01111111], [985, "fox", 0.01111111, 0.01111111], [986, "use", 0.01111111, 0.01111111], [987, "way", 0.0125, 0.0125], [988, "borrower", 0.01388889, 0.01388889], [989, "just", 0.01388889, 0.01388889], [990, "education", 0.01527778, 0.01527778], [991, "said", 0.01666667, 0.01666667], [992, "feature", 0.01666667, 0.01666667], [993, "year", 0.01666667, 0.01666667], [994, "plan", 0.01805556, 0.01805556], [995, "biden", 0.02638889, 0.02638889], [996, "student", 0.03333333, 0.03333333], [997, "trump", 0.0375, 0.0375], [998, "loan", 0.0375, 0.0375], [999, "news", 0.04861111, 0.04861111]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="two-features---strict-two-political-biases" class="level3">
+<h3 class="anchored" data-anchor-id="two-features---strict-two-political-biases">Two Features - Strict Two Political Biases</h3>
+<div id="918bbff3" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<table id="itables_397b2e41_e841_4acd_b8aa_9609347690e7" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feature</th>
+      <th>importance</th>
+      <th>absolute_importance</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_397b2e41_e841_4acd_b8aa_9609347690e7:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[0, "fox", -0.02222222, 0.02222222], [1, "did", -0.02222222, 0.02222222], [2, "city", -0.01481481, 0.01481481], [3, "eagle", -0.01481481, 0.01481481], [4, "team", -0.01481481, 0.01481481], [5, "leave", -0.01234568, 0.01234568], [6, "attorney", -0.01234568, 0.01234568], [7, "military", -0.01234568, 0.01234568], [8, "union", -0.01234568, 0.01234568], [9, "win", -0.01234568, 0.01234568], [10, "return", -0.01234568, 0.01234568], [11, "hope", -0.01234568, 0.01234568], [12, "called", -0.01234568, 0.01234568], [13, "paid", -0.01234568, 0.01234568], [14, "group", -0.01234568, 0.01234568], [15, "week", -0.01234568, 0.01234568], [16, "hurt", -0.01234568, 0.01234568], [17, "white", -0.01234568, 0.01234568], [18, "money", -0.01234568, 0.01234568], [19, "affect", -0.01234568, 0.01234568], [20, "mission", -0.01234568, 0.01234568], [21, "offering", -0.01234568, 0.01234568], [22, "offer", -0.01234568, 0.01234568], [23, "family", -0.01234568, 0.01234568], [24, "trump", -0.01234568, 0.01234568], [25, "senate", -0.009876543, 0.009876543], [26, "judge", -0.009876543, 0.009876543], [27, "thousand", -0.009876543, 0.009876543], [28, "getty", -0.009876543, 0.009876543], [29, "worker", -0.009876543, 0.009876543], [30, "payment", -0.009876543, 0.009876543], [31, "make", -0.009876543, 0.009876543], [32, "federal", -0.009876543, 0.009876543], [33, "civil", -0.009876543, 0.009876543], [34, "program", -0.009876543, 0.009876543], [35, "sunday", -0.009876543, 0.009876543], [36, "president", -0.009876543, 0.009876543], [37, "year", -0.009876543, 0.009876543], [38, "option", -0.009876543, 0.009876543], [39, "super", -0.009876543, 0.009876543], [40, "bowl", -0.009876543, 0.009876543], [41, "month", -0.007407407, 0.007407407], [42, "come", -0.007407407, 0.007407407], [43, "effort", -0.007407407, 0.007407407], [44, "democratic", -0.007407407, 0.007407407], [45, "billion", -0.007407407, 0.007407407], [46, "include", -0.007407407, 0.007407407], [47, "known", -0.007407407, 0.007407407], [48, "university", -0.007407407, 0.007407407], [49, "relief", -0.007407407, 0.007407407], [50, "use", -0.007407407, 0.007407407], [51, "elect", -0.007407407, 0.007407407], [52, "administrative", -0.007407407, 0.007407407], [53, "administration", -0.007407407, 0.007407407], [54, "action", -0.007407407, 0.007407407], [55, "ensure", -0.007407407, 0.007407407], [56, "noted", -0.007407407, 0.007407407], [57, "nearly", -0.007407407, 0.007407407], [58, "supreme", -0.007407407, 0.007407407], [59, "people", -0.007407407, 0.007407407], [60, "court", -0.007407407, 0.007407407], [61, "cost", -0.004938272, 0.004938272], [62, "term", -0.004938272, 0.004938272], [63, "black", -0.004938272, 0.004938272], [64, "independent", -0.004938272, 0.004938272], [65, "image", -0.004938272, 0.004938272], [66, "chance", -0.004938272, 0.004938272], [67, "despite", -0.004938272, 0.004938272], [68, "opportunity", -0.004938272, 0.004938272], [69, "monday", -0.004938272, 0.004938272], [70, "son", -0.004938272, 0.004938272], [71, "number", -0.004938272, 0.004938272], [72, "country", -0.004938272, 0.004938272], [73, "service", -0.004938272, 0.004938272], [74, "rule", -0.004938272, 0.004938272], [75, "senior", -0.004938272, 0.004938272], [76, "created", -0.004938272, 0.004938272], [77, "source", -0.004938272, 0.004938272], [78, "branch", -0.004938272, 0.004938272], [79, "secretary", -0.004938272, 0.004938272], [80, "business", -0.004938272, 0.004938272], [81, "block", -0.004938272, 0.004938272], [82, "key", -0.004938272, 0.004938272], [83, "major", -0.004938272, 0.004938272], [84, "allowing", -0.004938272, 0.004938272], [85, "professor", -0.004938272, 0.004938272], [86, "according", -0.004938272, 0.004938272], [87, "promise", -0.004938272, 0.004938272], [88, "provide", -0.004938272, 0.004938272], [89, "loan", -0.004938272, 0.004938272], [90, "presidential", -0.004938272, 0.004938272], [91, "foundation", -0.004938272, 0.004938272], [92, "free", -0.004938272, 0.004938272], [93, "virginia", -0.004938272, 0.004938272], [94, "spent", -0.004938272, 0.004938272], [95, "american", -0.004938272, 0.004938272], [96, "approach", -0.004938272, 0.004938272], [97, "rep", -0.004938272, 0.004938272], [98, "used", -0.004938272, 0.004938272], [99, "committee", -0.004938272, 0.004938272], [100, "doge", -0.004938272, 0.004938272], [101, "legal", -0.004938272, 0.004938272], [102, "attempt", -0.004938272, 0.004938272], [103, "tuesday", -0.004938272, 0.004938272], [104, "ruling", -0.004938272, 0.004938272], [105, "result", -0.002469136, 0.002469136], [106, "department", -0.002469136, 0.002469136], [107, "higher", -0.002469136, 0.002469136], [108, "state", -0.002469136, 0.002469136], [109, "share", -0.002469136, 0.002469136], [110, "qualify", -0.002469136, 0.002469136], [111, "significant", -0.002469136, 0.002469136], [112, "democrat", -0.002469136, 0.002469136], [113, "push", -0.002469136, 0.002469136], [114, "illegal", -0.002469136, 0.002469136], [115, "previous", -0.002469136, 0.002469136], [116, "previously", -0.002469136, 0.002469136], [117, "immigration", -0.002469136, 0.002469136], [118, "follow", -0.002469136, 0.002469136], [119, "hand", -0.002469136, 0.002469136], [120, "conservative", -0.002469136, 0.002469136], [121, "existing", -0.002469136, 0.002469136], [122, "florida", -0.002469136, 0.002469136], [123, "philadelphia", -0.002469136, 0.002469136], [124, "financial", -0.002469136, 0.002469136], [125, "south", -0.002469136, 0.002469136], [126, "space", -0.002469136, 0.002469136], [127, "conference", -0.002469136, 0.002469136], [128, "final", -0.002469136, 0.002469136], [129, "great", -0.002469136, 0.002469136], [130, "concern", -0.002469136, 0.002469136], [131, "old", -0.002469136, 0.002469136], [132, "figure", -0.002469136, 0.002469136], [133, "fan", -0.002469136, 0.002469136], [134, "pro", -0.002469136, 0.002469136], [135, "gov", -0.002469136, 0.002469136], [136, "given", -0.002469136, 0.002469136], [137, "pay", -0.002469136, 0.002469136], [138, "deal", -0.002469136, 0.002469136], [139, "efficiency", -0.002469136, 0.002469136], [140, "election", -0.002469136, 0.002469136], [141, "pas", -0.002469136, 0.002469136], [142, "say", -0.002469136, 0.002469136], [143, "held", -0.002469136, 0.002469136], [144, "political", -0.002469136, 0.002469136], [145, "scheme", -0.002469136, 0.002469136], [146, "elon", -0.002469136, 0.002469136], [147, "partner", -0.002469136, 0.002469136], [148, "hit", -0.002469136, 0.002469136], [149, "politics", -0.002469136, 0.002469136], [150, "question", -0.002469136, 0.002469136], [151, "pandemic", -0.002469136, 0.002469136], [152, "employee", -0.002469136, 0.002469136], [153, "reform", -0.002469136, 0.002469136], [154, "position", -0.002469136, 0.002469136], [155, "host", -0.002469136, 0.002469136], [156, "post", -0.002469136, 0.002469136], [157, "drug", -0.002469136, 0.002469136], [158, "covid", -0.002469136, 0.002469136], [159, "plan", -0.002469136, 0.002469136], [160, "recent", -0.002469136, 0.002469136], [161, "outside", -0.002469136, 0.002469136], [162, "received", -0.002469136, 0.002469136], [163, "housing", -0.002469136, 0.002469136], [164, "receive", -0.002469136, 0.002469136], [165, "regulation", -0.002469136, 0.002469136], [166, "growth", -0.002469136, 0.002469136], [167, "including", -0.002469136, 0.002469136], [168, "building", -0.002469136, 0.002469136], [169, "long", -0.002469136, 0.002469136], [170, "leading", -0.002469136, 0.002469136], [171, "wing", -0.002469136, 0.002469136], [172, "best", -0.002469136, 0.002469136], [173, "campus", -0.002469136, 0.002469136], [174, "campaign", -0.002469136, 0.002469136], [175, "leader", -0.002469136, 0.002469136], [176, "annual", -0.002469136, 0.002469136], [177, "california", -0.002469136, 0.002469136], [178, "ago", -0.002469136, 0.002469136], [179, "announcement", -0.002469136, 0.002469136], [180, "little", -0.002469136, 0.002469136], [181, "mean", -0.002469136, 0.002469136], [182, "measure", -0.002469136, 0.002469136], [183, "budget", -0.002469136, 0.002469136], [184, "medical", -0.002469136, 0.002469136], [185, "based", -0.002469136, 0.002469136], [186, "borrower", -0.002469136, 0.002469136], [187, "aid", -0.002469136, 0.002469136], [188, "wanted", -0.002469136, 0.002469136], [189, "limited", -0.002469136, 0.002469136], [190, "kind", -0.002469136, 0.002469136], [191, "limit", -0.002469136, 0.002469136], [192, "labor", -0.002469136, 0.002469136], [193, "took", -0.002469136, 0.002469136], [194, "large", -0.002469136, 0.002469136], [195, "law", -0.002469136, 0.002469136], [196, "treasury", -0.002469136, 0.002469136], [197, "treatment", -0.002469136, 0.002469136], [198, "investor", -0.002469136, 0.002469136], [199, "medium", -0.002469136, 0.002469136], [200, "matter", -0.002469136, 0.002469136], [201, "like", -0.002469136, 0.002469136], [202, "area", -0.002469136, 0.002469136], [203, "china", -0.002469136, 0.002469136], [204, "legislation", -0.002469136, 0.002469136], [205, "ap", -0.002469136, 0.002469136], [206, "loss", -0.002469136, 0.002469136], [207, "making", -0.002469136, 0.002469136], [208, "statement", -0.002469136, 0.002469136], [209, "climate", -0.002469136, 0.002469136], [210, "charge", -0.002469136, 0.002469136], [211, "activity", -0.002469136, 0.002469136], [212, "office", -0.002469136, 0.002469136], [213, "star", -0.002469136, 0.002469136], [214, "application", -0.002469136, 0.002469136], [215, "mexico", -0.002469136, 0.002469136], [216, "mark", -0.002469136, 0.002469136], [217, "work", -0.002469136, 0.002469136], [218, "york", -0.002469136, 0.002469136], [219, "ceo", -0.002469136, 0.002469136], [220, "claim", -0.002469136, 0.002469136], [221, "workforce", -0.002469136, 0.002469136], [222, "apply", -0.002469136, 0.002469136], [223, "increase", -0.002469136, 0.002469136], [224, "security", -4.440892e-17, 4.440892e-17], [225, "america", -4.440892e-17, 4.440892e-17], [226, "production", -2.220446e-17, 2.220446e-17], [227, "know", -2.220446e-17, 2.220446e-17], [228, "man", -2.220446e-17, 2.220446e-17], [229, "decision", -2.220446e-17, 2.220446e-17], [230, "spending", -2.220446e-17, 2.220446e-17], [231, "good", -2.220446e-17, 2.220446e-17], [232, "reporter", -2.220446e-17, 2.220446e-17], [233, "john", -2.220446e-17, 2.220446e-17], [234, "executive", -2.220446e-17, 2.220446e-17], [235, "operation", -2.220446e-17, 2.220446e-17], [236, "related", -2.220446e-17, 2.220446e-17], [237, "order", -2.220446e-17, 2.220446e-17], [238, "war", -2.220446e-17, 2.220446e-17], [888, "college", 0.002469136, 0.002469136], [889, "reported", 0.002469136, 0.002469136], [890, "taxpayer", 0.002469136, 0.002469136], [891, "million", 0.002469136, 0.002469136], [892, "need", 0.002469136, 0.002469136], [893, "digital", 0.002469136, 0.002469136], [894, "democracy", 0.002469136, 0.002469136], [895, "disaster", 0.002469136, 0.002469136], [896, "november", 0.002469136, 0.002469136], [897, "requirement", 0.002469136, 0.002469136], [898, "development", 0.002469136, 0.002469136], [899, "border", 0.002469136, 0.002469136], [900, "professional", 0.002469136, 0.002469136], [901, "joe", 0.002469136, 0.002469136], [902, "file", 0.002469136, 0.002469136], [903, "justice", 0.002469136, 0.002469136], [904, "vought", 0.002469136, 0.002469136], [905, "agreement", 0.002469136, 0.002469136], [906, "signed", 0.002469136, 0.002469136], [907, "continue", 0.002469136, 0.002469136], [908, "management", 0.002469136, 0.002469136], [909, "police", 0.002469136, 0.002469136], [910, "rate", 0.002469136, 0.002469136], [911, "enforcement", 0.002469136, 0.002469136], [912, "graduate", 0.002469136, 0.002469136], [913, "performance", 0.002469136, 0.002469136], [914, "local", 0.002469136, 0.002469136], [915, "expected", 0.002469136, 0.002469136], [916, "future", 0.002469136, 0.002469136], [917, "past", 0.002469136, 0.002469136], [918, "released", 0.002469136, 0.002469136], [919, "following", 0.002469136, 0.002469136], [920, "twitter", 0.002469136, 0.002469136], [921, "washington", 0.002469136, 0.002469136], [922, "parent", 0.002469136, 0.002469136], [923, "central", 0.002469136, 0.002469136], [924, "want", 0.002469136, 0.002469136], [925, "forward", 0.002469136, 0.002469136], [926, "document", 0.002469136, 0.002469136], [927, "support", 0.002469136, 0.002469136], [928, "daily", 0.002469136, 0.002469136], [929, "taken", 0.002469136, 0.002469136], [930, "view", 0.002469136, 0.002469136], [931, "value", 0.002469136, 0.002469136], [932, "left", 0.002469136, 0.002469136], [933, "january", 0.004938272, 0.004938272], [934, "report", 0.004938272, 0.004938272], [935, "failed", 0.004938272, 0.004938272], [936, "app", 0.004938272, 0.004938272], [937, "sign", 0.004938272, 0.004938272], [938, "community", 0.004938272, 0.004938272], [939, "current", 0.004938272, 0.004938272], [940, "press", 0.004938272, 0.004938272], [941, "story", 0.004938272, 0.004938272], [942, "idea", 0.004938272, 0.004938272], [943, "click", 0.004938272, 0.004938272], [944, "hamas", 0.004938272, 0.004938272], [945, "said", 0.004938272, 0.004938272], [946, "congress", 0.004938272, 0.004938272], [947, "individual", 0.004938272, 0.004938272], [948, "doe", 0.004938272, 0.004938272], [949, "person", 0.004938272, 0.004938272], [950, "benefit", 0.004938272, 0.004938272], [951, "tip", 0.004938272, 0.004938272], [952, "government", 0.004938272, 0.004938272], [953, "social", 0.004938272, 0.004938272], [954, "dei", 0.004938272, 0.004938272], [955, "education", 0.004938272, 0.004938272], [956, "donald", 0.007407407, 0.007407407], [957, "later", 0.007407407, 0.007407407], [958, "day", 0.007407407, 0.007407407], [959, "way", 0.007407407, 0.007407407], [960, "school", 0.007407407, 0.007407407], [961, "policy", 0.007407407, 0.007407407], [962, "student", 0.007407407, 0.007407407], [963, "act", 0.009876543, 0.009876543], [964, "simply", 0.009876543, 0.009876543], [965, "sense", 0.009876543, 0.009876543], [966, "change", 0.009876543, 0.009876543], [967, "public", 0.009876543, 0.009876543], [968, "agency", 0.009876543, 0.009876543], [969, "majority", 0.009876543, 0.009876543], [970, "saying", 0.009876543, 0.009876543], [971, "robert", 0.009876543, 0.009876543], [972, "authority", 0.009876543, 0.009876543], [973, "initiative", 0.009876543, 0.009876543], [974, "just", 0.009876543, 0.009876543], [975, "debt", 0.009876543, 0.009876543], [976, "time", 0.009876543, 0.009876543], [977, "home", 0.01234568, 0.01234568], [978, "reach", 0.01234568, 0.01234568], [979, "entire", 0.01234568, 0.01234568], [980, "similar", 0.01234568, 0.01234568], [981, "wrote", 0.01234568, 0.01234568], [982, "think", 0.01234568, 0.01234568], [983, "example", 0.01234568, 0.01234568], [984, "safety", 0.01234568, 0.01234568], [985, "company", 0.01234568, 0.01234568], [986, "food", 0.01234568, 0.01234568], [987, "common", 0.01234568, 0.01234568], [988, "half", 0.01234568, 0.01234568], [989, "likely", 0.01234568, 0.01234568], [990, "protection", 0.01234568, 0.01234568], [991, "power", 0.01234568, 0.01234568], [992, "came", 0.01234568, 0.01234568], [993, "health", 0.01234568, 0.01234568], [994, "chief", 0.01234568, 0.01234568], [995, "case", 0.01234568, 0.01234568], [996, "economic", 0.01234568, 0.01234568], [997, "history", 0.01234568, 0.01234568], [998, "biden", 0.01975309, 0.01975309], [999, "news", 0.03703704, 0.03703704]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>The new Three Label Model will have 198 features and the new Two Label Model will have 351 features.</p>
+</blockquote>
+</section>
+</section>
+<section id="retrained-models" class="level2">
+<h2 class="anchored" data-anchor-id="retrained-models">Retrained Models</h2>
+<p>The retrained models with fewer features had roughly about the same accuracy (when compared to the grid search cross validation results).</p>
+<section id="three-features" class="level3">
+<h3 class="anchored" data-anchor-id="three-features">Three Features</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/svm/cm_important_three_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="two-features" class="level3">
+<h3 class="anchored" data-anchor-id="two-features">Two Features</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modeling/svm/cm_important_two_labels.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="reddit-projection-results" class="level2">
+<h2 class="anchored" data-anchor-id="reddit-projection-results">Reddit Projection Results</h2>
+<div id="4c2ec069" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<table id="itables_6eadbaa8_a673_4da1_aa1a_f3ddabf00fb8" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<thead>
+    <tr style="text-align: right;">
+      
+      <th>Author</th>
+      <th>Predicted Bias Three</th>
+      <th>Threshold Three</th>
+      <th>Predicted Bias Two</th>
+      <th>Threshold Two</th>
+      <th>Threshold</th>
+      <th>Conclusion</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+Loading ITables v2.2.5 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_6eadbaa8_a673_4da1_aa1a_f3ddabf00fb8:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [["-CJF-", "Center", 0.52456, "Left", 0.939749, 0.492955, "Lean Left"], ["42Pockets", "Center", 0.432347, "Left", 0.5, 0.216174, "Lean Left"], ["AffectionatePause152", "Center", 0.878663, "Left", 0.661537, 0.581269, "Lean Left"], ["Alternative-Rub-7445", "Center", 0.809377, "Left", 0.530028, 0.428993, "Lean Left"], ["Deepthunkd", "Center", 0.840155, "Right", 0.641983, 0.539365, "Lean Right"], ["Deutsche_Bank_AG", "Center", 0.977197, "Left", 0.588565, 0.575144, "Lean Left"], ["EmergencyThing5", "Center", 0.934804, "Left", 0.81588, 0.762688, "Lean Left"], ["Expensive-Annual1024", "Center", 0.745705, "Right", 0.593169, 0.442329, "Lean Right"], ["Flaky-Wing2205", "Center", 0.9144, "Left", 0.766352, 0.700752, "Lean Left"], ["HyruleSmash855", "Center", 0.669846, "Right", 0.644595, 0.431779, "Lean Right"], ["Idea-Technical", "Center", 0.778618, "Left", 0.738787, 0.575233, "Lean Left"], ["Impressive-Peanut614", "Center", 0.924821, "Left", 0.714264, 0.660566, "Lean Left"], ["Leann004", "Center", 0.89962, "Right", 0.671731, 0.604303, "Lean Right"], ["LeetleBugg", "Center", 0.760086, "Left", 0.77636, 0.590101, "Lean Left"], ["Logical_Holiday_2457", "Center", 0.847155, "Left", 0.758001, 0.642144, "Lean Left"], ["Ok-Nefariousness-927", "Center", 0.936103, "Right", 0.637525, 0.596788, "Lean Right"], ["OrangeTabbiesDad", "Center", 0.958436, "Left", 0.681519, 0.653192, "Lean Left"], ["PandaKing6887", "Center", 0.92671, "Left", 0.833779, 0.772671, "Lean Left"], ["Relevant-Platypus162", "Center", 0.856145, "Left", 0.597537, 0.511579, "Lean Left"], ["SD-777", "Center", 0.971331, "Left", 0.543881, 0.528288, "Lean Left"], ["TldrDev", "Center", 0.960237, "Left", 0.635031, 0.60978, "Lean Left"], ["Ut_Prosim", "Left", 0.593143, "Left", 0.893102, 0.529737, "Left"], ["arinehim", "Left", 0.62009, "Left", 0.752306, 0.466497, "Left"], ["baby-luvs-gorgonzola", "Center", 0.920647, "Left", 0.534971, 0.492519, "Lean Left"], ["blueskyandsea", "Center", 0.665949, "Left", 0.896828, 0.597242, "Lean Left"], ["burner12077", "Center", 0.887892, "Left", 0.593366, 0.526845, "Lean Left"], ["codece", "Center", 0.963428, "Left", 0.767181, 0.739124, "Lean Left"], ["embiggenedmind", "Right", 0.909722, "Right", 0.754411, 0.686305, "Right"], ["girl_of_squirrels", "Center", 0.932738, "Left", 0.552347, 0.515195, "Lean Left"], ["horsebycommittee", "Center", 0.755814, "Right", 0.841352, 0.635905, "Lean Right"], ["hotjambalaya17", "Center", 0.960507, "Right", 0.680155, 0.653294, "Lean Right"], ["indy1386", "Center", 0.723808, "Left", 0.709208, 0.51333, "Lean Left"], ["ironboy157", "Center", 0.947284, "Left", 0.626944, 0.593894, "Lean Left"], ["kungfuenglish", "Center", 0.84358, "Left", 0.538331, 0.454126, "Lean Left"], ["milespoints", "Center", 0.904986, "Left", 0.60854, 0.55072, "Lean Left"], ["mindmapsofficial", "Center", 0.966683, "Left", 0.759784, 0.73447, "Lean Left"], ["mlotto7", "Center", 0.764017, "Left", 0.834973, 0.637933, "Lean Left"], ["mxzf", "Center", 0.792695, "Left", 0.679918, 0.538967, "Lean Left"], ["random-bot-2", "Center", 0.914163, "Left", 0.888152, 0.811915, "Lean Left"], ["robotlasagna", "Center", 0.924466, "Right", 0.698081, 0.645352, "Lean Right"], ["snoopyvibes", "Center", 0.717494, "Left", 0.872981, 0.626359, "Lean Left"], ["throwawtphone", "Center", 0.874135, "Right", 0.788949, 0.689648, "Lean Right"], ["tizuby", "Center", 0.891541, "Right", 0.704742, 0.628306, "Lean Right"], ["urLocalpoopstain", "Center", 0.887909, "Left", 0.883162, 0.784168, "Lean Left"], ["waterwicca", "Center", 0.821782, "Left", 0.856886, 0.704173, "Lean Left"], ["wes7946", "Center", 0.79827, "Right", 0.773636, 0.61757, "Lean Right"], ["xantharia", "Center", 0.838336, "Right", 0.691059, 0.579339, "Lean Right"]];
+
+        // Define the dt_args
+        let dt_args = {"layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "warn_on_selected_rows_not_rendered": true};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>The above illustrates the predicions for both the three and two label models as well as their probabilities. Combining the results in the last two columns illustrates the overall political bias (including leanings). Recall that the Reddit data is unlabeled, so the probabilities act as sure the model is in predicting the political biases. Recall that political biases are correlated with sentiment, with the Right having a more negative sentiment and the Left having a more positive sentiment.</p>
+</blockquote>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+</section>
+<section id="modeling-conclusions" class="level1">
+<h1>Modeling Conclusions</h1>
+<p>Please see <a href="./modeling_conclusion.html">Modeling Conclusions</a> for a complete synthesis of the supervised machine learning models, especially concerning bias and sentiment.</p>
+<hr>
+</section>
+<section id="code-links" class="level1">
+<h1>Code Links</h1>
+<ul>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/modeling_functions.py">Modeling Functions</a></li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/svm.py">SVM Modeling</a></li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

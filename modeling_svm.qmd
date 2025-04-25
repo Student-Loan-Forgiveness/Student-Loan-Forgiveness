@@ -3,3 +3,177 @@ title: "Modeling - Support Vector Machines"
 execute:
   echo: false
 ---
+
+```{python}
+# import libraries
+import pandas as pd
+from itables import show
+
+# import important features and reddit projection results
+feature_importance_three = pd.read_csv('data/modeling/svm/feature_importance_three.csv')
+feature_importance_two = pd.read_csv('data/modeling/svm/feature_importance_two.csv')
+svm_reddit_results = pd.read_csv('data/modeling/svm/svm_reddit_results.csv')
+
+# grid search results
+grid_search_best = pd.read_csv('data/modeling/svm/grid_search.csv')
+grid_search_combined = pd.read_csv('data/modeling/svm/detailed_combined.csv')
+
+```
+
+# Introduction
+
+Support Vector Machines (SVMs) are supervised learning methods which transform features into a higher dimensional space to separate the labels. The usefulness of an SVM comes from when the input data in its original dimensional space isn’t linearly separable, but in a higher dimensional space there exists a hyperplane which can linearly separate the groups of the data.
+
+SVMs use a quadratic optimization algorithm, in which the final optimal dual form contains a dot product (or inner product). This allows for the use of kernels, which are functions that return an inner product in a higher dimensional space. Being able to apply kernels is essential, as just the solution to the dot product is needed and doesn’t actually need to be transformed into a higher dimensional space in practice.
+
+Being able to use a dot product, and subsequently a kernel, allows for just the solution of the dot product to be used instead of actually transforming the data into a higher dimensional space. This makes SVMs highly efficient. Additionally, SVMs create a margin between the groups in the higher dimensional space. Any point on the margin is known as a support vector. Not only are they computationally efficient but they are also more resistant to outliers and noise due to this. Keep in mind that a single SVM is a binary classifier, however multiple SVMs can be ensembled together for more than a 2-class problem.
+
+SVMs can only work on labeled numeric data. First, an SVM is a supervised machine learning method. This means, that it can only be used on labeled data in order to train the model. Second, due to the mathematic nature of dot products, and subsequently kernels, the data must be numeric.
+
+Some of the common SVM kernels are:
+
+- RBF (Radial Basis Function or Gaussian)
+- Polynomial
+- Linear
+- Sigmoid
+
+This section of the analysis will specifically use **Support Vector Machine Classification** [sklearn documentation](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html).
+
+# Strategy and Goals
+
+More specifically, SVMs will be used here to create models for predicting political bias from text data. Aftering training models with news article which have known political biases, these models will be applied to Reddit data to project political bias, which could be a decent indicator of sentiment towards student loan relief in online social discourse.
+
+>See the [Modeling Preparation](modeling_prep.qmd) page for a detailed breakdown of the data fromatting, labels for supervised learning, and necessity for disjointness.
+
+# Hyperparameter Tuning
+
+Due to the availability of hyperparameters within the deciison tree classifier, [GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) was used to test each of the parameters for each the label aggregations. This uses the entire dataset and cross validates that, folding it into 5 different folds in this case. It essentially creates the training and testing sets during the process within the 5 different folds.
+
+The hyperparameters tested were:
+
+- C (cost):
+  - 0.5
+  - 1.0
+  - 1.5
+  - 2.0
+  - 2.5
+  - 3.0
+- kernel:
+  - linear
+  - poly (polynomial)
+  - rbf (radial basis function or gaussian)
+
+  
+## Hyperparameter Results
+
+```{python}
+show(grid_search_combined, style="width:100%;margin:auto")
+```
+
+## Hyperparameter Best Results
+
+```{python}
+show(grid_search_best, style="width:50%;margin:auto")
+```
+
+> Note that the combined search has rankings for each model based not only on accuracy but aspects such model fitting time. The Hyperparameter Best Results will be used for the following modeling.
+
+# Modeling
+
+## Five Labels
+
+![](images/modeling/svm/cm_five_labels.png){width=50% fig-align="center"}
+
+The overall accuracy for testing across all five labels is about 55.51%. Predictions for Center performed overwhelmingly well. This could be indicative to the proportion of the labels as discussed in the modeling preparations page.
+
+## Three Labels
+
+![](images/modeling/svm/cm_three_labels.png){width=50% fig-align="center"}
+
+When combining Lean Left and Lean Right with Left and Right, respectively, the model accuracy increasing to 61.23%. The model has a decent performance, with predictions for the Right political bias outperforming the other prediction categories. Left performed the worse.
+
+## Strict Three Labels
+
+![](images/modeling/svm/cm_strict_three_labels.png){width=50% fig-align="center"}
+
+When the leaning political biases weren't combined, the accuracy of the model increased by over 10% for the three political bias labels. Overall decent results with its best performance on Right labels.
+
+## Two Labels
+
+![](images/modeling/svm/cm_two_labels.png){width=50% fig-align="center"}
+
+When combining Lean Left and Lean Right with Left and Right, respectively, and dropping the Center label, the model accuracy was about 60%. There were still a high amount of incorrect predictions, which could be reflective on the leanings.
+
+## Strict Two Labels
+
+![](images/modeling/svm/cm_strict_two_labels.png){width=50% fig-align="center"}
+
+When the leaning political biases weren't combined, and dropping the the Center label, the accuracy of the model was phenomenonal! On this particular training and testing set, there was a 96% accuracy. This is a respectable model, and the best performance with the SVM classification in this section. *It should be noted that this model on the grid search performance was only just above 80% accuracy when averaged across several different training and testing datasets*.
+
+# Reddit Projections
+
+To apply this model in projecting political bias on Reddit authors, feature permutation was performed on the best performing 3-Class and 2-Class models to obtain the most important features from the original 1000 labels. Subsequently:
+
+1. The models were retrained on this subset of important features.
+2. The Reddit count vectorized data was then reduced to these feautres.
+3. The models were appplied to the Reddit subset.
+
+## Feature Importance through Permutation
+
+### Three Features - Strict Three Political Biases
+
+```{python}
+show(feature_importance_three[feature_importance_three['absolute_importance']>0], style="width:50%;margin:auto")
+```
+
+### Two Features - Strict Two Political Biases
+
+```{python}
+show(feature_importance_two[feature_importance_two['absolute_importance']>0], style="width:50%;margin:auto")
+```
+
+>The new Three Label Model will have 198 features and the new Two Label Model will have 351 features.
+
+
+## Retrained Models
+
+The retrained models with fewer features had roughly about the same accuracy (when compared to the grid search cross validation results).
+
+### Three Features
+
+![](images/modeling/svm/cm_important_three_labels.png){width=50% fig-align="center"}
+
+### Two Features
+
+![](images/modeling/svm/cm_important_two_labels.png){width=50% fig-align="center"}
+
+## Reddit Projection Results
+
+```{python}
+show(svm_reddit_results, style="width:50%;margin:auto")
+```
+
+>The above illustrates the predicions for both the three and two label models as well as their probabilities. Combining the results in the last two columns illustrates the overall political bias (including leanings). Recall that the Reddit data is unlabeled, so the probabilities act as sure the model is in predicting the political biases. Recall that political biases are correlated with sentiment, with the Right having a more negative sentiment and the Left having a more positive sentiment.
+
+
+# Conclusion
+
+# Modeling Conclusions
+
+Please see [Modeling Conclusions](modeling_conclusion.qmd) for a complete synthesis of the supervised machine learning models, especially concerning bias and sentiment.
+
+
+---
+
+# Code Links
+
+- [Modeling Functions](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/modeling_functions.py)
+- [SVM Modeling](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/svm.py)
+
+
+
+
+
+
+
+

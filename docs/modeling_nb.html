@@ -213,6 +213,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#reddit-projection-results" id="toc-reddit-projection-results" class="nav-link" data-scroll-target="#reddit-projection-results">Reddit Projection Results</a></li>
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#modeling-conclusions" id="toc-modeling-conclusions" class="nav-link" data-scroll-target="#modeling-conclusions">Modeling Conclusions</a></li>
   <li><a href="#code-links" id="toc-code-links" class="nav-link" data-scroll-target="#code-links">Code Links</a></li>
   </ul>
 </nav>
@@ -312,9 +313,9 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="feature-importance-through-permutation">Feature Importance through Permutation</h2>
 <section id="three-features---strict-three-political-biases" class="level3">
 <h3 class="anchored" data-anchor-id="three-features---strict-three-political-biases">Three Features - Strict Three Political Biases</h3>
-<div id="d6412194" class="cell" data-execution_count="2">
+<div id="568f9b4c" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_d65a8c9f_bc6b_4adc_b678_6dba7f18c646" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<table id="itables_bba7849b_7305_4b43_9a5d_f2eedf3526c3" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -389,7 +390,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_d65a8c9f_bc6b_4adc_b678_6dba7f18c646:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_bba7849b_7305_4b43_9a5d_f2eedf3526c3:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -409,9 +410,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="two-features---strict-two-political-biases" class="level3">
 <h3 class="anchored" data-anchor-id="two-features---strict-two-political-biases">Two Features - Strict Two Political Biases</h3>
-<div id="f0935f7b" class="cell" data-execution_count="3">
+<div id="15a67366" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_fcc22965_5d8a_4890_9fa7_505f68747ec6" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<table id="itables_b9a54db9_e532_4ea4_9130_56c30be8cf9a" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -486,7 +487,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_fcc22965_5d8a_4890_9fa7_505f68747ec6:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_b9a54db9_e532_4ea4_9130_56c30be8cf9a:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -530,9 +531,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="reddit-projection-results" class="level2">
 <h2 class="anchored" data-anchor-id="reddit-projection-results">Reddit Projection Results</h2>
-<div id="8468c993" class="cell" data-execution_count="4">
+<div id="cc509465" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<table id="itables_9ffc8a36_0b21_40b5_99ac_4959fbac346c" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<table id="itables_ebf5a380_dcee_49be_a36c_afe3d9d8f9b9" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -611,7 +612,7 @@ Loading ITables v2.2.5 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_9ffc8a36_0b21_40b5_99ac_4959fbac346c:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_ebf5a380_dcee_49be_a36c_afe3d9d8f9b9:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -629,12 +630,16 @@ Loading ITables v2.2.5 from the internet...
 </div>
 </div>
 <blockquote class="blockquote">
-<p>The above illustrates the predicions for both the three and two label models as well as their probabilities. Combining the results in the last two columns illustrates the overall political bias (including leanings). Recall that the Reddit data is unlabeled, so the probabilities act as sure the model is in predicting the political biases.</p>
+<p>The above illustrates the predicions for both the three and two label models as well as their probabilities. Combining the results in the last two columns illustrates the overall political bias (including leanings). Recall that the Reddit data is unlabeled, so the probabilities act as sure the model is in predicting the political biases. Recall that political biases are correlated with sentiment, with the Right having a more negative sentiment and the Left having a more positive sentiment.</p>
 </blockquote>
 </section>
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
+</section>
+<section id="modeling-conclusions" class="level1">
+<h1>Modeling Conclusions</h1>
+<p>Please see <a href="./modeling_conclusion.html">Modeling Conclusions</a> for a complete synthesis of the supervised machine learning models, especially concerning bias and sentiment.</p>
 <hr>
 </section>
 <section id="code-links" class="level1">

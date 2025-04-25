@@ -105,10 +105,15 @@ The retrained models with fewer features had roughly about the same accuracy.
 show(nb_reddit_results, style="width:50%;margin:auto")
 ```
 
->The above illustrates the predicions for both the three and two label models as well as their probabilities. Combining the results in the last two columns illustrates the overall political bias (including leanings). Recall that the Reddit data is unlabeled, so the probabilities act as sure the model is in predicting the political biases.
+>The above illustrates the predicions for both the three and two label models as well as their probabilities. Combining the results in the last two columns illustrates the overall political bias (including leanings). Recall that the Reddit data is unlabeled, so the probabilities act as sure the model is in predicting the political biases. Recall that political biases are correlated with sentiment, with the Right having a more negative sentiment and the Left having a more positive sentiment.
 
 
 # Conclusion
+
+# Modeling Conclusions
+
+Please see [Modeling Conclusions](modeling_conclusion.qmd) for a complete synthesis of the supervised machine learning models, especially concerning bias and sentiment.
+
 
 ---
 

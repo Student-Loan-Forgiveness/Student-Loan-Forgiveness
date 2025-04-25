@@ -80,7 +80,7 @@ show(grid_search_combined, style="width:100%;margin:auto")
 show(grid_search_best, style="width:50%;margin:auto")
 ```
 
-> Note that the combined search has rankings for each model based not only on accuracy but aspects such model fitting time. The best Hyperparameter Best Results will be used for the following modeling.
+> Note that the combined search has rankings for each model based not only on accuracy but aspects such model fitting time. The Hyperparameter Best Results will be used for the following modeling.
 
 # Modeling
 
@@ -164,11 +164,14 @@ The retrained models with fewer features had roughly about the same accuracy.
 show(dt_reddit_results, style="width:50%;margin:auto")
 ```
 
->The above illustrates the predicions for both the three and two label models as well as their probabilities. This was a strictly two-label projection onto the Reddit data and shows some decently high confidence from the model.
+>The above illustrates the predicions for both the three and two label models as well as their probabilities. This was a strictly two-label projection onto the Reddit data and shows some decently high confidence from the model. Recall that political biases are correlated with sentiment, with the Right having a more negative sentiment and the Left having a more positive sentiment.
 
 
 # Conclusion
 
+# Modeling Conclusions
+
+Please see [Modeling Conclusions](modeling_conclusion.qmd) for a complete synthesis of the supervised machine learning models, especially concerning bias and sentiment.
 
 ---
 
