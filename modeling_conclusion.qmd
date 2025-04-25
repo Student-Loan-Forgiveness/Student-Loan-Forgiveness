@@ -3,3 +3,133 @@ title: "Modeling - Conclusions"
 execute:
   echo: false
 ---
+
+
+```{python}
+# import libraries
+import pandas as pd
+from itables import show
+
+# import reddit scaled
+reddit_scaled = pd.read_csv('data/modeling/reddit_scaled.csv')
+
+# import reddit content by sentiment
+reddit_content_positive = pd.read_csv('data/modeling/reddit_content_positive.csv')
+reddit_content_neutral = pd.read_csv('data/modeling/reddit_content_neutral.csv')
+reddit_content_negative = pd.read_csv('data/modeling/reddit_content_negative.csv')
+
+# reduce to author and content
+reddit_content_positive = reddit_content_positive[['Author', 'Content', 'Sentiment Score', 'Sentiment Label']]
+reddit_content_neutral = reddit_content_neutral[['Author', 'Content', 'Sentiment Score', 'Sentiment Label']]
+reddit_content_negative = reddit_content_negative[['Author', 'Content', 'Sentiment Score', 'Sentiment Label']]
+
+# concatenate
+reddit_content = pd.concat([reddit_content_positive, reddit_content_neutral], ignore_index=True)
+reddit_content = pd.concat([reddit_content, reddit_content_negative], ignore_index=True)
+
+```
+
+# Introduction
+
+This section serves as a fusion of the supervised modeling across the previous sections:
+
+- [Modeling Preparation](modeling_prep.qmd)
+- [Naive Bayes](modeling_nb.qmd)
+- [Decision Trees](modeling_dt.qmd)
+- [Support Vector Machines](modeling_svm.qmd)
+
+Specifically, this will take the best binary classification models from Naive Bayes, Decision Trees, and Support Vector Machines. These binary classification models were trained and tested on the **strict** two label political biases (*Left* and *Right*). To iterate across the other sections, they ignore *Lean Left*, *Center*, and *Lean Right* political biases. Given that sentiment towards the topic of student loan forgiveness is generally split along political lines, the idea is that correlation can be projected onto Reddit authors, predicted by a collection of their posts.
+
+In all three families of the supervised learning models, the strict two label political bias binary classifiers performed the best. By performing probabilistic weighting with the three models, an overall political bias of a Reddit author can be obtained, complete with a probability. **Therefore, a general consensus of their sentiment towards this topic can be quantitatively calculated**.
+
+
+# Probabilistic Weighting
+
+Using the binary classifiers for Right and Left political bias from the three models, a conclusive weighting metric was made.
+
+For each Reddit Author:
+
+- $C_L$: count *Left* classifications
+- $C_R$: count *Right* classifications
+- $P_L$: product of *Left* probabilities, given a *Left* classification
+- $P_R$: product of *Right* probabilities, given a *Right* classification
+- $W_L = C_L \cdot P_L$: weight of *Left* classifications
+- $W_R = C_R \cdot P_R$: weight of *Left* classifications
+
+Let *Right* political bias be a negative value (as to represent negative sentiment), then the following scores and labels can be interpreted:
+
+**Sentiment Score** ($S_s$):
+
+$$S_s = W_L + (-W_R)$$
+
+**Sentiment Label** ($S_l$):
+
+$$S_l = \begin{cases} S_s \leq -1 : \text{Negative} \\ -1 < S_s < 1 : \text{Neutral} \\ S_s \geq 1 : \text{Positive} \end{cases}$$
+
+Using this probabilistic weighting method, the following results were derived:
+
+```{python}
+show(reddit_scaled, style="width:50%;margin:auto")
+```
+
+# Sentiment Gauge Overall
+
+```{=html}
+<iframe src="images/modeling/sentiment_gauge_overall.html" width="100%" height="600px"></iframe>
+```
+
+# Comparative Gauges
+
+::: columns
+::: {.column width=30%}
+
+**Positive Sentiment**
+
+```{=html}
+<iframe src="images/modeling/sentiment_gauge_positive.html" width="100%" height="600px"></iframe>
+```
+
+:::
+
+::: {.column width=3%}
+:::
+
+::: {.column width=30%}
+
+**Neutral Sentiment**
+
+```{=html}
+<iframe src="images/modeling/sentiment_gauge_neutral.html" width="100%" height="600px"></iframe>
+```
+
+:::
+
+::: {.column width=3%}
+:::
+
+::: {.column width=30%}
+
+**Negative Sentiment**
+
+```{=html}
+<iframe src="images/modeling/sentiment_gauge_negative.html" width="100%" height="600px"></iframe>
+```
+
+:::
+:::
+
+# Reddit Author Content
+
+```{python}
+show(reddit_content, classes="display")
+```
+
+# Conclusion
+
+
+---
+
+# Code Links
+
+- [Modeling Functions](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/modeling_functions.py)
+- [Modeling Conclusion](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/modeling_conclusions.py)

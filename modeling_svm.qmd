@@ -169,11 +169,3 @@ Please see [Modeling Conclusions](modeling_conclusion.qmd) for a complete synthe
 
 - [Modeling Functions](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/modeling_functions.py)
 - [SVM Modeling](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/modeling/svm.py)
-
-
-
-
-
-
-
-
