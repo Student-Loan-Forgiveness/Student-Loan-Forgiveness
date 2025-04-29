@@ -43,6 +43,12 @@ website:
             href: modeling_svm.qmd
           - text: 'Modeling Conclusions'
             href: modeling_conclusion.qmd
+      - href: nn.qmd
+        text: "Neural Networks"
+      - href: conclusions.qmd
+        text: "Conclusions"
+      - href: about.qmd
+        text: "About the Author"
     right:
       - icon: github
         href: https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness

@@ -194,6 +194,18 @@ window.Quarto = {
   </li>  
     </ul>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./nn.html"> 
+<span class="menu-text">Neural Networks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./conclusions.html"> 
+<span class="menu-text">Conclusions</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About the Author</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
@@ -315,9 +327,9 @@ window.Quarto = {
 <p>Following the analysis performed in <a href="./clustering.html">Clustering</a> section, NewsAPI data from the 3-Topic Iterative LDA wordset and Reddit data from the Reddit Author Aggregation Schema 3-Topic Iterative LDA wordset will be used.</p>
 <p>Transaction data is a format of data which differs from the classic record data. Each row is a comma separated list of unique items (words in this case) from a single transaction (text document in this case). When this is represented in a comma separated value (csv) file, there can be a different number of columns throughout the rows. Snippets of the prepared data are shown below, but the full transaction type datasets can be found <a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/data/transaction_data">here</a>.</p>
 <p><strong>NewsAPI Data Before Transformations</strong></p>
-<div id="d2556ed3" class="cell" data-execution_count="2">
+<div id="587d0e19" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_4c538af8_6c20_4943_8206_0dc0ad622ddb" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_7bb99900_23d4_4341_ba17_3944613c0aa8" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -392,15 +404,15 @@ window.Quarto = {
     </g>
 </svg>
 </a>
-Loading ITables v2.2.5 from the internet...
+Loading ITables v2.3.0 from the internet...
 (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
 </tr></tbody>
 </table>
-<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<link href="https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.css" rel="stylesheet">
 <script type="module">
-    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_4c538af8_6c20_4943_8206_0dc0ad622ddb:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_7bb99900_23d4_4341_ba17_3944613c0aa8:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -418,9 +430,9 @@ Loading ITables v2.2.5 from the internet...
 </div>
 </div>
 <p><strong>Reddit Data Before Transformations</strong></p>
-<div id="518ac8ed" class="cell" data-execution_count="3">
+<div id="770b12a3" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_308bd9f2_5e1e_4c52_84ad_92199c5a107b" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_6bbbe24c_ddec_4c10_a981_01af5563a91e" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -495,15 +507,15 @@ Loading ITables v2.2.5 from the internet...
     </g>
 </svg>
 </a>
-Loading ITables v2.2.5 from the internet...
+Loading ITables v2.3.0 from the internet...
 (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
 </tr></tbody>
 </table>
-<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<link href="https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.css" rel="stylesheet">
 <script type="module">
-    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_308bd9f2_5e1e_4c52_84ad_92199c5a107b:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_6bbbe24c_ddec_4c10_a981_01af5563a91e:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -563,9 +575,9 @@ Loading ITables v2.2.5 from the internet...
 <h1>Results</h1>
 <section id="newsapi-top-support" class="level2">
 <h2 class="anchored" data-anchor-id="newsapi-top-support">NewsAPI Top Support</h2>
-<div id="e1e2f04d" class="cell" data-execution_count="4">
+<div id="d753fcef" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<table id="itables_913301f7_6922_4bf7_a956_c6f23339a25d" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_1424f455_60d8_449f_8505_1a2ef1a3ee34" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -635,15 +647,15 @@ Loading ITables v2.2.5 from the internet...
     </g>
 </svg>
 </a>
-Loading ITables v2.2.5 from the internet...
+Loading ITables v2.3.0 from the internet...
 (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
 </tr></tbody>
 </table>
-<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<link href="https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.css" rel="stylesheet">
 <script type="module">
-    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_913301f7_6922_4bf7_a956_c6f23339a25d:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_1424f455_60d8_449f_8505_1a2ef1a3ee34:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -663,9 +675,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="newsapi-top-confidence" class="level2">
 <h2 class="anchored" data-anchor-id="newsapi-top-confidence">NewsAPI Top Confidence</h2>
-<div id="aca59baa" class="cell" data-execution_count="5">
+<div id="18cca436" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
-<table id="itables_25dc1c43_c6e6_4044_94d9_9d1e79b7bfc6" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_9b6234bf_2f9a_4f6a_91fd_3d96af2ec168" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -735,15 +747,15 @@ Loading ITables v2.2.5 from the internet...
     </g>
 </svg>
 </a>
-Loading ITables v2.2.5 from the internet...
+Loading ITables v2.3.0 from the internet...
 (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
 </tr></tbody>
 </table>
-<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<link href="https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.css" rel="stylesheet">
 <script type="module">
-    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_25dc1c43_c6e6_4044_94d9_9d1e79b7bfc6:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_9b6234bf_2f9a_4f6a_91fd_3d96af2ec168:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -763,9 +775,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="newsapi-top-lift" class="level2">
 <h2 class="anchored" data-anchor-id="newsapi-top-lift">NewsAPI Top Lift</h2>
-<div id="0fdc95ba" class="cell" data-execution_count="6">
+<div id="eac56ec5" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
-<table id="itables_17189743_b41f_4b6b_a566_01c145479b90" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_4d9fb9ba_a6a3_455f_8586_1659f0f4b503" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -835,15 +847,15 @@ Loading ITables v2.2.5 from the internet...
     </g>
 </svg>
 </a>
-Loading ITables v2.2.5 from the internet...
+Loading ITables v2.3.0 from the internet...
 (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
 </tr></tbody>
 </table>
-<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<link href="https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.css" rel="stylesheet">
 <script type="module">
-    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_17189743_b41f_4b6b_a566_01c145479b90:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_4d9fb9ba_a6a3_455f_8586_1659f0f4b503:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -863,9 +875,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="reddit-top-support" class="level2">
 <h2 class="anchored" data-anchor-id="reddit-top-support">Reddit Top Support</h2>
-<div id="77a61812" class="cell" data-execution_count="7">
+<div id="5c5853f8" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
-<table id="itables_f04278eb_f41c_486c_b25c_2d99cc40d599" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_f21ad3a0_9b78_4cff_8078_b9758a1507d2" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -935,15 +947,15 @@ Loading ITables v2.2.5 from the internet...
     </g>
 </svg>
 </a>
-Loading ITables v2.2.5 from the internet...
+Loading ITables v2.3.0 from the internet...
 (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
 </tr></tbody>
 </table>
-<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<link href="https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.css" rel="stylesheet">
 <script type="module">
-    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_f04278eb_f41c_486c_b25c_2d99cc40d599:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_f21ad3a0_9b78_4cff_8078_b9758a1507d2:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -963,9 +975,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="reddit-top-confidence" class="level2">
 <h2 class="anchored" data-anchor-id="reddit-top-confidence">Reddit Top Confidence</h2>
-<div id="a1e0cf47" class="cell" data-execution_count="8">
+<div id="d19f58d1" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
-<table id="itables_87a46bdd_6201_4dc6_8aef_062f4088b8ce" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_83236715_29d0_4b40_9e33_3b8501057f0c" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1035,15 +1047,15 @@ Loading ITables v2.2.5 from the internet...
     </g>
 </svg>
 </a>
-Loading ITables v2.2.5 from the internet...
+Loading ITables v2.3.0 from the internet...
 (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
 </tr></tbody>
 </table>
-<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<link href="https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.css" rel="stylesheet">
 <script type="module">
-    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_87a46bdd_6201_4dc6_8aef_062f4088b8ce:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_83236715_29d0_4b40_9e33_3b8501057f0c:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1063,9 +1075,9 @@ Loading ITables v2.2.5 from the internet...
 </section>
 <section id="reddit-top-lift" class="level2">
 <h2 class="anchored" data-anchor-id="reddit-top-lift">Reddit Top Lift</h2>
-<div id="4d2ae7f4" class="cell" data-execution_count="9">
+<div id="caa6fbd0" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
-<table id="itables_b2393020_f34f_40c9_9fe1_7b562c065e79" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_5f3bc344_f5c7_4c78_8d52_817ea35fd053" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1135,15 +1147,15 @@ Loading ITables v2.2.5 from the internet...
     </g>
 </svg>
 </a>
-Loading ITables v2.2.5 from the internet...
+Loading ITables v2.3.0 from the internet...
 (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
 </tr></tbody>
 </table>
-<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<link href="https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.css" rel="stylesheet">
 <script type="module">
-    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_b2393020_f34f_40c9_9fe1_7b562c065e79:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_5f3bc344_f5c7_4c78_8d52_817ea35fd053:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 

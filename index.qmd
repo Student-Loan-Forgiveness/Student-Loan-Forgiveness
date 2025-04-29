@@ -44,11 +44,25 @@ Instead, a recommendation was made to tighten lending requirements and condition
 
 Although this topic is highly divided along political party lines, it's a complex issue with positive and negative sentiment stemming from facets outside of political party lines. As of late January of 2025, it was reported that Joe Biden had cancelled the student loans of "more than 5 million Americans - more than any other president in U.S. history."
 This was over $180 billion in student loans [@ap_millions_despite].
-However, with a change of adminstrations from President Biden to President Trump, the rules for debt forgivess are tightening again.
+However, with a change of administrations from President Biden to President Trump, the rules for debt forgiveness are tightening again.
 In some cases, the debt forgiveness programs are being eradicated completely.
-What happens to the individuals who held out on the promise of their students loans being at least partially forgiven and are now being faced with a different financial future?
-Although negative sentiment could be still be placed along political party lines as one side is drastically changing the dynamics again, some are feeling the weight of a broken promise.
-Some of those who were facing financial hardships in the first place, or had been waiting on the promise of forgiveness are now becoming the target of an administration set on collecting.
+What happens to the individuals who held out on the promise of their student loans being at least partially forgiven and are now being faced with a different financial future?
+Although negative sentiment could still be placed along political party lines as one side is drastically changing the dynamics again, some are feeling the weight of a broken promise.
+Some of those who were facing financial hardships in the first place, or had been waiting on the promise of forgiveness, are now becoming the target of an administration set on collecting.
 For those in default, the government could begin garnishing wages and blocking other benefits some borrowers have become accustomed to.
-With "an average of 8.15 percent of student loan debt" in default at any given time, the government in colloquailly calling in its chit.
-With access to some of these repayment plans being completely severed, its estimated that "some 8 million borrowers are in limbo" and may be facing "higher monthly costs" [@newsweek_garnishment].
+With "an average of 8.15 percent of student loan debt" in default at any given time, the government in colloquially calling in its chit.
+With access to some of these repayment plans being completely severed, it's estimated that "some 8 million borrowers are in limbo" and may be facing "higher monthly costs" [@newsweek_garnishment].
+
+An aspect shared by both sides of the aisle is that government sanctioned student loan forgiveness doesn’t address the root cause of why its needed in the first place.
+In an article by Saddique Ansari from Economics Online, its stated that “there was a real rise of 213% in students’ average funding outlays” for traditional state colleges over the last three decades [@causes_effects_econ_online].
+Some of the drivers of this increase referenced in the article include a decreased support from the states towards their public higher education institutions, administrative costs “outpacing” enrollment, expansion of services and amenities aimed at “enhancing the college experience” and attracting students, and the sheer available of federal student loans.
+The article states that the ease at which federal aid is procured has given colleges “less incentive to keep costs down”, essentially allowing them to increase attractiveness through these enhancements without considering an economic balance, especially for underrepresented classes seeking “upward mobility”.
+Even in the face of adversity, domestic and foreign students alike are choosing to pursue higher education in the United States.
+According to a 2025 ranking by The Times Higher Education, the United States was home to six out of ten of the top prestigious universities in the world.
+The United States is globally recognized in its academic excellence, research opportunities, and networking opportunities within its academic institutions.
+However, this obviously comes at a price. How do other countries with renowned higher education institutions compare?
+According to a 2025 ranking performed by the World Population Review, the United States has consistently fallen by international standards when it comes to education overall. The study indicates that “government spending on education has failed to keep up with inflation” and places the US at spot 31 on its list [@worldpopulationreviewEducationRankings].
+In fact, many nations within the European Union (EU) and the European Economic Area (EEA) land much higher in the rankings.
+Furthermore, many of these countries offer free college tuition to citizens from the EU, EEA, and Switzerland. Even if a student is not a citizen of these regions, the tuition is considerably cheaper compared to the United States [@investopediaEuropeanCountries].
+
+When it comes to student loan forgiveness and the student debt crisis in the United States, arguments from proponents and opponents alike have validity. Progress towards a viable permanent solution depends on a willingness to confront and discuss many complex issues.

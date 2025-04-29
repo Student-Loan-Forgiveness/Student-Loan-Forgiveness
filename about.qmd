@@ -1,10 +1,6 @@
 ---
-title: "About"
-jupyter: python3
+title: "About the Author"
 ---
 
-About this site
+Hi, my name is Carl Klein, and I'm the author of this analysis. Below are links to some of my other projects along my data science journey.
 
-```{python}
-1 + 1
-```
