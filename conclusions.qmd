@@ -1,0 +1,227 @@
+---
+title: "Conclusions"
+bibliography: references.bib
+csl: diabetologia.csl
+execute:
+  echo: false
+---
+
+```{python}
+# import libraries
+import pandas as pd
+from itables import show
+
+# import sentiment demo data
+content_demo = pd.read_csv('data/conclusions/content_demo.csv')
+positive_demo = content_demo[['Positive']]
+negative_demo = content_demo[['Negative']].dropna(ignore_index=True)
+
+```
+
+As the cost of college is outpacing inflation and young adults with unproven financial literacy are given loans to cover their educational expenses, a debt crisis is occurring within the United States for those in pursuit of higher education.
+At any given time, “an average 8.15 percent of student loan debt” across the nation is in default [@newsweek_garnishment].
+Many are struggling to keep up with their monthly payments or are facing decades to pay off their debt once interest is accounted for [@opencampusLikeDrowning].
+There is a political divide on whether student loans should be forgiven by the federal government.
+In fact, one national poll shows 58% of Democrats were in favor of relief, versus just 15% of Republicans [@theweekProsCons].
+In other words, those with the political bias of Left general support student loan forgiveness while those with the political bias of Right general oppose student loan forgiveness.
+In support of the idea, many say the burden of debt delays life milestones and brings significant financial struggles.
+In opposition to the idea, many say it would result in increased federal taxes and doesn’t address the root issue.
+Those in support argue the system is unjust while those in opposition argue that increased federal taxes are unfair towards those in good standing with their repayments and to those who didn’t pursue higher education.
+To better investigate the conversations surrounding this controversy, news articles and reddit conversation were gathered with appropriate queries and preapred for analysis.
+
+Online social discourse, such as Reddit conversations, can color outside of the political divide that entities such as politicians or news media organization generally adhere to must strictly abide by.
+Effectively, this offers a glimpse into the public’s real sentiment towards topics.
+However, from the perspective of comparing news articles to Reddit conversations, there are limitations stemming from syntactical and structural nuances.
+News articles mostly use proper and accepted language, structure, and terms, whereas social media and other online community discussion boards, like Reddit, are likely to follow a more unofficial format.
+Social media may feature slang, text speak, misspellings, and incomplete sentences.
+Incomplete sentences could be due to single word responses or reactions, or simply due to improperly structured sentences.
+One result from the analysis illustrated these differences can propagate when comparing news articles and online social discourse.
+In an attempt to identify political biases within Subreddits, vetted news articles were chosen and combined into a corpus with content aggregated by Subreddits.
+The chosen news articles were known to cluster together within political biases and apart between political biases.
+>The theory being that clusters formed from this corpus could help identify political bias of the Subreddits. In essence, Subreddits which clustered with a particular group of news articles could indicate similar bias or sentiment towards the topic.
+
+However, the result ultimately revealed that the Reddit conversations were simply different than the news articles.
+
+![](images/clustering/hierarchical/newsapi_subreddit_dendrogram.png){width=50% fig-align="center"}
+
+Given that sentiment towards this topic is roughly divided along political lines, frequent words from subsets of news median organization with known political bias were examined.
+
+::: columns
+::: {.column width=30%}
+
+**Left Political Bias**
+
+![](images/newsapi/vectorized/newsapi_left.png){fig-align="center"}
+
+:::
+
+::: {.column width=3%}
+:::
+
+::: {.column width=30%}
+
+**Center Political Bias**
+
+![](images/newsapi/vectorized/newsapi_center.png){fig-align="center"}
+
+:::
+
+::: {.column width=3%}
+:::
+
+::: {.column width=30%}
+
+**Right Political Bias**
+
+![](images/newsapi/vectorized/newsapi_right.png){fig-align="center"}
+
+:::
+:::
+
+>In these images, the higher frequency words are larger. There are shared words between the amalgamations of political biases, however some are more prevalent than others. Articles from news organizations more associated with the Left seem to focus on student loans with an education and temporal component. Articles from the Center associated organizations seem to focus on student loans with heavy reference to borrowers. Articles from the Right associated organizations seem to mention President Biden and President Trump, potentially more focused on their contrasting agendas on student loan forgiveness.
+
+After some of the groundwork was laid by exploratory data analysis, modeling was performed with the intent of predicting political bias for any given news article.
+The models were used to either predict three biases (Left, Center, or Right) or the two most polar biases (Left or Right).
+
+| Three Labels | Two Labels |
+|------------|--------------|
+| Left | Left |
+| Center | - |
+| Right | Right |
+
+: Model Biases {.striped .hover}
+
+
+
+::: columns
+::: {.column width=45%}
+
+**Best Model for Three Biases**
+
+![](images/modeling/nb/cm_strict_three_labels.png){fig-align="center"}
+
+:::
+
+::: {.column width=5%}
+:::
+
+::: {.column width=45%}
+
+**Best Model for Two Biases**
+
+![](images/modeling/svm/cm_strict_two_labels.png){fig-align="center"}
+
+:::
+:::
+
+>For both the three and two bias class models, there was enough information available to decently teach the models how to partition between the biases, as confirmed by high accuracies. Notably, models across several families of machine learning models perform phenomenally for most divisive binary bias class models.
+
+Additionally, a model known for its ability to produce a tree-like flowchart was implemented during this process.
+Not only did this model achieve an adequate accuracy of just above 80% on predicting the binary bias class models of Left vs. Right, but it simplified the logic of selection with just a handful of word counts (out of the thousands available across the vocabulary of just these news articles) from any given article.
+
+![](images/modeling/dt/dt_strict_two_labels.png.png){width=50% fig-align="center"}
+
+>From top to bottom, the logical flow of splitting by words by their counts in articles can followed, with almost 80% in predicting political bias of a news article. For example, the root node roughly illustrates that if the word "news" appears more or less than 3 times in an article, there is enough information gained to split the article into the next set of leaves. When false (3 or more counts), the bias of Right was given into an almost pure split of 2 Left articles and 64 Right articles. By following the pathways to the final leaves in the tree, this maximizes the information-based potential.
+
+The data for both the news articles and Reddit conversations were also examined regardless of political bias with a technique known as topic modeling. In general, a topic is a mixture of words, and a document is a mixture of topics. In this case, one set of documents is the news articles, and the other set of documents is Reddit authors’ aggregated content. Topic modeling aims to uncover the layered similarities. The specific technique used doesn't return topics, but topics can be deduced by logically examining the words.
+
+**Topic Modeling - News Articles**
+
+![](images/lda/lda_plot_newsapi.png){width=50% fig-align="center"}
+
+**Topic Modeling - Reddit Conversations**
+
+![](images/lda/lda_plot_reddit.png){width=50% fig-align="center"}
+
+By examining the words and their relative frequency (weight) within the unlabeled topic, a topic can roughly be deduced. There appears to be three main themes within the data collected:
+
+- **Finance**
+- **Government**
+- **Education**
+
+Given that the overall subject and search queries were for student loan forgiveness, which references the government helping to financially assist students, these were appropriate. Although this isn't a substantial discovery, it does affirm suitable content was collected.
+
+One of the climactic research goals of this analysis was to investigate overall sentiment, specifically to provide a method to project sentiment onto public discourse.
+As indicated by the clustering results, even curated news articles and Reddit conversations generalized to the Subreddit level tend to have their differences.
+Again, this likely stems from the innate differences between the language structures of the two types of media.
+However, given the strong modeling performance on the political bias of the news articles, particularly when attempting to partition the polar biases Left vs. Right, what if these models were applied in predicting bias towards Reddit conversations?
+To reiterate, sentiment towards the topic is roughly politically divided.
+By predicting political bias on an aggregation of content by Reddit author, the ability to project positive and negative sentiment on this topic may prove feasible.
+Using the Reddit authors with a more substantial collection of posts, roughly equivalent to at least the size of a news article, three different well-performing models were used to classify the author with a political bias of either Left or Right.
+By also tracking the probabilities of the predictions, a weighted probabilistic model of bias can be created.
+By applying positive sentiment scores and negative sentiment scores to Left and Right predictions, respectively, an overall score can be created to get an idea of a Reddit author’s sentiment towards the topic.
+
+::: columns
+::: {.column width=45%}
+
+**Positive Score**
+
+![](images/conclusions/gauge_positive.png){fig-align="center"}
+
+:::
+
+::: {.column width=5%}
+:::
+
+::: {.column width=45%}
+
+**Negative Score**
+
+![](images/conclusions/gauge_negative.png){fig-align="center"}
+
+:::
+:::
+
+The gauges above illustrate the two most extreme Author scores on either side of the sentiment. The authors with usernames *-CJF-* and *horsebycommittee* represent the extremes of Positive and Negative sentiment, respectively.
+
+To examine how this theory truly performed, given the unlabeled experimental nature of the method, a few of the authors' posts will be illustrated.
+
+
+::: columns
+::: {.column width=45%}
+
+**Positive Score**
+
+```{python}
+show(positive_demo,
+     classes="display",
+     style="width:100%;margin:auto",
+     columnDefs=[{"width": "100%", "targets": "_all"}],
+     autoWidth=False,
+     lengthMenu=[5, 10, 20])
+```
+
+:::
+
+::: {.column width=5%}
+:::
+
+::: {.column width=45%}
+
+**Negative Score**
+
+```{python}
+show(negative_demo,
+     classes="display",
+     style="width:100%;margin:auto",
+     columnDefs=[{"width": "100%", "targets": "_all"}],
+     autoWidth=False,
+     lengthMenu=[5, 10, 20])
+```
+
+:::
+:::
+
+>The user on the extreme positive side of sentiment is certainly hoping for some sort of relief to pass, as well as exhibiting negative sentiment towards Republicans (or the right). The user on the extreme negative side of sentiment isn't exactly championing Republicans or the elimination of any plans, but they're echoing rhetoric of the Right in how the plans were flawed to begin with along with the Right's outlines on their agenda.
+
+This method is not without its flaws, but it begins to capture deeper complexities within sentiment on such a divisive issue. Although there is the principal component of political division, other auxiliary components such as distrust in leaders and inequity emerge when analyzing social discourse.
+From Occam's Razor perspective, perhaps projecting sentiment from political bias on a model efficient for a different type of media is a few steps too far.
+
+The United States is renowned for its educational institutions, but there is a true crisis occurring.
+Universities can partially implement attractive enhancements due to knowing students will be able to cover increased costs through easily obtainable loans.
+This has created a feedback loop where tuition has significantly outpaced inflation [@causes_effects_econ_online].
+Not only is this an issue for millions when the bill comes due, but it is also becoming unappealing to those who don’t wish to be burdened by the debt.
+Although higher education isn't the pathway for everyone, should it only become obtainable for the few?
+Continued dialogue must continue to find sustainable solutions, and analyzing how different media outlets along with the sentiment on social discourse platforms can help achieve a shared goal of increased accessibility to higher education.
+
+![](images/conclusions/graduation.png){width=50% fig-align="center"}
