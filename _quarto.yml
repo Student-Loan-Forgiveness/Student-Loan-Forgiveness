@@ -10,6 +10,7 @@ website:
     background: primary
     
   navbar:
+    search: true
     left:
       - href: index.qmd
         text: "Introduction"
@@ -47,11 +48,12 @@ website:
         text: "Neural Networks"
       - href: conclusions.qmd
         text: "Conclusions"
-      - href: about.qmd
-        text: "About the Author"
     right:
       - icon: github
         href: https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness
+      - icon: file-person
+        href: https://clickityklein.github.io/Carl-Klein/
+        
 
 format:
   html:

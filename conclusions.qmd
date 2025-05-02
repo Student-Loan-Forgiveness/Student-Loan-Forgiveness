@@ -123,7 +123,10 @@ Not only did this model achieve an adequate accuracy of just above 80% on predic
 
 >From top to bottom, the logical flow of splitting by words by their counts in articles can followed, with almost 80% in predicting political bias of a news article. For example, the root node roughly illustrates that if the word "news" appears more or less than 3 times in an article, there is enough information gained to split the article into the next set of leaves. When false (3 or more counts), the bias of Right was given into an almost pure split of 2 Left articles and 64 Right articles. By following the pathways to the final leaves in the tree, this maximizes the information-based potential.
 
-The data for both the news articles and Reddit conversations were also examined regardless of political bias with a technique known as topic modeling. In general, a topic is a mixture of words, and a document is a mixture of topics. In this case, one set of documents is the news articles, and the other set of documents is Reddit authors’ aggregated content. Topic modeling aims to uncover the layered similarities. The specific technique used doesn't return topics, but topics can be deduced by logically examining the words.
+The data for both the news articles and Reddit conversations were also examined regardless of political bias with a technique known as topic modeling.
+In general, a topic is a mixture of words, and a document is a mixture of topics. In this case, one set of documents is the news articles, and the other set of documents is Reddit authors’ aggregated content.
+Topic modeling aims to uncover the layered similarities.
+The specific technique used doesn't return topics, but topics can be deduced by logically examining the words.
 
 **Topic Modeling - News Articles**
 
@@ -133,23 +136,19 @@ The data for both the news articles and Reddit conversations were also examined 
 
 ![](images/lda/lda_plot_reddit.png){width=50% fig-align="center"}
 
-By examining the words and their relative frequency (weight) within the unlabeled topic, a topic can roughly be deduced. There appears to be three main themes within the data collected:
+By examining the words and their relative frequency (weight) within the unlabeled topic, a topic can roughly be deduced.
+There appears to be three main themes within the data collected:
 
 - **Finance**
 - **Government**
 - **Education**
 
-Given that the overall subject and search queries were for student loan forgiveness, which references the government helping to financially assist students, these were appropriate. Although this isn't a substantial discovery, it does affirm suitable content was collected.
+Given that the overall subject and search queries were for student loan forgiveness, which references the government helping to financially assist students, these were appropriate.
+Although this isn't a substantial discovery, it does affirm suitable content was collected.
 
-One of the climactic research goals of this analysis was to investigate overall sentiment, specifically to provide a method to project sentiment onto public discourse.
-As indicated by the clustering results, even curated news articles and Reddit conversations generalized to the Subreddit level tend to have their differences.
-Again, this likely stems from the innate differences between the language structures of the two types of media.
-However, given the strong modeling performance on the political bias of the news articles, particularly when attempting to partition the polar biases Left vs. Right, what if these models were applied in predicting bias towards Reddit conversations?
-To reiterate, sentiment towards the topic is roughly politically divided.
-By predicting political bias on an aggregation of content by Reddit author, the ability to project positive and negative sentiment on this topic may prove feasible.
-Using the Reddit authors with a more substantial collection of posts, roughly equivalent to at least the size of a news article, three different well-performing models were used to classify the author with a political bias of either Left or Right.
-By also tracking the probabilities of the predictions, a weighted probabilistic model of bias can be created.
-By applying positive sentiment scores and negative sentiment scores to Left and Right predictions, respectively, an overall score can be created to get an idea of a Reddit author’s sentiment towards the topic.
+One of the overarching goals of this research was to investigate if and how sentiment – positive or negative attitude – can be projected onto public discourse. It’s been proven that the political bias of news articles can be effectively modeled. Even though news articles and Reddit conversations have their innate language structure differences, the success of the models on news articles provide another chance of bias discovery on the social discourse platform. These more adept models were applied to the Reddit discussions to potentially uncover patterns in political bias, and ultimately sentiment.
+
+Since sentiment on the topic tends to divide along political lines, analyzing Reddit authors' political leanings provides a new way to track sentiment. In using the models to classify political bias, positive and negative sentiment scores can be applied to their writing. This offers a structured and quantitative method to examine sentiment towards the topic.
 
 ::: columns
 ::: {.column width=45%}
@@ -222,6 +221,6 @@ Universities can partially implement attractive enhancements due to knowing stud
 This has created a feedback loop where tuition has significantly outpaced inflation [@causes_effects_econ_online].
 Not only is this an issue for millions when the bill comes due, but it is also becoming unappealing to those who don’t wish to be burdened by the debt.
 Although higher education isn't the pathway for everyone, should it only become obtainable for the few?
-Continued dialogue must continue to find sustainable solutions, and analyzing how different media outlets along with the sentiment on social discourse platforms can help achieve a shared goal of increased accessibility to higher education.
+Continued dialogue must continue to find sustainable solutions and analyzing how different media outlets along with the sentiment on social discourse platforms can help achieve a shared goal of increased accessibility to higher education.
 
 ![](images/conclusions/graduation.png){width=50% fig-align="center"}
