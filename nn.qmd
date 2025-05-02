@@ -144,7 +144,7 @@ This project utilized a comprehensive guide for the mathematics and programming 
 
 This analysis focused on using a bespoke neural network to classify political bias within news articles. In particular, it used articles from media organizations with known Left or Right political bias. Neural Networks are a supervised machine learning method. Supervised Machine Learning models require labeled data, or known tags on the data to train the model. Additionally, when teaching the models, the data is split into disjoint training and testing sets. In essence, the models learn from the training set and then are tested on unseen data. This helps to prevent overfitting and simulates applying the model on real-world data.
 
-Samples and sometimes full datasets (depending on size) can be found **here**.
+Samples and sometimes full datasets (depending on size) can be found [here](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/data/nn).
 
 ## Starting Data
 
@@ -375,6 +375,6 @@ It should be noted that this was a rather simple version of a network based mode
 
 # Code Links
 
-- [Modeling Functions]()
-- [Neural Network Functions]()
-- [Neural Network Modeling]()
+- [Modeling Functions](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/nn/modeling_functions.py)
+- [Neural Network Functions](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/nn/nn_functions.py)
+- [Neural Network Modeling](https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/nn/nn_modeling.py)

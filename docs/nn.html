@@ -421,7 +421,7 @@ window.Quarto = {
 <section id="data-preparation" class="level1">
 <h1>Data Preparation</h1>
 <p>This analysis focused on using a bespoke neural network to classify political bias within news articles. In particular, it used articles from media organizations with known Left or Right political bias. Neural Networks are a supervised machine learning method. Supervised Machine Learning models require labeled data, or known tags on the data to train the model. Additionally, when teaching the models, the data is split into disjoint training and testing sets. In essence, the models learn from the training set and then are tested on unseen data. This helps to prevent overfitting and simulates applying the model on real-world data.</p>
-<p>Samples and sometimes full datasets (depending on size) can be found <strong>here</strong>.</p>
+<p>Samples and sometimes full datasets (depending on size) can be found <a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/tree/main/data/nn">here</a>.</p>
 <section id="starting-data" class="level2">
 <h2 class="anchored" data-anchor-id="starting-data">Starting Data</h2>
 <p>A sample of the data used is seen below. The columns shown have the <em>url</em> of the news article, <em>political bias</em> of the news organization, the raw <em>article</em>, and the <em>cleaned</em> article after processing. This was the data scraped from NewsAPI and labels obtained from AllSides. Processing included:</p>
@@ -436,9 +436,9 @@ window.Quarto = {
 <li>Removing Stopwords</li>
 <li>Lemmatizing</li>
 </ul>
-<div id="fb272e16" class="cell" data-execution_count="2">
+<div id="78feb95b" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_a9522358_4b75_478a_8752_35633e824887" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_1a486564_de08_4585_85ac_bb3895bbfd7b" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -514,7 +514,7 @@ Loading ITables v2.3.0 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_a9522358_4b75_478a_8752_35633e824887:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_1a486564_de08_4585_85ac_bb3895bbfd7b:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -535,9 +535,9 @@ Loading ITables v2.3.0 from the internet...
 <section id="vectorized-data" class="level2">
 <h2 class="anchored" data-anchor-id="vectorized-data">Vectorized Data</h2>
 <p>Using the cleaned column (as described above), the data was vectorized with <code>CountVectorizer</code> from sklearn using a limit of 1000 maximum features, and then reduced to the rows with the appropriate political biases of Left and Right. Additionally, the label was mapped to a binary representation with <span class="math inline">\(Left \rightarrow 1\)</span> and <span class="math inline">\(Right \rightarrow 0\)</span>.</p>
-<div id="43ab6166" class="cell" data-execution_count="3">
+<div id="613bea98" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<table id="itables_6b56aecd_8d03_41df_97a1_0acd194eb704" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_59452118_c883_45d4_aae8_d34cc9176539" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -699,7 +699,7 @@ Loading ITables v2.3.0 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_6b56aecd_8d03_41df_97a1_0acd194eb704:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_59452118_c883_45d4_aae8_d34cc9176539:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -738,9 +738,9 @@ Loading ITables v2.3.0 from the internet...
 <div class="columns">
 <div class="column" style="width:30%;">
 <p><strong>Training Label</strong></p>
-<div id="daace4d9" class="cell" data-execution_count="4">
+<div id="a52d9d5d" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
-<table id="itables_f5e80d94_af1b_431f_a560_77f65d2a2e25" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_075fef2a_a345_49bd_8681_bfd260a4ace4" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -813,7 +813,7 @@ Loading ITables v2.3.0 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_f5e80d94_af1b_431f_a560_77f65d2a2e25:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_075fef2a_a345_49bd_8681_bfd260a4ace4:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -834,9 +834,9 @@ Loading ITables v2.3.0 from the internet...
 
 </div><div class="column" style="width:65%;">
 <p><strong>Training Data</strong></p>
-<div id="e91fa967" class="cell" data-execution_count="5">
+<div id="c3b14707" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
-<table id="itables_61917570_6f3d_45f1_81b8_3757d574ce20" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_1853fad4_0b3d_4282_b6e9_5e7ebaa23c41" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -918,7 +918,7 @@ Loading ITables v2.3.0 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_61917570_6f3d_45f1_81b8_3757d574ce20:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_1853fad4_0b3d_4282_b6e9_5e7ebaa23c41:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -940,9 +940,9 @@ Loading ITables v2.3.0 from the internet...
 <div class="columns">
 <div class="column" style="width:30%;">
 <p><strong>Testing Label</strong></p>
-<div id="cf471956" class="cell" data-execution_count="6">
+<div id="3b8318dd" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
-<table id="itables_53e16a6f_45cf_4656_886c_9167fbecac60" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_d14c0139_c530_43ad_8717_dcd898ed1a2d" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1015,7 +1015,7 @@ Loading ITables v2.3.0 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_53e16a6f_45cf_4656_886c_9167fbecac60:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_d14c0139_c530_43ad_8717_dcd898ed1a2d:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1036,9 +1036,9 @@ Loading ITables v2.3.0 from the internet...
 
 </div><div class="column" style="width:65%;">
 <p><strong>Testing Data</strong></p>
-<div id="775b3109" class="cell" data-execution_count="7">
+<div id="4ca291bc" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
-<table id="itables_b02172b4_48c7_43af_82bd_fc6f58d423da" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_a8f55404_0638_4c8f_b6d2_5f7d9876ff8c" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1120,7 +1120,7 @@ Loading ITables v2.3.0 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_b02172b4_48c7_43af_82bd_fc6f58d423da:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_a8f55404_0638_4c8f_b6d2_5f7d9876ff8c:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1147,9 +1147,9 @@ Loading ITables v2.3.0 from the internet...
 <div class="columns">
 <div class="column" style="width:30%;">
 <p><strong>Training Label</strong></p>
-<div id="bf8a9408" class="cell" data-execution_count="8">
+<div id="145ced69" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
-<table id="itables_1e79e4df_d79e_4760_b6be_689a9495df86" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_89aa48fd_a5b6_4bbe_9b9e_4595de04dc28" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1222,7 +1222,7 @@ Loading ITables v2.3.0 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_1e79e4df_d79e_4760_b6be_689a9495df86:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_89aa48fd_a5b6_4bbe_9b9e_4595de04dc28:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1243,9 +1243,9 @@ Loading ITables v2.3.0 from the internet...
 
 </div><div class="column" style="width:65%;">
 <p><strong>Training Data</strong></p>
-<div id="1edd5117" class="cell" data-execution_count="9">
+<div id="fbd23d47" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
-<table id="itables_5cfe0c20_b285_4650_b671_73c4b5361b1f" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_d8160158_450a_4b1d_96da_dd0657e314d1" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1407,7 +1407,7 @@ Loading ITables v2.3.0 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_5cfe0c20_b285_4650_b671_73c4b5361b1f:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_d8160158_450a_4b1d_96da_dd0657e314d1:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1429,9 +1429,9 @@ Loading ITables v2.3.0 from the internet...
 <div class="columns">
 <div class="column" style="width:30%;">
 <p><strong>Testing Label</strong></p>
-<div id="d861d23a" class="cell" data-execution_count="10">
+<div id="3dbba383" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display">
-<table id="itables_d0eba5fd_8d98_4be4_9163_f7c1a3976a9a" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_617a42cc_bb62_469a_b0e0_0ca8cf396589" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1504,7 +1504,7 @@ Loading ITables v2.3.0 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_d0eba5fd_8d98_4be4_9163_f7c1a3976a9a:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_617a42cc_bb62_469a_b0e0_0ca8cf396589:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1525,9 +1525,9 @@ Loading ITables v2.3.0 from the internet...
 
 </div><div class="column" style="width:65%;">
 <p><strong>Testing Data</strong></p>
-<div id="1bd48422" class="cell" data-execution_count="11">
+<div id="3e964405" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
-<table id="itables_546a128f_1970_4708_a022_07778b49fd28" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
+<table id="itables_cd4c2fed_1305_42a0_896e_1782f91eeb6f" class="display nowrap" data-quarto-disable-processing="true" style="width:100%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1750,7 +1750,7 @@ Loading ITables v2.3.0 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_546a128f_1970_4708_a022_07778b49fd28:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_cd4c2fed_1305_42a0_896e_1782f91eeb6f:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1793,9 +1793,9 @@ Loading ITables v2.3.0 from the internet...
 <h2 class="anchored" data-anchor-id="pca-results">PCA Results</h2>
 <section id="grid-search" class="level3">
 <h3 class="anchored" data-anchor-id="grid-search">Grid Search</h3>
-<div id="da511ee7" class="cell" data-execution_count="12">
+<div id="48658c1b" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
-<table id="itables_ad000038_bce7_4bec_9ed6_61b636081281" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<table id="itables_061a8333_42d8_4b83_9f06_f82b5ade076f" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1873,7 +1873,7 @@ Loading ITables v2.3.0 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_ad000038_bce7_4bec_9ed6_61b636081281:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_061a8333_42d8_4b83_9f06_f82b5ade076f:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1912,9 +1912,9 @@ Loading ITables v2.3.0 from the internet...
 <h2 class="anchored" data-anchor-id="full-results">Full Results</h2>
 <section id="grid-search-1" class="level3">
 <h3 class="anchored" data-anchor-id="grid-search-1">Grid Search</h3>
-<div id="05541ab3" class="cell" data-execution_count="13">
+<div id="d747e0c0" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
-<table id="itables_63619c95_a130_4eae_89ca_fe3527f375ff" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
+<table id="itables_4185ff4c_b406_45d2_b16e_81996ad79734" class="display nowrap" data-quarto-disable-processing="true" style="width:50%;margin:auto">
 <thead>
     <tr style="text-align: right;">
       
@@ -1992,7 +1992,7 @@ Loading ITables v2.3.0 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.2.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_63619c95_a130_4eae_89ca_fe3527f375ff:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_4185ff4c_b406_45d2_b16e_81996ad79734:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -2048,9 +2048,9 @@ Loading ITables v2.3.0 from the internet...
 <section id="code-links" class="level1">
 <h1>Code Links</h1>
 <ul>
-<li><a href="">Modeling Functions</a></li>
-<li><a href="">Neural Network Functions</a></li>
-<li><a href="">Neural Network Modeling</a></li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/nn/modeling_functions.py">Modeling Functions</a></li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/nn/nn_functions.py">Neural Network Functions</a></li>
+<li><a href="https://github.com/Student-Loan-Forgiveness/Student-Loan-Forgiveness/blob/main/scripts/nn/nn_modeling.py">Neural Network Modeling</a></li>
 </ul>
 
 
